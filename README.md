@@ -1,6 +1,7 @@
 # Backend 계획서
 
-### 사용기술
+#### 사용기술
+```
 Spring Data JPA
 Java 11 
 DB : 미정
@@ -9,6 +10,7 @@ API 호출 : Rest Templet
 공공데이터 : https://www.data.go.kr/data/15034533/standard.do
 지도데이터 : https://apis.map.kakao.com/
 ...
+```
 --- 
 
 ## 기능 요구사항 
