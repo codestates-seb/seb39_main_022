@@ -1,5 +1,14 @@
 # Backend 계획서
-> 아이디어만 있을 뿐 아직 명세서가 완성되지 않았습니다.
+
+### 사용기술
+Spring Data JPA
+Java 11 
+DB : 미정
+API 문성 : Swagger
+API 호출 : Rest Templet
+공공데이터 : https://www.data.go.kr/data/15034533/standard.do
+지도데이터 : https://apis.map.kakao.com/
+...
 --- 
 
 ## 기능 요구사항 
@@ -23,3 +32,5 @@
 
 - ![images/specification1.png](images/specification1.png)
 ![img.png](img.png)
+
+
