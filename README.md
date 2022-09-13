@@ -5,7 +5,7 @@
 - Spring Data JPA
 - Java 11 
 - DB : 미정
-- API 문성 : Swagger
+- API 문서 : Swagger
 - API 호출 : Web Client
 - 공공데이터 : https://www.data.go.kr/data/15034533/standard.do
 - 지도데이터 : https://apis.map.kakao.com/
