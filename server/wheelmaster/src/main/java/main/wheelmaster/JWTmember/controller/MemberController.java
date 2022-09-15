@@ -9,6 +9,8 @@ import main.wheelmaster.JWTmember.service.MemberService;
 import main.wheelmaster.response.MessageResponseDto;
 import main.wheelmaster.response.SingleResponseWithMessageDto;
 import main.wheelmaster.token.dto.TokenResponseDto;
+import main.wheelmaster.token.entity.Token;
+import main.wheelmaster.token.mapper.TokenMapper;
 import main.wheelmaster.token.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,7 @@ public class MemberController {
     private final MemberService memberService;
     private final AuthService authService;
     private final MemberMapper mapper;
+    private final TokenMapper tokenMapper;
 
     //회원가입
     @PostMapping("/signup")
@@ -42,12 +45,22 @@ public class MemberController {
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
+//    //로그인
+//    @PostMapping("/login")
+//    public ResponseEntity login(@RequestBody @Valid MemberRequestDto.loginDto loginDto) {
+////        Token token = authService.login(mapper.loginDtoToMember(loginDto));
+//        TokenResponseDto.Token response = authService.login(mapper.loginDtoToMember(loginDto));
+//        return new ResponseEntity<>(new SingleResponseWithMessageDto<>(response,
+//                "SUCCESS"),
+//                HttpStatus.OK);
+//    }
     //로그인
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid MemberRequestDto.loginDto loginDto) {
-//        Token token = authService.login(mapper.loginDtoToMember(loginDto));
-        TokenResponseDto.Token response = authService.login(mapper.loginDtoToMember(loginDto));
-        return new ResponseEntity<>(new SingleResponseWithMessageDto<>(response,
+        Token token = authService.login(mapper.loginDtoToMember(loginDto));
+//        TokenResponseDto.Token response = authService.login(mapper.loginDtoToMember(loginDto));
+
+        return new ResponseEntity<>(new SingleResponseWithMessageDto<>(tokenMapper.tokenInfo(token),
                 "SUCCESS"),
                 HttpStatus.OK);
     }

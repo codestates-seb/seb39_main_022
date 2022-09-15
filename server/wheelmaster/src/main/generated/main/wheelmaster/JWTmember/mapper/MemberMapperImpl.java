@@ -1,14 +1,14 @@
-package main.wheelmaster.member.mapper;
+package main.wheelmaster.JWTmember.mapper;
 
 import javax.annotation.processing.Generated;
-import main.wheelmaster.member.dto.MemberRequestDto;
-import main.wheelmaster.member.dto.MemberResponseDto;
-import main.wheelmaster.member.entity.Member;
+import main.wheelmaster.JWTmember.dto.MemberRequestDto;
+import main.wheelmaster.JWTmember.dto.MemberResponseDto;
+import main.wheelmaster.JWTmember.entity.Member;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-15T16:45:23+0900",
+    date = "2022-09-15T19:59:58+0900",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 11.0.13 (Oracle Corporation)"
 )
 @Component
@@ -54,6 +54,7 @@ public class MemberMapperImpl implements MemberMapper {
 
         memberInfo.email( member.getEmail() );
         memberInfo.nickName( member.getNickName() );
+        memberInfo.tel( member.getTel() );
 
         return memberInfo.build();
     }
