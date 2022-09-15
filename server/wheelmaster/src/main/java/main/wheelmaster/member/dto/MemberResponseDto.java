@@ -23,7 +23,6 @@ public class MemberResponseDto {
     public static class UpdateDto {
         private String nickName;
         private String tel;
-        private long memberId;
     }
 
     @Data
