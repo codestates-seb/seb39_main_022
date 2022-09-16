@@ -61,11 +61,11 @@ public class MemberController {
     }
 
     //회원 정보 수정
-    @PatchMapping
-    public ResponseEntity updateMember(@RequestBody MemberRequestDto.updateDto updateDto,
-                                       @SessionAttribute(name= LOGIN_MEMBER) Member loginMember)
+    @PatchMapping("/{member-id}")
+    public ResponseEntity updateMember(@RequestBody MemberRequestDto.updateDto updateDto,@Positive @PathVariable("member-id") long memberId)
+//                                       @SessionAttribute(name= LOGIN_MEMBER) Member loginMember)
     {
-        updateDto.setMemberId(loginMember.getMemberId());
+        updateDto.setMemberId(memberId);
         Member member = memberService.updateMember(mapper.updateDtoToMember(updateDto));
         MemberResponseDto.UpdateDto memberInfo = mapper.memberToUpdateDto(member);
 

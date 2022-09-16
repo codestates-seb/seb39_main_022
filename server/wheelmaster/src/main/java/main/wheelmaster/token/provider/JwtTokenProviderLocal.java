@@ -92,7 +92,7 @@ public class JwtTokenProviderLocal {
 
   // HTTP Request 의 Header 에서 Token Parsing -> "X-AUTH-TOKEN: jwt"
   public String resolveToken(HttpServletRequest request) {
-    return request.getHeader("X-AUTH-TOKEN");
+    return request.getHeader("Authorization");
   }
 
   // jwt 의 유효성 및 만료일자 확인
