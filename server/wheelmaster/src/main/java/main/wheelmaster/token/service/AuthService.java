@@ -5,6 +5,8 @@ import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.exception.ExceptionCode;
 import main.wheelmaster.JWTmember.entity.Member;
 import main.wheelmaster.JWTmember.repository.MemberRepository;
+import main.wheelmaster.token.dto.TokenRequestDto;
+import main.wheelmaster.token.dto.TokenResponseDto;
 import main.wheelmaster.token.entity.Token;
 import main.wheelmaster.token.provider.JwtTokenProviderLocal;
 import main.wheelmaster.token.repository.TokenRepository;
@@ -31,7 +33,6 @@ public class AuthService {
   public Token login(Member member) {
     Member findMember = findVerifiedMemberByEmail(member.getEmail());
     Token token = jwtTokenProvider.createTokenDto(findMember);
-//    TokenResponseDto.Token token = jwtTokenProvider.createTokenDto(findMember);
     return tokenRepository.save(token);
   }
 
@@ -41,18 +42,20 @@ public class AuthService {
     return optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
   }
 
-//  public TokenResponseDto.ReIssueToken reIssue(TokenRequestDto.ReIssue reIssue) {
-//    Member findMember = findVerifiedMemberByEmail()
-//    Token findToken = findVerifiedToken(reIssue.getRefreshToken());
-//    if(reIssue.getRefreshToken().equals(tokenRepository.findByRefreshToken(reIssue.getRefreshToken()))){
-//      return jwtTokenProvider.createReIssueTokenDto()
-//    }
-//    return null;
-//  }
-//
-//  @Transactional(readOnly = true)
-//  public Token findVerifiedToken(String refreshToken){
-//    Optional<Token> optionalToken = tokenRepository.findByRefreshToken(refreshToken);
-//    return optionalToken.orElseThrow(()->new BusinessLogicException(ExceptionCode.TOKEN_IS_INVALID));
-//  }
+  public TokenResponseDto.ReIssueToken reIssue(TokenRequestDto.ReIssue reIssue) {
+    Member findMember = findVerifiedMemberByEmail(reIssue.getMember().getEmail());
+    Token findToken = findVerifiedToken(reIssue.getRefreshToken());
+    if(reIssue.getRefreshToken().equals(tokenRepository.findByRefreshToken(reIssue.getRefreshToken())))
+      return jwtTokenProvider.createReIssueTokenDto(findMember);
+    else if(!reIssue.getRefreshToken().equals(tokenRepository.findByRefreshToken(reIssue.getRefreshToken()))) //refresh 토큰 불일치
+      throw new BusinessLogicException(ExceptionCode.TOKEN_IS_INVALID);
+    else // refresh 토큰 만료
+      throw new BusinessLogicException(ExceptionCode.REFRESH_TOKEN_IS_EXPIRED);
+  }
+
+  @Transactional(readOnly = true)
+  public Token findVerifiedToken(String refreshToken){
+    Optional<Token> optionalToken = tokenRepository.findByRefreshToken(refreshToken);
+    return optionalToken.orElseThrow(()->new BusinessLogicException(ExceptionCode.TOKEN_IS_INVALID));
+  }
 }

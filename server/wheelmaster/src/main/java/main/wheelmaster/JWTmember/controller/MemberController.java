@@ -8,6 +8,7 @@ import main.wheelmaster.JWTmember.mapper.MemberMapper;
 import main.wheelmaster.JWTmember.service.MemberService;
 import main.wheelmaster.response.MessageResponseDto;
 import main.wheelmaster.response.SingleResponseWithMessageDto;
+import main.wheelmaster.token.dto.TokenRequestDto;
 import main.wheelmaster.token.dto.TokenResponseDto;
 import main.wheelmaster.token.entity.Token;
 import main.wheelmaster.token.mapper.TokenMapper;
@@ -45,15 +46,6 @@ public class MemberController {
         return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
-//    //로그인
-//    @PostMapping("/login")
-//    public ResponseEntity login(@RequestBody @Valid MemberRequestDto.loginDto loginDto) {
-////        Token token = authService.login(mapper.loginDtoToMember(loginDto));
-//        TokenResponseDto.Token response = authService.login(mapper.loginDtoToMember(loginDto));
-//        return new ResponseEntity<>(new SingleResponseWithMessageDto<>(response,
-//                "SUCCESS"),
-//                HttpStatus.OK);
-//    }
     //로그인
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid MemberRequestDto.loginDto loginDto) {
