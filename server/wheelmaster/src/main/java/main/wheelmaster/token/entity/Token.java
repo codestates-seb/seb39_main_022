@@ -2,11 +2,9 @@ package main.wheelmaster.token.entity;
 
 
 import lombok.*;
+import main.wheelmaster.JWTmember.entity.Member;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +23,7 @@ public class Token {
     private String refreshToken;
     private Long accessTokenExpiredTime;
     private Long refreshTokenExpiredTime;
+
+    @OneToOne(mappedBy = "token")
+    private Member member;
 }

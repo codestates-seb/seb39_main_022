@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import main.wheelmaster.token.entity.Token;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -32,4 +33,8 @@ public class Member {
 
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();
+
+    @OneToOne
+    @JoinColumn(name = "TOKEN_ID")
+    private Token token;
 }
