@@ -27,7 +27,7 @@ public class MemberRequestDto {
         @NotBlank
         private String nickName;
 
-        private String tel;
+        private String phoneNumber;
     }
 
     @Data
@@ -52,7 +52,7 @@ public class MemberRequestDto {
 
         private String nickName;
 
-        private String tel;
+        private String phoneNumber;
 
         private long memberId;
     }

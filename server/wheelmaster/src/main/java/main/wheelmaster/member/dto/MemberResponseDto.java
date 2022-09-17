@@ -22,7 +22,7 @@ public class MemberResponseDto {
     @Builder
     public static class UpdateDto {
         private String nickName;
-        private String tel;
+        private String phoneNumber;
     }
 
     @Data

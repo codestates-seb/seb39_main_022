@@ -33,7 +33,7 @@ public class MemberService {
         Member findMember = findVerifiedMember(member.getMemberId());
         Optional.ofNullable(member.getNickName()).ifPresent(findMember::setNickName);
         Optional.ofNullable(member.getPassword()).ifPresent(findMember::setPassword);
-        Optional.ofNullable(member.getTel()).ifPresent(findMember::setTel);
+        Optional.ofNullable(member.getPhoneNumber()).ifPresent(findMember::setPhoneNumber);
         return memberRepository.save(findMember);
     }
 
