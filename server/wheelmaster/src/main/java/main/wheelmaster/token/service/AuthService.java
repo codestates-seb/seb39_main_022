@@ -23,13 +23,6 @@ public class AuthService {
   private final TokenRepository tokenRepository;
   private final JwtTokenProviderLocal jwtTokenProvider;
 
-
-//  public TokenResponseDto.Token login(Member member) {
-//    Member findMember = findVerifiedMemberByEmail(member.getEmail());
-////    Token token = jwtTokenProvider.createTokenDto(findMember);
-//    TokenResponseDto.Token token = jwtTokenProvider.createTokenDto(findMember);
-//    return token;
-//  }
   public Token login(Member member) {
     Member findMember = findVerifiedMemberByEmail(member.getEmail());
     Token token = jwtTokenProvider.createTokenDto(findMember);
