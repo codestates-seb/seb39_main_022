@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-17T17:52:37+0900",
+    date = "2022-09-17T18:10:37+0900",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 11.0.13 (Oracle Corporation)"
 )
 @Component
@@ -25,7 +25,7 @@ public class MemberMapperImpl implements MemberMapper {
         member.setEmail( singUpDto.getEmail() );
         member.setPassword( singUpDto.getPassword() );
         member.setNickName( singUpDto.getNickName() );
-        member.setTel( singUpDto.getTel() );
+        member.setPhoneNumber( singUpDto.getPhoneNumber() );
 
         return member;
     }
@@ -54,7 +54,7 @@ public class MemberMapperImpl implements MemberMapper {
 
         memberInfo.email( member.getEmail() );
         memberInfo.nickName( member.getNickName() );
-        memberInfo.tel( member.getTel() );
+        memberInfo.phoneNumber( member.getPhoneNumber() );
 
         return memberInfo.build();
     }
@@ -70,7 +70,7 @@ public class MemberMapperImpl implements MemberMapper {
         member.setMemberId( updateDto.getMemberId() );
         member.setPassword( updateDto.getPassword() );
         member.setNickName( updateDto.getNickName() );
-        member.setTel( updateDto.getTel() );
+        member.setPhoneNumber( updateDto.getPhoneNumber() );
 
         return member;
     }
@@ -84,7 +84,7 @@ public class MemberMapperImpl implements MemberMapper {
         MemberResponseDto.UpdateDto.UpdateDtoBuilder updateDto = MemberResponseDto.UpdateDto.builder();
 
         updateDto.nickName( member.getNickName() );
-        updateDto.tel( member.getTel() );
+        updateDto.phoneNumber( member.getPhoneNumber() );
         updateDto.memberId( member.getMemberId() );
 
         return updateDto.build();
