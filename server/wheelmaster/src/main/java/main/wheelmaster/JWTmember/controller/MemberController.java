@@ -92,6 +92,8 @@ public class MemberController {
     }
 
     //TODO 토큰 재발급시 유효한 토큰인지 인증
+    // 로그인시 토큰 발급되어 mysql에 저장된다(이 부분이 좀 애매하다)
+    // accsessToken을 재발급 받기위해 내가 가지고 있는 refreshToken과 DB에 있는 refreshToken을 비교하여 일치하면 accessToken이 발급되게 해야한다
 //    @PostMapping("/reissue")
 //    public ResponseEntity reIssue(@RequestBody @Valid TokenRequestDto.ReIssue reIssue) {
 //        TokenResponseDto.ReIssueToken response =  authService.reIssue(reIssue);
