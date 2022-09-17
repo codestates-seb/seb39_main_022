@@ -14,7 +14,7 @@ public class MemberResponseDto {
     public static class MemberInfo {
         private String email;
         private String nickName;
-        private String tel;
+        private String phoneNumber;
     }
 
     @Data
@@ -23,7 +23,7 @@ public class MemberResponseDto {
     @Builder
     public static class UpdateDto {
         private String nickName;
-        private String tel;
+        private String phoneNumber;
         private long memberId;
     }
 }

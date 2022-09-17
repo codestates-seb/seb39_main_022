@@ -29,7 +29,7 @@ public class Member {
     private String nickName;
 
     @Column(length = 50)
-    private String tel;
+    private String phoneNumber;
 
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime modifiedAt = LocalDateTime.now();
