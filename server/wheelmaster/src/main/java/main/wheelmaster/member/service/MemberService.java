@@ -18,7 +18,6 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-
     public Member createMember(Member member) {
         verifyEmail(member.getEmail());
         return memberRepository.save(member);

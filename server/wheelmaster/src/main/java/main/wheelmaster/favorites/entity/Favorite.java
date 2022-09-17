@@ -33,3 +33,4 @@ public class Favorite {
 
     private double longitude;
 }
+

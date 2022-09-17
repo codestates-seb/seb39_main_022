@@ -1,6 +1,5 @@
 package main.wheelmaster.comment.entity;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
