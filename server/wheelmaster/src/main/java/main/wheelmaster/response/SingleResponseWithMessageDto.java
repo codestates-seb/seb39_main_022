@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class SingleResponseWithMessageDto<T> {
+public class SingleResponseWithMessageDto<T>{
   private T data;
   private String message;
 }

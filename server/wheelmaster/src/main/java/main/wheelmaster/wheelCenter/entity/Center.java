@@ -39,5 +39,4 @@ public class Center {
     private boolean phoneChargerFlag;                       //휴대정화 충전 가능여부
     private String institutionName;                         //관리기관명
     private String institutionPhoneNumber;                  //기관 전화번호
-
 }

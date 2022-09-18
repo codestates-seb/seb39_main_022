@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Vote {
+public class Vote{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

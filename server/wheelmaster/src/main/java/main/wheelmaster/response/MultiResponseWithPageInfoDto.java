@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 @Getter
-public class MultiResponseWithPageInfoDto<T> {
+public class MultiResponseWithPageInfoDto<T>{
   private List<T> data;
   private PageInfo pageInfo;
 

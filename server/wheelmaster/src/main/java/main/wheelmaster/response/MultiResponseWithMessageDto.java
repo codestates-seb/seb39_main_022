@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class MultiResponseWithMessageDto<T> {
+public class MultiResponseWithMessageDto<T>{
   private List<T> data;
   private String message;
 }
