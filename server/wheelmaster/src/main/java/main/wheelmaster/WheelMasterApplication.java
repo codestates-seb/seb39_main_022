@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WheelmasterApplication {
+public class WheelMasterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WheelmasterApplication.class, args);
+		SpringApplication.run(WheelMasterApplication.class, args);
 	}
 
 }
