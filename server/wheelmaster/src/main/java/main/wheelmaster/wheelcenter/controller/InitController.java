@@ -1,18 +1,13 @@
 package main.wheelmaster.wheelcenter.controller;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import main.wheelmaster.wheelcenter.entity.WheelCenter;
 import main.wheelmaster.wheelcenter.service.WheelCenterService;
-import org.apache.tomcat.util.json.JSONParser;
+import main.wheelmaster.wheelcenter.entity.WheelCenter;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.XML;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -46,7 +40,8 @@ public class InitController {
         WebClient client  = WebClient
                 .create("http://api.data.go.kr/openapi/tn_pubr_public_electr_whlchairhgh_spdchrgr_api");
 
-        for(int page = 0; page <= 33; ++page) {
+        for(int page = 1; page <= 33; ++page) {
+
             Optional<String> first = client.get()
                     .uri("?serviceKey=" + serviceKey + "&pageNo=" + page +  "&numOfRows=" + quantity +"&type=json")
                     .retrieve()
@@ -67,7 +62,9 @@ public class InitController {
                 JSONObject body = jsonObject.getJSONObject("response").getJSONObject("body");
                 int numOfRows = body.getInt("numOfRows");
 
+                if(page == 33) numOfRows = 4;
                 JSONArray items = body.getJSONArray("items");
+
 
 
                 for (int i = 0; i < numOfRows; ++i) {
@@ -112,6 +109,7 @@ public class InitController {
 
         if (data[0].length() < 2) {
             data[0] = "0" + data[0];
+
             flag = true;
         }
         if (data[1].length() < 2) {

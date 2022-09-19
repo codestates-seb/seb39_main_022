@@ -1,9 +1,8 @@
-package main.comment.entity;
+package main.wheelmaster.comment.entity;
 
 import lombok.*;
-import main.member.entity.Member;
+import main.wheelmaster.member.entity.Member;
 import main.wheelmaster.wheelcenter.entity.WheelCenter;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 

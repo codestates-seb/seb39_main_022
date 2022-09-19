@@ -1,10 +1,10 @@
-package main.member.entity;
+package main.wheelmaster.member.entity;
 
 
 import lombok.*;
-import main.comment.entity.Comment;
-import main.favoriteplace.entity.FavoritePlace;
-import main.vote.entity.Vote;
+import main.wheelmaster.comment.entity.Comment;
+import main.wheelmaster.favoriteplace.entity.FavoritePlace;
+import main.wheelmaster.vote.entity.Vote;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
