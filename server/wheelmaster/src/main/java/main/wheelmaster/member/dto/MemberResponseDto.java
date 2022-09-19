@@ -32,4 +32,5 @@ public class MemberResponseDto {
     public static class MemberComments {
         private String nickName;
     }
+
 }

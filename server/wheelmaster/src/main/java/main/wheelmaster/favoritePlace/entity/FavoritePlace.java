@@ -1,4 +1,5 @@
-package main.wheelmaster.vote.entity;
+package main.wheelmaster.favoritePlace.entity;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,28 +9,31 @@ import main.wheelmaster.wheelmaster.entity.WheelCenter;
 
 import javax.persistence.*;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
-public class Vote{
+public class FavoritePlace {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long voteId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long favoriteId;
 
     @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
+    @JoinColumn(name="MEMBER_ID")
     private Member member;
 
     @ManyToOne
     @JoinColumn(name="CENTER_ID")
     private WheelCenter wheelCenter;
 
-    @Column(columnDefinition = "TinyInt")
-    private Boolean upDown;
+    @Column(length = 100, nullable = false)
+    private String facultyName;
 
+    @Column(nullable = false, updatable = false)
+    private Double latitude;
+
+    @Column(nullable = false, updatable = false)
+    private Double longitude;
 
     public void setMember(Member member) {
         if(member != null && this.member == null) {
@@ -38,7 +42,7 @@ public class Vote{
     }
 
     public void setWheelCenter(WheelCenter wheelCenter) {
-        if (wheelCenter != null && this.wheelCenter == null) {
+        if(wheelCenter != null && this.wheelCenter == null){
             this.wheelCenter = wheelCenter;
         }
     }
