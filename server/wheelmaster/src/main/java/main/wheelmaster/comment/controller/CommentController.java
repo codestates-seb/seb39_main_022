@@ -20,7 +20,7 @@ import javax.validation.constraints.Positive;
 
 @Validated
 @RestController
-@RequestMapping("wheelCenter/{centerId}/comment")
+@RequestMapping("wheel-center/{centerId}/comment")
 @RequiredArgsConstructor
 public class CommentController {
 
