@@ -9,7 +9,9 @@ public enum ExceptionCode {
   CONSTRAINT_VIOLATION_ERROR(400, "Constraint Violation Error"),
   TOKEN_IS_INVALID(401, "Token is invalid"),
   REFRESH_TOKEN_IS_EXPIRED(403, "Refresh Token is expired"),
-  COMMENT_NOT_FOUND(404,"Comment not found" );
+  COMMENT_NOT_FOUND(404,"Comment not found" ),
+  VOTE_ALREADY_EXISTS(409, "Vote already exists"),
+  VOTE_NOT_FOUND(404, "Vote not found");
 
 
   @Getter
