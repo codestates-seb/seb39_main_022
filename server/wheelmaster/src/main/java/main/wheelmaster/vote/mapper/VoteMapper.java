@@ -1,6 +1,5 @@
 package main.wheelmaster.vote.mapper;
 
-import main.wheelmaster.vote.dto.VoteRequestDto;
 import main.wheelmaster.vote.dto.VoteRequestDto.VotePostDto;
 import main.wheelmaster.vote.dto.VoteRequestDto.VoteUpdateDto;
 import main.wheelmaster.vote.dto.VoteResponseDto;

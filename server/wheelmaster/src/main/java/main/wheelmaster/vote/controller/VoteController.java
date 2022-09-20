@@ -1,4 +1,5 @@
 package main.wheelmaster.vote.controller;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.member.entity.Member;
@@ -17,10 +18,10 @@ import static main.wheelmaster.member.SessionConst.LOGIN_MEMBER;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("wheel-center/{centerId}/vote")
+@RequestMapping("/wheel-center/{centerId}/vote")
 public class VoteController {
 
-    private final VoteService service;
+    private final VoteService voteService;
     private final VoteMapper mapper;
 
     @PostMapping
@@ -32,12 +33,10 @@ public class VoteController {
         votePostDto.setCenterId(centerId);
         votePostDto.setMember(member);
 
-        Vote savedVote = service.create(mapper.VotePostDtoToVote(votePostDto));
+        Vote savedVote = voteService.create(mapper.VotePostDtoToVote(votePostDto));
 
         return mapper.VoteToVoteResponseDto(savedVote);
     }
-
-
 
     @PatchMapping("/{voteId}")
     public VoteResponseDto updateVote(@SessionAttribute(LOGIN_MEMBER)Member member,
@@ -48,7 +47,7 @@ public class VoteController {
         voteUpdateDto.setCenterId(centerId);
         voteUpdateDto.setMember(member);
 
-        Vote savedVote = service.create(mapper.VoteUpdateDtoToVote(voteUpdateDto));
+        Vote savedVote = voteService.create(mapper.VoteUpdateDtoToVote(voteUpdateDto));
 
         return mapper.VoteToVoteResponseDto(savedVote);
     }

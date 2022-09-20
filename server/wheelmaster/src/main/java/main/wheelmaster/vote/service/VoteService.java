@@ -15,29 +15,54 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class VoteService {
-    private final VoteRepository repository;
+    private final VoteRepository voteRepository;
 
 
     public Vote create(Vote vote) {
-        verifyDuplicateVote(vote);
-        return repository.save(vote);
+        return voteRepository.save(vote);
     }
 
-    public Vote update(Vote vote) {
-        Vote findVote = verifyVoteExists(vote);
-
+    public Vote updateVote(Vote vote){
+        Vote findVote = findVerifiedVote(vote.getWheelCenter().getCenterId(), vote.getMember().getMemberId());
         Optional.ofNullable(vote.getUpDown()).ifPresent(findVote::setUpDown);
-        return repository.save(findVote);
+        return voteRepository.save(findVote);
     }
+
+
+//    @Transactional(readOnly = true)
+//    public Vote findVerifiedVote(long voteId, long memberId){
+//        Optional<Vote> optionalVote = voteRepository.findByIdAndVoteIdAndMemberId(voteId,memberId);
+//        return optionalVote.orElseThrow(()->new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS));
+//    }
 
     @Transactional(readOnly = true)
-    public Vote verifyVoteExists(Vote vote){
-        return repository.findById(vote.getVoteId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.VOTE_NOT_FOUND));
+    public Vote findVerifiedVote(long centerId, long memberId){
+        Optional<Vote> optionalVote = voteRepository.findByIdAndVoteIdAndMemberId(centerId,memberId);
+        return optionalVote.orElseThrow(()->new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS));
     }
 
-    public void verifyDuplicateVote(Vote vote){
-        Optional<Vote> optionalVote = repository.findByCenterIdAndMemberId(vote.getWheelCenter().getCenterId(), vote.getMember().getMemberId());
-        if (optionalVote.isPresent()) throw new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS);
-    }
+
+
+    //    public Vote create(Vote vote) {
+//        verifyDuplicateVote(vote);
+//        return voteRepository.save(vote);
+//    }
+
+//    public Vote update(Vote vote) {
+//        Vote findVote = verifyVoteExists(vote);
+//
+//        Optional.ofNullable(vote.getUpDown()).ifPresent(findVote::setUpDown);
+//        return voteRepository.save(findVote);
+//    }
+
+//    @Transactional(readOnly = true)
+//    public Vote verifyVoteExists(Vote vote){
+//        return voteRepository.findById(vote.getVoteId())
+//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.VOTE_NOT_FOUND));
+//    }
+//
+//    public void verifyDuplicateVote(Vote vote){
+//        Optional<Vote> optionalVote = voteRepository.findByCenterIdAndMemberId(vote.getWheelCenter().getCenterId(), vote.getMember().getMemberId());
+//        if (optionalVote.isPresent()) throw new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS);
+//    }
 }

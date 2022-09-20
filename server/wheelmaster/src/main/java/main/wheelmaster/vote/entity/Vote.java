@@ -42,4 +42,16 @@ public class Vote{
             this.wheelCenter = wheelCenter;
         }
     }
+
+    public void addMember(Member member) {
+        if(this.member == null && member != null){
+            this.member = member;
+        }
+    }
+
+    public void addCenter(WheelCenter wheelCenter){
+        if(this.wheelCenter == null && wheelCenter != null){
+            this.wheelCenter = wheelCenter;
+        }
+    }
 }

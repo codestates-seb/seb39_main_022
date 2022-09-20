@@ -16,7 +16,7 @@ public interface CommentMapper {
         WheelCenter wheelCenter = new WheelCenter();
         wheelCenter.setCenterId(createCommentDto.getCenterId());
 
-        comment.setCenter(wheelCenter);
+        comment.setWheelCenter(wheelCenter);
         comment.setComment(createCommentDto.getComment());
         return comment;
     }

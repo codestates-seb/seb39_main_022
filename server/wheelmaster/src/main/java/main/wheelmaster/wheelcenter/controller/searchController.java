@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Positive;
@@ -21,14 +22,14 @@ import java.util.List;
 @RestController
 @Validated
 @RequiredArgsConstructor
-@RequestMapping("wheel-center")
+@RequestMapping("/wheel-center")
 public class searchController {
 
     private final WheelCenterService wheelCenterService;
     private final WheelCenterMapper mapper;
 
     @GetMapping("/cityName")
-    public ResponseEntity getWheelCenterByCityName(@PathParam("cityName") String cityName,
+    public ResponseEntity getWheelCenterByCityName(@RequestParam("cityName") String cityName,
                                                    @Positive @PathParam("page") int page,
                                                    @Positive @PathParam("size") int size){
         Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenterByCityName(cityName, page-1, size);
