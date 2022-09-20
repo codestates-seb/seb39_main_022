@@ -1,5 +1,6 @@
 package main.wheelmaster.member.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.exception.BusinessLogicException;
@@ -30,12 +31,14 @@ import static main.wheelmaster.member.SessionConst.LOGIN_MEMBER;
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
+
 public class MemberController {
 
     private final MemberService memberService;
     private final MemberMapper mapper;
 
     //회원가입
+    @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
     public ResponseEntity singUp(@RequestBody @Valid MemberRequestDto.singUpDto singUpDto){
         Member member = memberService.createMember(mapper.signUpDtoToMember(singUpDto));
@@ -49,6 +52,7 @@ public class MemberController {
     }
 
     //로그인
+    @ApiOperation(value = "로그인")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request, HttpServletResponse response){
         Member member = mapper.loginDtoToMember(loginDto);
@@ -59,7 +63,8 @@ public class MemberController {
     }
 
 
-    //회원 정보 수정
+    //회원정보 수정
+    @ApiOperation(value = "회원정보 수정")
     @PatchMapping
     public ResponseEntity updateMember(@RequestBody MemberRequestDto.updateDto updateDto,
                                        @SessionAttribute(name= LOGIN_MEMBER) Member loginMember)
@@ -72,6 +77,7 @@ public class MemberController {
     }
 
     //회원정보 삭제
+    @ApiOperation(value = "회원정보 삭제")
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(@Positive @PathVariable("member-id") long memberId){
         memberService.deleteMember(memberId);
@@ -79,6 +85,7 @@ public class MemberController {
     }
 
     //로그아웃
+    @ApiOperation(value = "로그아웃")
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
