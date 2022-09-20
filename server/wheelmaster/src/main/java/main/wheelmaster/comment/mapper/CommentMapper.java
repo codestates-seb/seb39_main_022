@@ -4,7 +4,7 @@ import main.wheelmaster.comment.dto.CommentRequestDto;
 import main.wheelmaster.comment.dto.CommentResponseDto;
 import main.wheelmaster.comment.entity.Comment;
 import main.wheelmaster.member.dto.MemberResponseDto;
-import main.wheelmaster.wheelmaster.entity.WheelCenter;
+import main.wheelmaster.wheelcenter.entity.WheelCenter;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main.wheelmaster.member.entity.Member;
-import main.wheelmaster.wheelmaster.entity.WheelCenter;
+import main.wheelmaster.wheelcenter.entity.WheelCenter;
 
 import javax.persistence.*;
 

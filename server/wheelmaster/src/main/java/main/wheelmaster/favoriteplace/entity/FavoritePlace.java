@@ -1,4 +1,5 @@
-package main.wheelmaster.favoriteplace.entity;
+package main.wheelmaster.favoritePlace.entity;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +9,9 @@ import main.wheelmaster.wheelcenter.entity.WheelCenter;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
 public class FavoritePlace {
     @Id
