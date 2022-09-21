@@ -1,4 +1,4 @@
-package main.wheelmaster.favoriteplace.entity;
+package main.wheelmaster.favoritePlace.entity;
 
 
 import lombok.Getter;
