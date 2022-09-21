@@ -16,57 +16,54 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class VoteService {
-    private final VoteRepository voteRepository;
+    private final VoteRepository repository;
 
-
+    /**
+     * vote 의 upDown Boolean 값이 다른 경우 update
+     * 그렇지 않은 경우 예외를 던짐
+     *
+     * @param vote
+     * @return
+     */
+    @Transactional(rollbackFor = {BusinessLogicException.class, RuntimeException.class})
     public Vote create(Vote vote) {
-        return voteRepository.save(vote);
+
+        verifyDuplicateVote(vote);
+        return repository.save(vote);
+
     }
 
-    public Vote updateVote(Vote vote){
-        Vote findVote = findVerifiedVote(vote.getWheelCenter().getCenterId(), vote.getMember().getMemberId());
-        Optional.ofNullable(vote.getUpDown()).ifPresent(findVote::setUpDown);
-        return voteRepository.save(findVote);
+    public void verifyDuplicateVote(Vote vote) {
+
+        Optional<Vote> findVote = repository.findByWheelCenterIdAndMemberId(vote.getWheelCenter().getWheelCenterId(), vote.getMember().getMemberId());
+
+        if (findVote.isPresent()) {
+
+            if (findVote.get().getUpDown() == vote.getUpDown()) {
+
+                throw new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS);
+            } else {
+                vote.setVoteId(findVote.get().getVoteId());
+                vote.setWheelCenter(findVote.get().getWheelCenter());
+            }
+        }
+    }
+
+    @Transactional(rollbackFor = BusinessLogicException.class)
+    public void deleteVote(Vote vote) {
+        Vote findVote = verifyVoteExists(vote);
+        repository.delete(findVote);
+    }
+
+    public Vote verifyVoteExists(Vote vote) {
+        return repository.findById(vote.getVoteId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.VOTE_NOT_FOUND));
+    }
+
+    public Vote readVote(Vote vote) throws NullPointerException {
+        log.info("memberId = {}, centerId={}", vote.getMember(), vote.getWheelCenter().getWheelCenterId());
+        Optional<Vote> optionalVote = repository.findByWheelCenterIdAndMemberId(vote.getWheelCenter().getWheelCenterId(), vote.getMember().getMemberId());
+        return optionalVote.orElse(null);
     }
 
 
-//    @Transactional(readOnly = true)
-//    public Vote findVerifiedVote(long voteId, long memberId){
-//        Optional<Vote> optionalVote = voteRepository.findByIdAndVoteIdAndMemberId(voteId,memberId);
-//        return optionalVote.orElseThrow(()->new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS));
-//    }
-
-    @Transactional(readOnly = true)
-    public Vote findVerifiedVote(long centerId, long memberId){
-        Optional<Vote> optionalVote = voteRepository.findByIdAndVoteIdAndMemberId(centerId,memberId);
-        return optionalVote.orElseThrow(()->new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS));
-    }
-
-//    public void deleteVote(long voteId, long memberId) {
-//        Vote findVote = findVerifiedVote(voteId,memberId);
-//        voteRepository.delete(findVote);
-//    }
-
-    //    public Vote create(Vote vote) {
-//        verifyDuplicateVote(vote);
-//        return voteRepository.save(vote);
-//    }
-
-//    public Vote update(Vote vote) {
-//        Vote findVote = verifyVoteExists(vote);
-//
-//        Optional.ofNullable(vote.getUpDown()).ifPresent(findVote::setUpDown);
-//        return voteRepository.save(findVote);
-//    }
-
-//    @Transactional(readOnly = true)
-//    public Vote verifyVoteExists(Vote vote){
-//        return voteRepository.findById(vote.getVoteId())
-//                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.VOTE_NOT_FOUND));
-//    }
-//
-//    public void verifyDuplicateVote(Vote vote){
-//        Optional<Vote> optionalVote = voteRepository.findByCenterIdAndMemberId(vote.getWheelCenter().getCenterId(), vote.getMember().getMemberId());
-//        if (optionalVote.isPresent()) throw new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS);
-//    }
 }

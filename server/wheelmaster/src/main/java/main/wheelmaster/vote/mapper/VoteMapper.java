@@ -1,7 +1,7 @@
 package main.wheelmaster.vote.mapper;
 
-import main.wheelmaster.vote.dto.VoteRequestDto.VotePostDto;
-import main.wheelmaster.vote.dto.VoteRequestDto.VoteUpdateDto;
+import main.wheelmaster.vote.dto.VoteGetDto;
+import main.wheelmaster.vote.dto.VotePostDto;
 import main.wheelmaster.vote.dto.VoteResponseDto;
 import main.wheelmaster.vote.entity.Vote;
 import main.wheelmaster.wheelcenter.entity.WheelCenter;
@@ -12,7 +12,7 @@ public interface VoteMapper {
 
     public default Vote VotePostDtoToVote(VotePostDto votePostDto){
         WheelCenter wheelCenter = new WheelCenter();
-        wheelCenter.setCenterId(votePostDto.getCenterId());
+        wheelCenter.setWheelCenterId(votePostDto.getCenterId());
 
         Vote vote = new Vote();
         vote.setUpDown(votePostDto.getUpDown());
@@ -22,24 +22,22 @@ public interface VoteMapper {
         return vote;
     }
 
+    public default Vote VoteGetResponseDtoToVote(VoteGetDto voteGetDto){
+        WheelCenter wheelCenter = new WheelCenter();
+        wheelCenter.setWheelCenterId(voteGetDto.getCenterId());
+
+        Vote vote = new Vote();
+        vote.setMember(voteGetDto.getMember());
+        vote.setWheelCenter(wheelCenter);
+        return vote;
+    }
+
     public default VoteResponseDto VoteToVoteResponseDto(Vote vote) {
         return VoteResponseDto.builder()
                 .voteId(vote.getVoteId())
-                .centerId(vote.getWheelCenter().getCenterId())
+                .centerId(vote.getWheelCenter().getWheelCenterId())
                 .upDown(vote.getUpDown())
                 .build();
     }
 
-    public default Vote VoteUpdateDtoToVote(VoteUpdateDto voteUpdateDto){
-        WheelCenter wheelCenter = new WheelCenter();
-        wheelCenter.setCenterId(voteUpdateDto.getCenterId());
-
-        Vote vote = new Vote();
-        vote.setUpDown(voteUpdateDto.getUpDown());
-        vote.setMember(voteUpdateDto.getMember());
-        vote.setVoteId(voteUpdateDto.getVoteId());
-        vote.setWheelCenter(wheelCenter);
-
-        return vote;
-    }
 }
