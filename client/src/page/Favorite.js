@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import Pagination from "../component/Pagenation";
 
 export default function Favorite() {
-    const { kakao } = window;
-
     const [state, setState] = useState({
         favoriteList: []
     });
@@ -22,7 +20,7 @@ export default function Favorite() {
 
     // click event
     const [markers, setMarkers] = useState([])
-    // console.log(markers.forEach(e => console.log(e)))
+    // console.log(markers)
 
     // list click event
     const [place, setPlace] = useState({
@@ -33,13 +31,16 @@ export default function Favorite() {
 
     const move = () => {
         setPlace({
-            center: markers.forEach(e => console.log(e)),
+            center: {
+                lat: markers.forEach(e => Number(e.lat)),
+                lng: markers.forEach(e => Number(e.lng))
+            }
+            ,
             isPanto: false,
-
         })
     }
-    // console.log(place)
-    // list click event
+    // console.log(place.center)
+
 
     // infoWindow
     const [isOpen, setIsOpen] = useState(false)
@@ -86,6 +87,7 @@ export default function Favorite() {
             isGood: !e.isGood
         }))
     }
+
     return (
         <FavoritePage>
             <section className="favoriteList">
@@ -140,6 +142,7 @@ export default function Favorite() {
                     height: "40rem",
                 }}
                 level={3}
+
             >
                 <MapMarker
                     position={place.center}
@@ -151,20 +154,16 @@ export default function Favorite() {
                     <div className="hi">
                         <div
                             onClick={() => setIsOpen(false)}>
-                            {/* {favoriteList.map(favoriteItem => {
+                            {favoriteList.map(favoriteItem => {
                                 return (
                                     <p key={favoriteItem.id}>{favoriteItem.시설명}</p>
                                 )
-                            })} */}
-                            청담동 주민센터
+                            })}
                         </div>
                         <Link to='/detail'>더보기+</Link>
                     </div>
                 )}
             </Map>
-            <div>
-
-            </div>
         </FavoritePage >
     )
 }
