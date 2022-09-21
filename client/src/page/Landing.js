@@ -7,10 +7,11 @@ function Landing() {
     return (
         <>
             <div className="Landing">
-                <p>구르미</p>
+                <p className='title'>구르미</p>
                 <img src={img} alt='landing_img' />
             </div>
             <Link to='/maptest'>충전소 찾으러가기</Link>
+            <Link to='/favorite'>즐겨찾기</Link>
         </>
     );
 }
