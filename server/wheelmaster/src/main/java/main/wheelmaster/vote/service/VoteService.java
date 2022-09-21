@@ -2,6 +2,7 @@ package main.wheelmaster.vote.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import main.wheelmaster.comment.entity.Comment;
 import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.exception.ExceptionCode;
 import main.wheelmaster.vote.entity.Vote;
@@ -41,7 +42,10 @@ public class VoteService {
         return optionalVote.orElseThrow(()->new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS));
     }
 
-
+//    public void deleteVote(long voteId, long memberId) {
+//        Vote findVote = findVerifiedVote(voteId,memberId);
+//        voteRepository.delete(findVote);
+//    }
 
     //    public Vote create(Vote vote) {
 //        verifyDuplicateVote(vote);

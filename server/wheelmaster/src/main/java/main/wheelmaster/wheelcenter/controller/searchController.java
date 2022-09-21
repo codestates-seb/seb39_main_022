@@ -28,11 +28,22 @@ public class searchController {
     private final WheelCenterService wheelCenterService;
     private final WheelCenterMapper mapper;
 
+    //도 이름으로 검색
     @GetMapping("/cityName")
     public ResponseEntity getWheelCenterByCityName(@RequestParam("cityName") String cityName,
                                                    @Positive @PathParam("page") int page,
                                                    @Positive @PathParam("size") int size){
         Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenterByCityName(cityName, page-1, size);
+        List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
+        return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
+    }
+
+    //시군구로 검색
+    @GetMapping("/sigunguName")
+    public ResponseEntity getWheelCenterBySigunguName(@RequestParam("sigunguName") String sigunguName,
+                                                   @Positive @PathParam("page") int page,
+                                                   @Positive @PathParam("size") int size){
+        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenterBySigunguName(sigunguName, page-1, size);
         List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
         return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
     }

@@ -2,13 +2,17 @@ package main.wheelmaster.vote.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import main.wheelmaster.member.SessionConst;
 import main.wheelmaster.member.entity.Member;
+import main.wheelmaster.response.MessageResponseDto;
 import main.wheelmaster.vote.dto.VoteRequestDto.VotePostDto;
 import main.wheelmaster.vote.dto.VoteRequestDto.VoteUpdateDto;
 import main.wheelmaster.vote.dto.VoteResponseDto;
 import main.wheelmaster.vote.entity.Vote;
 import main.wheelmaster.vote.mapper.VoteMapper;
 import main.wheelmaster.vote.service.VoteService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
@@ -51,6 +55,15 @@ public class VoteController {
 
         return mapper.VoteToVoteResponseDto(savedVote);
     }
-
-
+//
+//    @DeleteMapping("/{voteId}")
+//    public ResponseEntity deleteVote(@SessionAttribute(LOGIN_MEMBER)Member member,
+//                                     @Positive @PathVariable("centerId") long centerId,
+//                                     @Positive @PathVariable("voteId") long voteId,
+//                                     @RequestBody VoteUpdateDto voteUpdateDto){
+//        voteUpdateDto.setCenterId(centerId);
+//        voteUpdateDto.setVoteId(voteId);
+//        voteService.deleteVote(centerId,member.getMemberId());
+//        return new ResponseEntity(new MessageResponseDto("NO_CONTENT"), HttpStatus.NO_CONTENT);
+//    }
 }
