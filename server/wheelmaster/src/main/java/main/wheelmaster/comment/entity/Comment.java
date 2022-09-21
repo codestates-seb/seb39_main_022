@@ -23,7 +23,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "CENTER_ID")
-    private WheelCenter center;
+    private WheelCenter wheelCenter;
 
     @Column(nullable = false, length = 100)
     private String comment;
@@ -34,9 +34,9 @@ public class Comment {
         }
     }
 
-    public void addCenter(WheelCenter center){
-        if(this.center == null && center != null){
-            this.center = center;
+    public void addCenter(WheelCenter wheelCenter){
+        if(this.wheelCenter == null && wheelCenter != null){
+            this.wheelCenter = wheelCenter;
         }
     }
 }

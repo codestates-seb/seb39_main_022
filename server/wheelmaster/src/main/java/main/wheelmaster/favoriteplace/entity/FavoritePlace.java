@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class FavoritePlace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long favoriteId;
+    private long favoriteId;
 
     @ManyToOne
     @JoinColumn(name="MEMBER_ID")
