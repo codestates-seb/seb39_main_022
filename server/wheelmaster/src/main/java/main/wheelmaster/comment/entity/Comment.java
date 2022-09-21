@@ -22,7 +22,7 @@ public class Comment {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "CENTER_ID")
+    @JoinColumn(name = "WHEEL_CENTER_ID")
     private WheelCenter wheelCenter;
 
     @Column(nullable = false, length = 100)

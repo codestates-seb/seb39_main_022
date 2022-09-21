@@ -17,27 +17,51 @@ import java.util.Optional;
 public class VoteService {
     private final VoteRepository repository;
 
-
+    /**
+     * vote 의 upDown Boolean 값이 다른 경우 update
+     * 그렇지 않은 경우 예외를 던짐
+     *
+     * @param vote
+     * @return
+     */
+    @Transactional(rollbackFor = {BusinessLogicException.class, RuntimeException.class})
     public Vote create(Vote vote) {
+
         verifyDuplicateVote(vote);
         return repository.save(vote);
+
     }
 
-    public Vote update(Vote vote) {
+    public void verifyDuplicateVote(Vote vote) {
+
+        Optional<Vote> findVote = repository.findByWheelCenterIdAndMemberId(vote.getWheelCenter().getWheelCenterId(), vote.getMember().getMemberId());
+
+        if (findVote.isPresent()) {
+
+            if (findVote.get().getUpDown() == vote.getUpDown()) {
+
+                throw new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS);
+            } else {
+                vote.setVoteId(findVote.get().getVoteId());
+                vote.setWheelCenter(findVote.get().getWheelCenter());
+            }
+        }
+    }
+
+    @Transactional(rollbackFor = BusinessLogicException.class)
+    public void deleteVote(Vote vote) {
         Vote findVote = verifyVoteExists(vote);
-
-        Optional.ofNullable(vote.getUpDown()).ifPresent(findVote::setUpDown);
-        return repository.save(findVote);
+        repository.delete(findVote);
     }
 
-    @Transactional(readOnly = true)
-    public Vote verifyVoteExists(Vote vote){
-        return repository.findById(vote.getVoteId())
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.VOTE_NOT_FOUND));
+    public Vote verifyVoteExists(Vote vote) {
+        return repository.findById(vote.getVoteId()).orElseThrow(() -> new BusinessLogicException(ExceptionCode.VOTE_NOT_FOUND));
     }
 
-    public void verifyDuplicateVote(Vote vote){
-        Optional<Vote> optionalVote = repository.findByCenterIdAndMemberId(vote.getWheelCenter().getCenterId(), vote.getMember().getMemberId());
-        if (optionalVote.isPresent()) throw new BusinessLogicException(ExceptionCode.VOTE_ALREADY_EXISTS);
+    public Vote readVote(Vote vote) throws NullPointerException {
+        log.info("memberId = {}, centerId={}", vote.getMember(), vote.getWheelCenter().getWheelCenterId());
+        Optional<Vote> optionalVote = repository.findByWheelCenterIdAndMemberId(vote.getWheelCenter().getWheelCenterId(), vote.getMember().getMemberId());
+        return optionalVote.orElse(null);
     }
+
 }

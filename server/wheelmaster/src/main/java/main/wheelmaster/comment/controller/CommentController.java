@@ -20,7 +20,7 @@ import javax.validation.constraints.Positive;
 
 @Validated
 @RestController
-@RequestMapping("wheel-center/{centerId}/comment")
+@RequestMapping("wheel-center/{wheelCenterId}/comment")
 @RequiredArgsConstructor
 public class CommentController {
 
@@ -29,10 +29,10 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity createComment(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) Member member,
-                                        @Positive @PathVariable("centerId") long centerId,
+                                        @Positive @PathVariable("wheelCenterId") long wheelCenterId,
                                         @RequestBody @Valid CommentRequestDto.createCommentDto createCommentDto){
 
-        createCommentDto.setCenterId(centerId);
+        createCommentDto.setWheelCenterId(wheelCenterId);
         createCommentDto.setMember(member);
         Comment comment = commentService.createComment(mapper.createCommentDtoToComment(createCommentDto));
         return new ResponseEntity<>(new SingleResponseWithMessageDto<>(mapper.commentToCommentInfo(comment),"SUCCESS"), HttpStatus.CREATED);
@@ -40,19 +40,19 @@ public class CommentController {
 
     @PatchMapping("/{commentId}")
     public ResponseEntity updateComment(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) Member member,
-                                        @Positive @PathVariable("centerId") long centerId,
+                                        @Positive @PathVariable("wheelCenterId") long wheelCenterId,
                                         @Positive @PathVariable("commentId") long commentId,
                                         @RequestBody @Valid CommentRequestDto.updateCommentDto updateCommentDto){
         updateCommentDto.setMember(member);
         updateCommentDto.setCommentId(commentId);
-        updateCommentDto.setCenterId(centerId);
+        updateCommentDto.setWheelCenterId(wheelCenterId);
         Comment comment = commentService.updateComment(mapper.updateCommentDtoToComment(updateCommentDto));
         return new ResponseEntity(new SingleResponseWithMessageDto<>(mapper.commentToCommentInfo(comment),"SUCCESS"),HttpStatus.OK);
     }
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity deleteComment(@SessionAttribute(name = SessionConst.LOGIN_MEMBER) Member member,
-                                         @Positive @PathVariable("centerId") long centerId,
+                                         @Positive @PathVariable("wheelCenterId") long wheelCenterId,
                                          @Positive @PathVariable("commentId") long commentId){
         commentService.deleteComment(commentId,member.getMemberId());
         return new ResponseEntity(new MessageResponseDto("NO_CONTENT"),HttpStatus.NO_CONTENT);

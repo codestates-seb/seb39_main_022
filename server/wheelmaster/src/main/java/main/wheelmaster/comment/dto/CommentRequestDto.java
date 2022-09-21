@@ -17,7 +17,7 @@ public class CommentRequestDto {
     @Builder
     public static class createCommentDto{
         @NotNull
-        private long centerId;
+        private long wheelCenterId;
 
         @NotEmpty
         private String comment;
@@ -31,7 +31,7 @@ public class CommentRequestDto {
     @Builder
     public static class updateCommentDto{
         @NotNull
-        private long centerId;
+        private long wheelCenterId;
 
         private long commentId;
 

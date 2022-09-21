@@ -14,6 +14,6 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
     Optional<Vote> findById(long voteId);
 
 
-    @Query(value = "select * from WHEEL_CENTER where CENTER_ID = :centerId and MEMBER_ID = :memberId", nativeQuery = true)
-    Optional<Vote> findByCenterIdAndMemberId(@Param("centerId") long centerId, @Param("memberId") long memberId);
+    @Query(value = "select * from Vote where WHEEL_CENTER_ID = :wheelCenterId and MEMBER_ID = :memberId", nativeQuery = true)
+    Optional<Vote> findByWheelCenterIdAndMemberId(@Param("wheelCenterId") long wheelCenterId, @Param("memberId") long memberId);
 }

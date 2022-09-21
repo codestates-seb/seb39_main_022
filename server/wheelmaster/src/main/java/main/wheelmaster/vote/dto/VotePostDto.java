@@ -8,7 +8,7 @@ import main.wheelmaster.member.entity.Member;
 @Getter
 @Setter
 public class VotePostDto {
-    private Long centerId;
+    private Long wheelCenterId;
     private Member member;
     @NonNull
     private Boolean upDown;

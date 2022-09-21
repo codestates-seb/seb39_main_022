@@ -2,8 +2,8 @@ package main.wheelmaster.vote.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.member.entity.Member;
-import main.wheelmaster.vote.dto.VoteRequestDto.VotePostDto;
-import main.wheelmaster.vote.dto.VoteRequestDto.VoteUpdateDto;
+import main.wheelmaster.vote.dto.VoteGetDto;
+import main.wheelmaster.vote.dto.VotePostDto;
 import main.wheelmaster.vote.dto.VoteResponseDto;
 import main.wheelmaster.vote.entity.Vote;
 import main.wheelmaster.vote.mapper.VoteMapper;
@@ -17,41 +17,46 @@ import static main.wheelmaster.member.SessionConst.LOGIN_MEMBER;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("wheel-center/{centerId}/vote")
+@RequestMapping("/wheel-center/{wheelCenterId}/vote")
 public class VoteController {
 
-    private final VoteService service;
+    private final VoteService voteService;
     private final VoteMapper mapper;
 
     @PostMapping
     public VoteResponseDto vote(@SessionAttribute(LOGIN_MEMBER)Member member,
-                                @Positive @PathVariable("centerId") long centerId,
+                                @Positive @PathVariable("wheelCenterId") Long wheelCenterId,
                                 @RequestBody VotePostDto votePostDto)
     {
-        log.info("member = {}", member);
-        votePostDto.setCenterId(centerId);
+        votePostDto.setWheelCenterId(wheelCenterId);
         votePostDto.setMember(member);
 
-        Vote savedVote = service.create(mapper.VotePostDtoToVote(votePostDto));
+        Vote savedVote = voteService.create(mapper.VotePostDtoToVote(votePostDto));
 
         return mapper.VoteToVoteResponseDto(savedVote);
     }
 
+    @DeleteMapping("/{voteId}")
+    public void cancelVote(@SessionAttribute(LOGIN_MEMBER)Member member,
+                           @Positive @PathVariable("wheelCenterId")Long wheelCenterId,
+                           @Positive @PathVariable("voteId") Long voteId) {
 
+        Vote vote = new Vote();
+        vote.setVoteId(voteId);
+        vote.setMember(member);
 
-    @PatchMapping("/{voteId}")
-    public VoteResponseDto updateVote(@SessionAttribute(LOGIN_MEMBER)Member member,
-                                      @Positive @PathVariable("centerId") long centerId,
-                                      @Positive @PathVariable("voteId") long voteId,
-                                      @RequestBody VoteUpdateDto voteUpdateDto)
-    {
-        voteUpdateDto.setCenterId(centerId);
-        voteUpdateDto.setMember(member);
+        voteService.deleteVote(vote);
 
-        Vote savedVote = service.create(mapper.VoteUpdateDtoToVote(voteUpdateDto));
-
-        return mapper.VoteToVoteResponseDto(savedVote);
     }
 
+
+    @GetMapping
+    public VoteResponseDto getVote(@SessionAttribute(LOGIN_MEMBER)Member member,
+                                   @Positive @PathVariable("wheelCenterId") Long wheelCenterId){
+
+        VoteGetDto voteGetDto = new VoteGetDto(member, wheelCenterId);
+        Vote vote = voteService.readVote(mapper.VoteGetResponseDtoToVote(voteGetDto));
+        return (vote == null) ? null : mapper.VoteToVoteResponseDto(vote);
+    }
 
 }

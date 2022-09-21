@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class VoteResponseDto {
     private Long voteId;
-    private Long centerId;
+    private Long wheelCenterId;
     private Boolean upDown;
 }

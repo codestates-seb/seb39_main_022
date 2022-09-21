@@ -9,5 +9,5 @@ import main.wheelmaster.member.entity.Member;
 @NoArgsConstructor
 public class VoteGetDto {
     private Member member;
-    private Long centerId;
+    private Long wheelCenterId;
 }

@@ -5,10 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface WheelCenterRepository extends JpaRepository<WheelCenter, Long> {
 
 
     @Query(value = "select * from WHEEL_CENTER where CITY_NAME like %:cityName%", nativeQuery = true)
-    Page<WheelCenter> findAllByCityName(String cityName, Pageable pageable);
+    Page<WheelCenter> findAllByCityName(@Param("cityName") String cityName, Pageable pageable);
+
+
+    @Query(value = "select * from WHEEL_CENTER where SIGUNGU_NAME like %:sigunguName%", nativeQuery = true)
+    Page<WheelCenter> findAllBySigunguName(@Param("sigunguName") String sigunguName, Pageable pageable);
 }
