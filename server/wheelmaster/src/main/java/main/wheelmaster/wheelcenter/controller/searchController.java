@@ -28,6 +28,8 @@ public class searchController {
     private final WheelCenterService wheelCenterService;
     private final WheelCenterMapper mapper;
 
+    //TODO 어떤 단어로 검색해도 한 번에 찾을 수 있도록 컨트롤러 합치기
+
     //도 이름으로 검색
     @GetMapping("/cityName")
     public ResponseEntity getWheelCenterByCityName(@RequestParam("cityName") String cityName,
@@ -48,5 +50,23 @@ public class searchController {
         return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
     }
 
+    //도로명 주소로 검색(ex:석촌호수로)
+    @GetMapping("/roadAddress")
+    public ResponseEntity getWheelCenterByRoadAddress(@RequestParam("roadAddress") String roadAddress,
+                                                  @Positive @PathParam("page") int page,
+                                                  @Positive @PathParam("size") int size){
+        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenterByRoadAddress(roadAddress, page-1, size);
+        List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
+        return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
+    }
 
+    //지번 주소로 검색(ex:석촌동)
+    @GetMapping("/oldAddress")
+    public ResponseEntity getWheelCenterByOldAddress(@RequestParam("oldAddress") String oldAddress,
+                                                  @Positive @PathParam("page") int page,
+                                                  @Positive @PathParam("size") int size){
+        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenterByOldAddress(oldAddress, page-1, size);
+        List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
+        return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
+    }
 }

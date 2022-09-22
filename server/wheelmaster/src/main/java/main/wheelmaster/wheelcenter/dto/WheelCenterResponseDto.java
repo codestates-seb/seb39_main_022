@@ -15,7 +15,8 @@ public class WheelCenterResponseDto {
         private String cityName;
         private String facultyName;
         private String sigunguName;
-        private String address;
+        private String roadAddress;
+        private String oldAddress;
         private String installLocation;
     }
 }

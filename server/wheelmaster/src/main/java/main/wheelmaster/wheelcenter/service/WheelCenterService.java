@@ -26,4 +26,12 @@ public class WheelCenterService {
     public Page<WheelCenter> findWheelCenterBySigunguName(String sigunguName, int page, int size) {
         return wheelCenterRepository.findAllBySigunguName(sigunguName, PageRequest.of(page,size, Sort.by("WHEEL_CENTER_ID").descending()));
     }
+
+    public Page<WheelCenter> findWheelCenterByRoadAddress(String roadAddress, int page, int size) {
+        return wheelCenterRepository.findAllByRoadAddress(roadAddress, PageRequest.of(page,size, Sort.by("WHEEL_CENTER_ID").descending()));
+    }
+
+    public Page<WheelCenter> findWheelCenterByOldAddress(String oldAddress, int page, int size) {
+        return wheelCenterRepository.findAllByOldAddress(oldAddress, PageRequest.of(page,size, Sort.by("WHEEL_CENTER_ID").descending()));
+    }
 }
