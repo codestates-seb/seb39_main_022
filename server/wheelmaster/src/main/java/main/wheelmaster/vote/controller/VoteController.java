@@ -23,7 +23,7 @@ public class VoteController {
     private final VoteService voteService;
     private final VoteMapper mapper;
 
-    @PostMapping
+    @PostMapping("/wheel-center/{wheelCenterId}/vote")
     public VoteResponseDto vote(@SessionAttribute(LOGIN_MEMBER)Member member,
                                 @Positive @PathVariable("wheelCenterId") Long wheelCenterId,
                                 @RequestBody VotePostDto votePostDto)
