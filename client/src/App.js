@@ -1,7 +1,8 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MapTest from './component/Map';
-import Landing from './component/Landing';
+import Landing from './page/Landing';
+import Favorite from './page/Favorite';
+import Detail from './page/Detail';
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path='/' element={<Landing />} />
-          <Route path='/maptest' element={<MapTest />} />
+          <Route path='/favorite' element={<Favorite />} />
+          <Route path='/detail' element={<Detail />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Gothic:wght@800&display=swap');
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .Landing {
   text-align: center;
@@ -10,7 +15,7 @@
   align-items: center;
 }
 
-p {
+.title {
   font-size: 10rem;
   color: #238f51;
 }
@@ -23,5 +28,4 @@ img {
 #map {
   width: 50vw;
   height: 100vh;
-
 }
