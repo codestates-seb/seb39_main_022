@@ -28,7 +28,6 @@ public class searchController {
     private final WheelCenterService wheelCenterService;
     private final WheelCenterMapper mapper;
 
-    //TODO 어떤 단어로 검색해도 한 번에 찾을 수 있도록 컨트롤러 합치기
 
     //도 이름으로 검색
     @GetMapping("/cityName")
@@ -66,6 +65,19 @@ public class searchController {
                                                   @Positive @PathParam("page") int page,
                                                   @Positive @PathParam("size") int size){
         Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenterByOldAddress(oldAddress, page-1, size);
+        List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
+        return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
+    }
+
+/*
+    TODO 어떤 단어로 검색해도 한 번에 찾을 수 있도록 컨트롤러 합치기
+    TODO hibernate search, Elasticsearch 등 가능하면 변경해보기
+ */
+    @GetMapping("/search")
+    public ResponseEntity getWheelCenter(@RequestParam("search") String search,
+                                                     @Positive @PathParam("page") int page,
+                                                     @Positive @PathParam("size") int size){
+        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenter(search, page-1, size);
         List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
         return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
     }

@@ -34,4 +34,8 @@ public class WheelCenterService {
     public Page<WheelCenter> findWheelCenterByOldAddress(String oldAddress, int page, int size) {
         return wheelCenterRepository.findAllByOldAddress(oldAddress, PageRequest.of(page,size, Sort.by("WHEEL_CENTER_ID").descending()));
     }
+
+    public Page<WheelCenter> findWheelCenter(String search, int page, int size) {
+        return wheelCenterRepository.findAllWheelCenter(search, PageRequest.of(page,size, Sort.by("WHEEL_CENTER_ID").descending()));
+    }
 }
