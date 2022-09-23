@@ -1,3 +1,3 @@
 # Backend Programming Coding convention
 
-- https://naver.github.io/hackday-conventions-java/#encoding-utf8
+- [캠퍼스 핵데이 코딩 컨벤션](https://naver.github.io/hackday-conventions-java/#encoding-utf8)
