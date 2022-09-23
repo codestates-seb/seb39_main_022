@@ -2,6 +2,8 @@ package main.wheelmaster.favoritePlace.repository;
 
 import main.wheelmaster.favoritePlace.entity.FavoritePlace;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +14,9 @@ public interface FavoritePlaceRepository extends JpaRepository<FavoritePlace, Lo
 
     Optional<FavoritePlace> findById(Long id);
 
-    Optional<List<FavoritePlace>> findByMemberId(Long memberId);
+    @Query(value="Select * from favorite_place where member_id = :memberId", nativeQuery = true)
+    Optional<List<FavoritePlace>> findByMemberId(@Param("memberId") Long memberId);
 
-    Optional<FavoritePlace> findByWheelCenterIdAndMemberId(long wheelCenterId, long MemberId);
+    @Query(value = "Select * from favorite_place where wheel_center_id = :wheelCenterId AND member_id = :memberId", nativeQuery = true)
+    Optional<FavoritePlace> findByWheelCenterIdAndMemberId(@Param("wheelCenterId")Long wheelCenterId,@Param("memberId") Long MemberId);
 }
