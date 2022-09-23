@@ -24,10 +24,8 @@ public class FavoritePlaceController {
                                                         @PathVariable  Long wheelCenterId,
                                                         @RequestBody @Validated FavoritePlacePostDto favoritePlacePostDto) {
 
-        FavoritePlaceResponseDto responseDto = service.createFavoritePlace(
+        return service.createFavoritePlace(
                 FavoritePlacePostDto.of(favoritePlacePostDto, member, wheelCenterId));
-
-        return responseDto;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
