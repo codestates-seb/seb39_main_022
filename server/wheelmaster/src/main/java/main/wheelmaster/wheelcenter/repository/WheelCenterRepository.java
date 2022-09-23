@@ -9,8 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface WheelCenterRepository extends JpaRepository<WheelCenter, Long> {
 
-
-
     @Query(value = "select * from WHEEL_CENTER where CITY_NAME like %:cityName%", nativeQuery = true)
     Page<WheelCenter> findAllByCityName(@Param("cityName") String cityName, Pageable pageable);
 
@@ -29,8 +27,8 @@ public interface WheelCenterRepository extends JpaRepository<WheelCenter, Long> 
     //TODO hibernate search, Elasticsearch 등 가능하면 변경해보기
     @Query(value = "select * from WHEEL_CENTER where "
             +"CITY_NAME like %:search% or "
-            +"SIGUNGU_NAME like %:search% or "
-            +"ROAD_ADDRESS like %:search% or "
-            +"OLD_ADDRESS like %:search%", nativeQuery = true)
+            +"REPLACE(SIGUNGU_NAME,' ','') like %:search% or "
+            +"REPLACE(ROAD_ADDRESS,' ','') like %:search% or "
+            +"REPLACE(OLD_ADDRESS,' ','') like %:search%", nativeQuery = true)
     Page<WheelCenter> findAllWheelCenter(@Param("search") String search, Pageable pageable);
 }

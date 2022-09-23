@@ -18,5 +18,9 @@ public class WheelCenterResponseDto {
         private String roadAddress;
         private String oldAddress;
         private String installLocation;
+        private Double latitude;
+        private Double longitude;
+        private Boolean airInjectorFlag;
+        private Boolean phoneChargerFlag;
     }
 }

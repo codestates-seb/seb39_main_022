@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-22T18:44:39+0900",
+    date = "2022-09-23T16:10:53+0900",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 11.0.13 (Oracle Corporation)"
 )
 @Component
@@ -42,6 +42,10 @@ public class WheelCenterMapperImpl implements WheelCenterMapper {
         wheelCenterInfo.roadAddress( wheelCenter.getRoadAddress() );
         wheelCenterInfo.oldAddress( wheelCenter.getOldAddress() );
         wheelCenterInfo.installLocation( wheelCenter.getInstallLocation() );
+        wheelCenterInfo.latitude( wheelCenter.getLatitude() );
+        wheelCenterInfo.longitude( wheelCenter.getLongitude() );
+        wheelCenterInfo.airInjectorFlag( wheelCenter.getAirInjectorFlag() );
+        wheelCenterInfo.phoneChargerFlag( wheelCenter.getPhoneChargerFlag() );
 
         return wheelCenterInfo.build();
     }
