@@ -26,8 +26,7 @@ public class VoteController {
     @PostMapping
     public VoteResponseDto vote(@SessionAttribute(LOGIN_MEMBER)Member member,
                                 @Positive @PathVariable("wheelCenterId") Long wheelCenterId,
-                                @RequestBody VotePostDto votePostDto)
-    {
+                                @RequestBody VotePostDto votePostDto) {
         votePostDto.setWheelCenterId(wheelCenterId);
         votePostDto.setMember(member);
 

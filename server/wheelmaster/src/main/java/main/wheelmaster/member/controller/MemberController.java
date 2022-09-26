@@ -67,8 +67,7 @@ public class MemberController {
     @ApiOperation(value = "회원정보 수정")
     @PatchMapping
     public ResponseEntity updateMember(@RequestBody MemberRequestDto.updateDto updateDto,
-                                       @SessionAttribute(name= LOGIN_MEMBER) Member loginMember)
-    {
+                                       @SessionAttribute(name= LOGIN_MEMBER) Member loginMember){
         updateDto.setMemberId(loginMember.getMemberId());
         Member member = memberService.updateMember(mapper.updateDtoToMember(updateDto));
         MemberResponseDto.UpdateDto memberInfo = mapper.memberToUpdateDto(member);
@@ -89,8 +88,7 @@ public class MemberController {
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session == null)
-        {
+        if (session == null) {
             throw new BusinessLogicException(ExceptionCode.CONSTRAINT_VIOLATION_ERROR);
         }
         session.invalidate();

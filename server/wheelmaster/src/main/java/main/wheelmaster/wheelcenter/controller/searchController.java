@@ -7,6 +7,8 @@ import main.wheelmaster.wheelcenter.entity.WheelCenter;
 import main.wheelmaster.wheelcenter.mapper.WheelCenterMapper;
 import main.wheelmaster.wheelcenter.service.WheelCenterService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -75,9 +77,8 @@ public class searchController {
  */
     @GetMapping("/search")
     public ResponseEntity getWheelCenter(@RequestParam("search") String search,
-                                                     @Positive @PathParam("page") int page,
-                                                     @Positive @PathParam("size") int size){
-        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenter(search, page-1, size);
+                                         Pageable pageable){
+        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenter(search, pageable);
         List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
         return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
     }

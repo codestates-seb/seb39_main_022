@@ -31,4 +31,11 @@ public interface WheelCenterRepository extends JpaRepository<WheelCenter, Long> 
             +"REPLACE(ROAD_ADDRESS,' ','') like %:search% or "
             +"REPLACE(OLD_ADDRESS,' ','') like %:search%", nativeQuery = true)
     Page<WheelCenter> findAllWheelCenter(@Param("search") String search, Pageable pageable);
+
+    @Query(value = "select * from WHEEL_CENTER where "
+            +"CITY_NAME like %:search% or "
+            +"REPLACE(SIGUNGU_NAME,' ','') like %:search% or "
+            +"REPLACE(ROAD_ADDRESS,' ','') like %:search% or "
+            +"REPLACE(OLD_ADDRESS,' ','') like %:search%", nativeQuery = true)
+    Page<WheelCenter> findAll(@Param("search")String search, Pageable pageable);
 }
