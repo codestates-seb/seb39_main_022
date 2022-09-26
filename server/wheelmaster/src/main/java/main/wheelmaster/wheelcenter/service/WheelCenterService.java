@@ -15,6 +15,7 @@ public class WheelCenterService {
     private final WheelCenterRepository wheelCenterRepository;
 
 
+    PageRequest page = PageRequest.of(0,10, Sort.by("WHEEL_CENTER_ID").descending());
     public WheelCenter create(WheelCenter wheelCenter) {
         return wheelCenterRepository.save(wheelCenter);
     }
@@ -37,7 +38,7 @@ public class WheelCenterService {
     }
 
     public Page<WheelCenter> findWheelCenter(String search, Pageable pageable) {
-        pageable = PageRequest.of(0,10, Sort.by("WHEEL_CENTER_ID").descending());
+        pageable = PageRequest.of(pageable.getPageNumber()-1, 10, Sort.by("WHEEL_CENTER_ID").descending());
         return wheelCenterRepository.findAll(search,pageable);
     }
 }
