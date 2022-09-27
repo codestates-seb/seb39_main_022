@@ -48,6 +48,6 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
             return member.getMemberId();
         }
 
-        return session.getAttribute(LOGIN_MEMBER);
+        return member;
     }
 }

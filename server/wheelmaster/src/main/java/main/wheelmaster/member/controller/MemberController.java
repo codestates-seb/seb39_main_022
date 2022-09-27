@@ -42,21 +42,19 @@ public class MemberController {
     @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public MessageResponseDto singUp(@RequestBody @Valid MemberRequestDto.singUpDto singUpDto){
-        Member member = memberService.createMember(singUpDto);
-        return MessageResponseDto.builder().message("WELCOME").build();
+    public void singUp(@RequestBody @Valid MemberRequestDto.singUpDto singUpDto){
+        memberService.createMember(singUpDto);
     }
 
     //로그인
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
-    public SingleResponseWithMessageDto<MemberInfo> login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request, HttpServletResponse response){
+    public SingleResponseWithMessageDto login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request, HttpServletResponse response){
 
         Member loginMember = memberService.login(loginDto);
         HttpSession session = request.getSession(true);
         session.setAttribute(LOGIN_MEMBER, loginMember);
 
-        log.info("login member = {}", request.getSession(false).getAttribute(LOGIN_MEMBER));
         return new SingleResponseWithMessageDto<>(mapper.memberToMemberInfo(loginMember),"SUCCESS");
     }
 
@@ -64,23 +62,16 @@ public class MemberController {
     //회원정보 수정
     @ApiOperation(value = "회원정보 수정")
     @PatchMapping
-    public ResponseEntity updateMember(@RequestBody MemberRequestDto.updateDto updateDto,
-                                       @Login Member loginMember)
+    public SingleResponseWithMessageDto updateMember(@RequestBody MemberRequestDto.updateDto updateDto,
+                                                     @Login Member loginMember)
     {
-        log.info("loginMember = {}", loginMember);
-        if(loginMember == null) return null;
-
-        updateDto.setMemberId(loginMember.getMemberId());
-        Member member = memberService.updateMember(mapper.updateDtoToMember(updateDto));
-        MemberResponseDto.UpdateDto memberInfo = mapper.memberToUpdateDto(member);
-
-        return new ResponseEntity<>(new SingleResponseWithMessageDto(memberInfo, "SUCCESS"), HttpStatus.OK);
+        return new SingleResponseWithMessageDto(memberService.updateMember(updateDto.setMemberId(loginMember.getMemberId())), "SUCCESS");
     }
 
     //회원정보 삭제
     @ApiOperation(value = "회원정보 삭제")
-    @DeleteMapping("/{member-id}")
-    public ResponseEntity deleteMember(@Positive @PathVariable("member-id") long memberId){
+    @DeleteMapping("/{memberId}")
+    public ResponseEntity deleteMember(@Positive long memberId){
         memberService.deleteMember(memberId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -89,11 +80,13 @@ public class MemberController {
     @ApiOperation(value = "로그아웃")
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
+
         HttpSession session = request.getSession(false);
-        if (session == null)
-        {
+
+        if (session == null) {
             throw new BusinessLogicException(ExceptionCode.CONSTRAINT_VIOLATION_ERROR);
         }
+
         session.invalidate();
         return "redirect:/";
     }
