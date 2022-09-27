@@ -46,12 +46,10 @@ public class FavoritePlaceService {
      */
     public void verifyDuplicate(FavoritePlace favoritePlace) {
 
-        Optional<FavoritePlace> optionalFavoritePlace =
-                repository.findByWheelCenterIdAndMemberId(favoritePlace.getWheelCenter().getWheelCenterId(), favoritePlace.getMember().getMemberId());
-
-        optionalFavoritePlace.ifPresent((favor) -> {
-            throw new BusinessLogicException(FAVORITE_PLACE_ALREADY_EXISTS);
-        });
+        repository.findByWheelCenterIdAndMemberId(favoritePlace.getWheelCenter().getWheelCenterId(), favoritePlace.getMember().getMemberId())
+                .ifPresent((favor) -> {
+                    throw new BusinessLogicException(FAVORITE_PLACE_ALREADY_EXISTS);
+                });
     }
 
 
