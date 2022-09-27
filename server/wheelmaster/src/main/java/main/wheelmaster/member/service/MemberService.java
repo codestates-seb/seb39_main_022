@@ -1,12 +1,14 @@
 package main.wheelmaster.member.service;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.exception.ExceptionCode;
-import main.wheelmaster.member.dto.MemberRequestDto;
 import main.wheelmaster.member.dto.MemberRequestDto.loginDto;
 import main.wheelmaster.member.dto.MemberRequestDto.singUpDto;
+import main.wheelmaster.member.dto.MemberRequestDto.updateDto;
+import main.wheelmaster.member.dto.MemberResponseDto.UpdateDto;
 import main.wheelmaster.member.entity.Member;
 import main.wheelmaster.member.mapper.MemberMapper;
 import main.wheelmaster.member.repository.MemberRepository;
@@ -23,22 +25,25 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberMapper mapper;
 
+    @Transactional(rollbackFor = BusinessLogicException.class)
     public Member createMember(singUpDto dto) {
+
         verifyEmail(mapper.signUpDtoToMember(dto).getEmail());
         return memberRepository.save(mapper.signUpDtoToMember(dto));
     }
 
     public Member login(loginDto loginDto){
-        Member findMember = findVerifiedMemberByEmail(mapper.loginDtoToMember(loginDto).getEmail());
-        return findMember;
+        return findVerifiedMemberByEmail(mapper.loginDtoToMember(loginDto).getEmail());
     }
 
-    public Member updateMember(Member member) {
+    public UpdateDto updateMember(updateDto member) {
+
         Member findMember = findVerifiedMember(member.getMemberId());
+
         Optional.ofNullable(member.getNickName()).ifPresent(findMember::setNickName);
         Optional.ofNullable(member.getPassword()).ifPresent(findMember::setPassword);
         Optional.ofNullable(member.getPhoneNumber()).ifPresent(findMember::setPhoneNumber);
-        return memberRepository.save(findMember);
+        return mapper.memberToUpdateDto(memberRepository.save(findMember));
     }
 
     public void deleteMember(long memberId) {
@@ -46,17 +51,15 @@ public class MemberService {
         memberRepository.delete(member);
     }
 
-    public void verifyEmail(String email){
-        Optional<Member> member = memberRepository.findByEmail(email);
-        if(member.isPresent()){
-            throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS);
-        }
+    public void verifyEmail(String email) {
+        memberRepository.findByEmail(email)
+                .ifPresent((member) -> new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_EXISTS));
     }
 
     @Transactional(readOnly = true)
     public Member findVerifiedMemberByEmail(String email) {
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
-        return optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
@@ -66,8 +69,7 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public Member findVerifiedMember(long memberId) {
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return findMember;
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 }

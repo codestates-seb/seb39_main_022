@@ -27,6 +27,7 @@ public class MemberRequestDto {
         @NotBlank
         private String nickName;
 
+        @NotBlank
         private String phoneNumber;
     }
 
@@ -55,5 +56,10 @@ public class MemberRequestDto {
         private String phoneNumber;
 
         private long memberId;
+
+        public updateDto setMemberId(long memberId){
+            this.memberId = memberId;
+            return this;
+        }
     }
 }

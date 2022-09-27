@@ -13,8 +13,8 @@ public class WebConfigSupport extends WebMvcConfigurationSupport {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 
-        resolvers.add(new LoginMemberArgumentResolver());
         super.addArgumentResolvers(resolvers);
+        resolvers.add(new LoginMemberArgumentResolver());
     }
 
 
