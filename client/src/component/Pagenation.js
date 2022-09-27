@@ -3,36 +3,38 @@ import styled from "styled-components";
 
 // prop으로 받은 것
 // 총 게시물 수(total) 10
-// 페이지당 게시물 수(limit) 5
-// 현재 페이지 번호(page) 1
-function Pagination({ total, limit, page, setPage }) {
-    // 필요한 페이지의 개수 계산
-    // 10/5 = 2
-    const numPages = Math.ceil(total / limit);
+// 페이지당 게시물 수(pagenationLimit) 5
+// 현재 페이지 번호(currentPageNumber) 1
+function Pagination({ total, pagenationLimit, currentPageNumber, setCurrentPageNumber }) {
+  // 필요한 페이지의 개수 계산
+  // ex) 10/5 = 2
+  const numPages = Math.ceil(total / pagenationLimit);
 
-    return (
-        <>
-            <Nav>
-                <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
-                    &lt;
-                </Button>
-                {Array(numPages)
-                    .fill()
-                    .map((_, i) => (
-                        <Button
-                            key={i + 1}
-                            onClick={() => setPage(i + 1)}
-                            aria-current={page === i + 1 ? "page" : null}
-                        >
-                            {i + 1}
-                        </Button>
-                    ))}
-                <Button onClick={() => setPage(page + 1)} disabled={page === numPages}>
-                    &gt;
-                </Button>
-            </Nav>
-        </>
-    );
+  return (
+    <>
+      <Nav>
+        {/* disabled === 비활성화 */}
+        <Button onClick={() => setCurrentPageNumber(currentPageNumber - 1)} disabled={currentPageNumber === 1}>
+          &lt;
+        </Button>
+        {Array(numPages)
+          .fill()
+          .map((_, i) => (
+            <Button
+              key={i + 1}
+              onClick={() => setCurrentPageNumber(i + 1)}
+              // aira-current === 현재 페이지
+              aria-current={currentPageNumber === i + 1 ? "currentPageNumber" : null}
+            >
+              {i + 1}
+            </Button>
+          ))}
+        <Button onClick={() => setCurrentPageNumber(currentPageNumber + 1)} disabled={currentPageNumber === numPages}>
+          &gt;
+        </Button>
+      </Nav>
+    </>
+  );
 }
 
 const Nav = styled.nav`

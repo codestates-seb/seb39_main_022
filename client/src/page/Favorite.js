@@ -1,168 +1,120 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
+import { Map, MapMarker, CustomOverlayMap } from "react-kakao-maps-sdk";
 import axios from "axios";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
 import styled from 'styled-components';
+
 import Pagination from "../component/Pagenation";
 
 export default function Favorite() {
-    const [state, setState] = useState({
-        favoriteList: []
-    });
+    const [favoriteList, setFavoriteList] = useState([]);
 
     // pagenation
-    // 페이지당 게시물 수(limit)
-    const [limit, setLimit] = useState(5)
-    // 현재 페이지 번호(page)
-    const [page, setPage] = useState(1)
-    // 첫 게시물의 위치(offset)
-    const offset = (page - 1) * limit
+    // 페이지당 게시물 수(pagenationLimit) pageSize
+    const [pagenationLimit, setPagenationLimit] = useState(5)
+    // 현재 페이지 번호(currentPageNumber)
+    const [currentPageNumber, setCurrentPageNumber] = useState(1)
 
     // click event
-    const [markers, setMarkers] = useState([])
-    // console.log(markers)
-
-    // list click event
+    const [markers, setMarkers] = useState()
     const [place, setPlace] = useState({
         // 지도의 초기 위치
         center: { lat: 33.452613, lng: 126.570888 },
         // 지도 위치 변경시 panto를 이용할지에 대해서 정의
+        시설명: ''
     })
 
-    const move = () => {
+    // 첫 게시물의 위치(firstOffset)
+    const firstOffset = (currentPageNumber - 1) * pagenationLimit
+
+    const currentFavoriteList = favoriteList.slice(firstOffset, firstOffset + pagenationLimit)
+
+    const handleMove = (event) => {
+        const id = event.target.value
+        const targetMarker = markers.find(marker => {
+            return marker.id === id
+        })
+
         setPlace({
-            center: {
-                lat: markers.forEach(e => Number(e.lat)),
-                lng: markers.forEach(e => Number(e.lng))
-            }
-            ,
-            isPanto: false,
+            ...targetMarker,
+            id: targetMarker.id,
+            center: targetMarker.latlng,
         })
     }
-    // console.log(place.center)
-
-
-    // infoWindow
-    const [isOpen, setIsOpen] = useState(false)
 
     // get
     useEffect(() => {
-        const getList = async () => {
+        const getFavoriteList = async () => {
             const response = await axios.get('http://localhost:4000/favoriteList');
-            setState({
-                ...state,
-                favoriteList: response.data
+            setFavoriteList(response.data)
+
+            const favorites = response.data;
+            const marker = favorites.map(favorite => {
+                return {
+                    ...favorite,
+                    id: favorite.id,
+                    latlng: { lat: Number(favorite.위도), lng: Number(favorite.경도) }
+                }
             })
-            // console.log(response.data[0].위도)
-
-            // click event info
-            const markers = [];
-            // console.log(markers)
-            for (let i = 0; i < response.data.length; i++) {
-                markers.push({
-                    lat: response.data[i].경도,
-                    lng: response.data[i].위도,
-                })
-            }
-
-            setMarkers(markers)
-            // console.log(markers)
+            setMarkers(marker)
         }
-        getList();
+
+        getFavoriteList();
     }, []);
-
-    let { favoriteList } = state;
-
-    // let key = Object.keys(state.favoriteList[0])
-    // console.log(key)
-
-    const [good, setGood] = React.useState({
-        isGood: false
-    })
-
-    const choice = good.isGood ? "https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon5/mt-star.svg" : "https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon5/mt-star_border.svg"
-
-    const click = () => {
-        setGood(e => ({
-            isGood: !e.isGood
-        }))
-    }
 
     return (
         <FavoritePage>
             <section className="favoriteList">
                 <ul>
-                    {/* <label>
-                    즐겨찾기 보기:&nbsp;
-                    <select
-                        type="number"
-                        value={limit}
-                        onChange={({ target: { value } }) => setLimit(Number(value))}
-                    >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                    </select>
-                </label> */}
-                    {/* get */}
-                    {favoriteList.slice(offset, offset + limit).map(favoriteItem => {
+                    {currentFavoriteList.map(({ id, 시설명, 공기주입가능여부, 휴대전화충전가능여부 }) => {
                         return (
-                            <li key={favoriteItem.id} className="list">
+                            <li key={id} className="list">
                                 {/* click event */}
-                                <p onClick={move}>
-                                    {favoriteItem.시설명}
+                                <button value={id} onClick={handleMove} className="list_title">
+                                    {시설명}
+                                </button>
+                                <p>
+                                    {공기주입가능여부 === "Y" ? '공기주입' : ""}
                                 </p>
-                                <span>
-                                    {favoriteItem.공기주입가능여부 === "Y" ? '공기주입' : ""}
-                                </span>
-                                <span>
-                                    {favoriteItem.휴대전화충전가능여부 === "Y" ? '충전' : ""}
-                                </span>
+                                <p>
+                                    {휴대전화충전가능여부 === "Y" ? '충전' : ""}
+                                </p>
                             </li>
                         )
                     })}
                 </ul>
                 <Pagination
-                    total={state.favoriteList.length}
-                    limit={limit}
-                    page={page}
-                    setPage={setPage}
-                />
-                <img
-                    className="img"
-                    src={choice}
-                    alt="icon"
-                    onClick={click}
+                    total={favoriteList?.length}
+                    pagenationLimit={pagenationLimit}
+                    currentPageNumber={currentPageNumber}
+                    setCurrentPageNumber={setCurrentPageNumber}
                 />
             </section>
             <Map
                 center={place.center}
-                isPanto={place.isPanto}
                 style={{
                     width: "40rem",
                     height: "40rem",
                 }}
                 level={3}
-
             >
+                <CustomOverlayMap position={place.center}>
+                    <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }}>
+                        <p>{place.시설명}</p>
+                        <p>운영중 <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span> <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span></p>
+                        <p>{place.관리기관전화번호}</p>
+                        <Link
+                            to={`/favorite/${place.id}`}
+                            state={{ place }}
+                        >더보기+
+                        </Link>
+                    </div>
+                </CustomOverlayMap>
                 <MapMarker
                     position={place.center}
-                    // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
                     clickable={true}
-                    onClick={() => setIsOpen(true)}
                 />
-                {isOpen && (
-                    <div className="hi">
-                        <div
-                            onClick={() => setIsOpen(false)}>
-                            {favoriteList.map(favoriteItem => {
-                                return (
-                                    <p key={favoriteItem.id}>{favoriteItem.시설명}</p>
-                                )
-                            })}
-                        </div>
-                        <Link to='/detail'>더보기+</Link>
-                    </div>
-                )}
+
             </Map>
         </FavoritePage >
     )
@@ -181,19 +133,12 @@ ul{
     }
 }
 
-.hi{
-    border: 1px solid black;
-    padding: 1rem;
-    height: 10rem;
-    position: absolute;
-    top: 12rem;
-    left: 27rem;
-    background-color: white;
-    z-index: 1;
-}
-
 .img{
     width: 5rem;
+}
+
+.list_title{
+    cursor: pointer;
 }
 `
 

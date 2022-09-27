@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './page/Landing';
 import Favorite from './page/Favorite';
 import Detail from './page/Detail';
+import AddReview from './page/AddReview';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/favorite' element={<Favorite />} />
-          <Route path='/detail' element={<Detail />} />
+          <Route path='/favorite/:id' element={<Detail />} />
+          <Route path='/addReview' element={<AddReview />} />
         </Routes>
       </div>
     </BrowserRouter>
