@@ -15,11 +15,14 @@ public class WheelCenterService {
     private final WheelCenterRepository wheelCenterRepository;
 
 
-    PageRequest page = PageRequest.of(0,10, Sort.by("WHEEL_CENTER_ID").descending());
     public WheelCenter create(WheelCenter wheelCenter) {
         return wheelCenterRepository.save(wheelCenter);
     }
 
+    public Page<WheelCenter> findWheelCenter(String search, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber()-1, 10, Sort.by("WHEEL_CENTER_ID").descending());
+        return wheelCenterRepository.findAll(search,pageable);
+    }
 
     public Page<WheelCenter> findWheelCenterByCityName(String cityName, int page, int size) {
         return wheelCenterRepository.findAllByCityName(cityName, PageRequest.of(page,size, Sort.by("WHEEL_CENTER_ID").descending()));
@@ -35,10 +38,5 @@ public class WheelCenterService {
 
     public Page<WheelCenter> findWheelCenterByOldAddress(String oldAddress, int page, int size) {
         return wheelCenterRepository.findAllByOldAddress(oldAddress, PageRequest.of(page,size, Sort.by("WHEEL_CENTER_ID").descending()));
-    }
-
-    public Page<WheelCenter> findWheelCenter(String search, Pageable pageable) {
-        pageable = PageRequest.of(pageable.getPageNumber()-1, 10, Sort.by("WHEEL_CENTER_ID").descending());
-        return wheelCenterRepository.findAll(search,pageable);
     }
 }

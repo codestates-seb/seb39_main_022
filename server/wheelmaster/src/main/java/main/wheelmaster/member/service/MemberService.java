@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.exception.ExceptionCode;
+import main.wheelmaster.member.dto.MemberRequestDto.loginDto;
+import main.wheelmaster.member.dto.MemberRequestDto.singUpDto;
 import main.wheelmaster.member.entity.Member;
+import main.wheelmaster.member.mapper.MemberMapper;
 import main.wheelmaster.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,14 +20,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final MemberMapper mapper;
 
-    public Member createMember(Member member) {
-        verifyEmail(member.getEmail());
-        return memberRepository.save(member);
+    public Member createMember(singUpDto dto) {
+        verifyEmail(mapper.signUpDtoToMember(dto).getEmail());
+        return memberRepository.save(mapper.signUpDtoToMember(dto));
     }
 
-    public Member login(Member member){
-        Member findMember = findVerifiedMemberByEmail(member.getEmail());
+    public Member login(loginDto loginDto){
+        Member findMember = findVerifiedMemberByEmail(mapper.loginDtoToMember(loginDto).getEmail());
         return findMember;
     }
 
