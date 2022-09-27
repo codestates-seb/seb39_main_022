@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.exception.ExceptionCode;
+import main.wheelmaster.global.argumentresolver.Login;
 import main.wheelmaster.member.dto.MemberRequestDto;
 import main.wheelmaster.member.dto.MemberResponseDto;
 import main.wheelmaster.member.entity.Member;
@@ -59,6 +60,7 @@ public class MemberController {
         Member loginMember = memberService.login(member);
         HttpSession session = request.getSession(true);
         session.setAttribute(LOGIN_MEMBER, loginMember);
+        log.info("login member = {}", request.getSession(false).getAttribute(LOGIN_MEMBER));
         return new ResponseEntity<>(new SingleResponseWithMessageDto<>(mapper.memberToMemberInfo(loginMember),"SUCCESS"),HttpStatus.OK);
     }
 
@@ -67,8 +69,11 @@ public class MemberController {
     @ApiOperation(value = "회원정보 수정")
     @PatchMapping
     public ResponseEntity updateMember(@RequestBody MemberRequestDto.updateDto updateDto,
-                                       @SessionAttribute(name= LOGIN_MEMBER) Member loginMember)
+                                       @Login Member loginMember)
     {
+        log.info("loginMember = {}", loginMember);
+        if(loginMember == null) return null;
+
         updateDto.setMemberId(loginMember.getMemberId());
         Member member = memberService.updateMember(mapper.updateDtoToMember(updateDto));
         MemberResponseDto.UpdateDto memberInfo = mapper.memberToUpdateDto(member);

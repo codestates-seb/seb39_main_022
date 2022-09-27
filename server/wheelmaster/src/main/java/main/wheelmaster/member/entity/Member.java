@@ -3,6 +3,7 @@ package main.wheelmaster.member.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import main.wheelmaster.comment.entity.Comment;
 import main.wheelmaster.favoritePlace.entity.FavoritePlace;
 import main.wheelmaster.vote.entity.Vote;
