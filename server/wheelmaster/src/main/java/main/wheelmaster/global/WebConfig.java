@@ -1,7 +1,7 @@
 package main.wheelmaster.global;
 
 import main.wheelmaster.global.argumentresolver.LoginMemberArgumentResolver;
-import main.wheelmaster.interceptor.LoginCheckInterceptor;
+import main.wheelmaster.global.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

@@ -1,4 +1,4 @@
-package main.wheelmaster.interceptor;
+package main.wheelmaster.global.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.member.SessionConst;
