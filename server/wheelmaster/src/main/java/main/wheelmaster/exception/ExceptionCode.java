@@ -11,7 +11,10 @@ public enum ExceptionCode {
   REFRESH_TOKEN_IS_EXPIRED(403, "Refresh Token is expired"),
   COMMENT_NOT_FOUND(404,"Comment not found" ),
   VOTE_ALREADY_EXISTS(409, "Vote already exists"),
-  VOTE_NOT_FOUND(404, "Vote not found");
+  VOTE_NOT_FOUND(404, "Vote not found"),
+  FAVORITE_PLACE_ALREADY_EXISTS(409, "Favorite place already exists"),
+  FAVORITE_PLACE_NOT_FOUND(404, "Favorite place not found");
+
 
 
   @Getter
