@@ -8,6 +8,7 @@ import main.wheelmaster.exception.ExceptionCode;
 import main.wheelmaster.global.argumentresolver.Login;
 import main.wheelmaster.member.dto.MemberRequestDto;
 import main.wheelmaster.member.dto.MemberResponseDto;
+import main.wheelmaster.member.dto.MemberResponseDto.MemberInfo;
 import main.wheelmaster.member.entity.Member;
 import main.wheelmaster.member.mapper.MemberMapper;
 import main.wheelmaster.member.service.MemberService;
@@ -32,36 +33,37 @@ import static main.wheelmaster.member.SessionConst.LOGIN_MEMBER;
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
-
 public class MemberController {
 
-    private final MemberService memberService;
     private final MemberMapper mapper;
+    private final MemberService memberService;
 
     //회원가입
     @ApiOperation(value = "회원가입")
     @PostMapping("/signup")
-    public ResponseEntity singUp(@RequestBody @Valid MemberRequestDto.singUpDto singUpDto){
-        Member member = memberService.createMember(mapper.signUpDtoToMember(singUpDto));
+    @ResponseStatus(HttpStatus.CREATED)
+    public MessageResponseDto singUp(@RequestBody @Valid MemberRequestDto.singUpDto singUpDto){
+        Member member = memberService.createMember(singUpDto);
         System.out.println("member = " + member);
 
         MessageResponseDto message = MessageResponseDto.builder()
                 .message("WELCOME")
                 .build();
 
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        return message;
     }
 
     //로그인
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request, HttpServletResponse response){
-        Member member = mapper.loginDtoToMember(loginDto);
-        Member loginMember = memberService.login(member);
+    public SingleResponseWithMessageDto<MemberInfo> login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request, HttpServletResponse response){
+
+        Member loginMember = memberService.login(loginDto);
         HttpSession session = request.getSession(true);
         session.setAttribute(LOGIN_MEMBER, loginMember);
+
         log.info("login member = {}", request.getSession(false).getAttribute(LOGIN_MEMBER));
-        return new ResponseEntity<>(new SingleResponseWithMessageDto<>(mapper.memberToMemberInfo(loginMember),"SUCCESS"),HttpStatus.OK);
+        return new SingleResponseWithMessageDto<>(mapper.memberToMemberInfo(loginMember),"SUCCESS");
     }
 
 
