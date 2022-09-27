@@ -7,6 +7,7 @@ import main.wheelmaster.wheelcenter.entity.WheelCenter;
 import main.wheelmaster.wheelcenter.mapper.WheelCenterMapper;
 import main.wheelmaster.wheelcenter.service.WheelCenterService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +20,8 @@ import javax.validation.constraints.Positive;
 import javax.websocket.server.PathParam;
 import java.util.List;
 
+import static main.wheelmaster.wheelcenter.dto.WheelCenterResponseDto.*;
+
 @RestController
 @Validated
 @RequiredArgsConstructor
@@ -27,6 +30,18 @@ public class searchController {
 
     private final WheelCenterService wheelCenterService;
     private final WheelCenterMapper mapper;
+
+    /*
+    TODO 어떤 단어로 검색해도 한 번에 찾을 수 있도록 컨트롤러 합치기
+    TODO hibernate search, Elasticsearch 등 가능하면 변경해보기
+    */
+    @GetMapping("/search")
+    public MultiResponseWithPageInfoDto<wheelCenterInfo> getWheelCenter(@RequestParam("search") String search,
+                                                                        Pageable pageable){
+        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenter(search, pageable);
+        List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
+        return new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter);
+    }
 
 
     //도 이름으로 검색
@@ -69,16 +84,5 @@ public class searchController {
         return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
     }
 
-/*
-    TODO 어떤 단어로 검색해도 한 번에 찾을 수 있도록 컨트롤러 합치기
-    TODO hibernate search, Elasticsearch 등 가능하면 변경해보기
- */
-    @GetMapping("/search")
-    public ResponseEntity getWheelCenter(@RequestParam("search") String search,
-                                                     @Positive @PathParam("page") int page,
-                                                     @Positive @PathParam("size") int size){
-        Page<WheelCenter> pageOfWheelCenter = wheelCenterService.findWheelCenter(search, page-1, size);
-        List<WheelCenter> wheelCenterList = pageOfWheelCenter.getContent();
-        return new ResponseEntity(new MultiResponseWithPageInfoDto<>(mapper.wheelCenterListToInfoList(wheelCenterList),pageOfWheelCenter), HttpStatus.OK);
-    }
+
 }

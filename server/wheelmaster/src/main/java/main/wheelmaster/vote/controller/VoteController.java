@@ -1,6 +1,7 @@
 package main.wheelmaster.vote.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import main.wheelmaster.global.argumentresolver.Login;
 import main.wheelmaster.member.entity.Member;
 import main.wheelmaster.vote.dto.VoteGetDto;
 import main.wheelmaster.vote.dto.VotePostDto;
@@ -24,10 +25,9 @@ public class VoteController {
     private final VoteMapper mapper;
 
     @PostMapping
-    public VoteResponseDto vote(@SessionAttribute(LOGIN_MEMBER)Member member,
+    public VoteResponseDto vote(@Login Member member,
                                 @Positive @PathVariable("wheelCenterId") Long wheelCenterId,
-                                @RequestBody VotePostDto votePostDto)
-    {
+                                @RequestBody VotePostDto votePostDto) {
         votePostDto.setWheelCenterId(wheelCenterId);
         votePostDto.setMember(member);
 
@@ -37,7 +37,7 @@ public class VoteController {
     }
 
     @DeleteMapping("/{voteId}")
-    public void cancelVote(@SessionAttribute(LOGIN_MEMBER)Member member,
+    public void cancelVote(@Login Member member,
                            @Positive @PathVariable("wheelCenterId")Long wheelCenterId,
                            @Positive @PathVariable("voteId") Long voteId) {
 
@@ -46,12 +46,11 @@ public class VoteController {
         vote.setMember(member);
 
         voteService.deleteVote(vote);
-
     }
 
 
     @GetMapping
-    public VoteResponseDto getVote(@SessionAttribute(LOGIN_MEMBER)Member member,
+    public VoteResponseDto getVote(@Login Member member,
                                    @Positive @PathVariable("wheelCenterId") Long wheelCenterId){
 
         VoteGetDto voteGetDto = new VoteGetDto(member, wheelCenterId);

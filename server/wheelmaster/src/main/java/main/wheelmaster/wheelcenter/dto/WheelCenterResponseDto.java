@@ -12,6 +12,7 @@ public class WheelCenterResponseDto {
     @AllArgsConstructor
     @Builder
     public static class wheelCenterInfo{
+        private long wheelCenterId;
         private String cityName;
         private String facultyName;
         private String sigunguName;
