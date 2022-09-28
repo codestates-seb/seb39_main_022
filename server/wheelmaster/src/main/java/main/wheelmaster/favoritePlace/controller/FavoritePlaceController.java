@@ -38,9 +38,9 @@ public class FavoritePlaceController {
     }
 
     @GetMapping("/favorite-places")
-    public List<FavoritePlaceResponseDto> getFavoritePlaces(@Login Member member)
+    public List<FavoritePlaceResponseDto> getFavoritePlaces(@Login Long memberId)
     {
-        return service.getFavoritePlaces(member.getMemberId());
+        return service.getFavoritePlaces(memberId);
     }
 
 }
