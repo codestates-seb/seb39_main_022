@@ -1,8 +1,10 @@
 package main.wheelmaster.global;
 
 import main.wheelmaster.global.argumentresolver.LoginMemberArgumentResolver;
+import main.wheelmaster.global.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import java.util.List;
@@ -18,12 +20,12 @@ public class WebConfigSupport extends WebMvcConfigurationSupport {
     }
 
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//
-//        registry.addInterceptor(new LoginCheckInterceptor())
-//                .order(1)
-//                .addPathPatterns("/**")
-//                .excludePathPatterns("/", "/members/signup", "/members/login", "/error", "/index");
-//    }
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        super.addInterceptors(registry);
+        registry.addInterceptor(new LoginCheckInterceptor())
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/error", "/members/signup", "/index", "/", "api/wheel");
+    }
 }

@@ -7,12 +7,9 @@ import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.exception.ExceptionCode;
 import main.wheelmaster.global.argumentresolver.Login;
 import main.wheelmaster.member.dto.MemberRequestDto;
-import main.wheelmaster.member.dto.MemberResponseDto.MemberInfo;
-import main.wheelmaster.member.dto.MemberResponseDto.UpdateDto;
 import main.wheelmaster.member.entity.Member;
 import main.wheelmaster.member.mapper.MemberMapper;
 import main.wheelmaster.member.service.MemberService;
-import main.wheelmaster.response.MessageResponseDto;
 import main.wheelmaster.response.SingleResponseWithMessageDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +46,8 @@ public class MemberController {
     //로그인
     @ApiOperation(value = "로그인")
     @PostMapping("/login")
-    public SingleResponseWithMessageDto login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request, HttpServletResponse response){
+    public SingleResponseWithMessageDto login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request,
+                                              HttpServletResponse response){
 
         Member loginMember = memberService.login(loginDto);
         HttpSession session = request.getSession(true);
@@ -63,8 +61,7 @@ public class MemberController {
     @ApiOperation(value = "회원정보 수정")
     @PatchMapping
     public SingleResponseWithMessageDto updateMember(@RequestBody MemberRequestDto.updateDto updateDto,
-                                                     @Login Member loginMember)
-    {
+                                                     @Login Member loginMember) {
         return new SingleResponseWithMessageDto(memberService.updateMember(updateDto
                 .setMemberId(loginMember.getMemberId())), "SUCCESS");
     }
@@ -72,7 +69,7 @@ public class MemberController {
     //회원정보 삭제
     @ApiOperation(value = "회원정보 삭제")
     @DeleteMapping("/{memberId}")
-    public ResponseEntity deleteMember(@Positive long memberId){
+    public ResponseEntity deleteMember(@Positive long memberId) {
         memberService.deleteMember(memberId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
