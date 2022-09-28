@@ -23,9 +23,10 @@ public class WebConfigSupport extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         super.addInterceptors(registry);
+
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/error", "/members/signup", "/index", "/", "api/wheel");
+                .excludePathPatterns("/error", "/members/signup", "/index", "/", "api/wheel", "members/login");
     }
 }
