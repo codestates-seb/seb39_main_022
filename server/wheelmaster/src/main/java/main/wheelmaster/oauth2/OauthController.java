@@ -12,17 +12,24 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class OauthController {
 
-    private final OauthService oauthService;
+    private final KakaoService userService;
 
-    @GetMapping("login/oauth/{provider}")
-    public ResponseEntity<LoginResponse> login(@PathVariable String provider, @RequestParam String code) {
-        LoginResponse loginResponse = oauthService.login(provider, code);
-        return ResponseEntity.ok().body(loginResponse);
+
+//    private final OauthService oauthService;
+//
+//    @GetMapping("/login/oauth/{provider}")
+//    public ResponseEntity<LoginResponse> login(@PathVariable String provider, @RequestParam String code) {
+//        LoginResponse loginResponse = oauthService.login(provider, code);
+//        return ResponseEntity.ok().body(loginResponse);
+//    }
+
+    @GetMapping("/kakao")
+    public void kakaoLogin(@RequestParam String code){
+        System.out.println("code = " + code);
+        String access_Token = userService.getKaKaoAccessToken(code);
+        userService.createKakaoUser(access_Token);
+        System.out.println("access_Token = " + access_Token);
+
     }
 
-    @PostMapping("login/oauth/{provider}")
-    public ResponseEntity<LoginResponse> token(@PathVariable String provider, @RequestParam String code) {
-        LoginResponse loginResponse = oauthService.login(provider, code);
-        return ResponseEntity.ok().body(loginResponse);
-    }
 }
