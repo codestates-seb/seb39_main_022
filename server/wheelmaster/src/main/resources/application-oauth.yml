@@ -2,7 +2,7 @@ oauth2:
   user:
     google:
       client-id: 1065191115991-m252mqq4uu16kbeqohh96rv8h0be0o85.apps.googleusercontent.com
-      client-secret: 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
+      client-secret:
       redirect-uri: http://localhost:8080/login/oauth2/code/google
   provider:
     google:
