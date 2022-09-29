@@ -29,7 +29,7 @@ public class KakaoService {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
-            sb.append("&client_id=6bbe89bdad50376857e6d143231b6a5b"); // TODO REST_API_KEY 입력
+            sb.append("&client_id="); // TODO REST_API_KEY 입력
             sb.append("&redirect_uri=http://localhost:8080/redirect/kakao"); // TODO 인가코드 받은 redirect_uri 입력
             sb.append("&code=" + code);
             bw.write(sb.toString());

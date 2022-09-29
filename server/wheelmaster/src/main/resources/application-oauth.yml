@@ -2,7 +2,7 @@ oauth2:
   user:
     github:
       client-id: c6fee4badc04b550ebef
-      client-secret: 59b6e2fbed4dbf5e1cfb8e24db918810fd59bf67
+      client-secret:
       redirect-uri: http://localhost:8080/redirect/oauth
 #    google:
 #      client-id: 54767115914-gcla0mork6h3156h4qcutjerm0mdf4fu.apps.googleusercontent.com
