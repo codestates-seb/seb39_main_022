@@ -18,15 +18,18 @@ public class Oauth2Member {
 
     private String email;
 
+    private String refreshToken;
+
 
     public Oauth2Member() {}
 
     @Builder
-    public Oauth2Member(Long id, String oauthId, String name, String email) {
+    public Oauth2Member(Long id, String oauthId, String name, String email, String refreshToken) {
         this.id = id;
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
+        this.refreshToken = refreshToken;
     }
 
     public Oauth2Member update(String name, String email) {

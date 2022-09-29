@@ -18,6 +18,7 @@ public class JwtTokenProvider {
     @Value("${jwt.token.secret-key:secret-key}")
     private String secretKey;
 
+
     public String createAccessToken(String payload) {
         return createToken(payload, accessTokenValidityInMilliseconds);
     }
