@@ -1,4 +1,5 @@
 package main.wheelmaster.vote.controller;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import main.wheelmaster.global.argumentresolver.Login;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 
-import static main.wheelmaster.member.SessionConst.LOGIN_MEMBER;
 
 @Slf4j
 @RestController
@@ -24,6 +24,7 @@ public class VoteController {
     private final VoteService voteService;
     private final VoteMapper mapper;
 
+    @ApiOperation(value = "추천&비추천")
     @PostMapping
     public VoteResponseDto vote(@Login Member member,
                                 @Positive @PathVariable("wheelCenterId") Long wheelCenterId,
@@ -36,6 +37,7 @@ public class VoteController {
         return mapper.VoteToVoteResponseDto(savedVote);
     }
 
+    @ApiOperation(value = "추천&비추천 삭제")
     @DeleteMapping("/{voteId}")
     public void cancelVote(@Login Member member,
                            @Positive @PathVariable("wheelCenterId")Long wheelCenterId,
@@ -48,7 +50,7 @@ public class VoteController {
         voteService.deleteVote(vote);
     }
 
-
+    @ApiOperation(value = "추천확인")
     @GetMapping
     public VoteResponseDto getVote(@Login Member member,
                                    @Positive @PathVariable("wheelCenterId") Long wheelCenterId){

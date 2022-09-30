@@ -1,6 +1,7 @@
 package main.wheelmaster.wheelcenter.controller;
 
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import main.wheelmaster.response.MultiResponseWithPageInfoDto;
 import main.wheelmaster.wheelcenter.entity.WheelCenter;
@@ -26,7 +27,7 @@ import static main.wheelmaster.wheelcenter.dto.WheelCenterResponseDto.*;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("wheel-center")
-public class searchController {
+public class SearchController {
 
     private final WheelCenterService wheelCenterService;
     private final WheelCenterMapper mapper;
@@ -35,6 +36,7 @@ public class searchController {
     TODO 어떤 단어로 검색해도 한 번에 찾을 수 있도록 컨트롤러 합치기
     TODO hibernate search, Elasticsearch 등 가능하면 변경해보기
     */
+    @ApiOperation(value = "충전소 검색")
     @GetMapping("/search")
     public MultiResponseWithPageInfoDto<wheelCenterInfo> getWheelCenter(@RequestParam("search") String search,
                                                                         Pageable pageable){

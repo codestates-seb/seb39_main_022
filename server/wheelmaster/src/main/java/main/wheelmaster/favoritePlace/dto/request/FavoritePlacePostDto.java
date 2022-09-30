@@ -19,16 +19,15 @@ public class FavoritePlacePostDto {
     @Positive
     private Double latitude;
 
-    public static FavoritePlacePostDto of(FavoritePlacePostDto favoritePlacePostDto, Member member, Long wheelCenterId)
+    public static FavoritePlacePostDto of(String facultyName, Member member, Double longitude, Double latitude, Long wheelCenterId)
     {
         FavoritePlacePostDto favoritePlacePostDtoResult = new FavoritePlacePostDto();
 
+        favoritePlacePostDtoResult.facultyName = facultyName;
         favoritePlacePostDtoResult.member = member;
+        favoritePlacePostDtoResult.longitude = longitude;
+        favoritePlacePostDtoResult.latitude = latitude;
         favoritePlacePostDtoResult.wheelCenterId = wheelCenterId;
-        favoritePlacePostDtoResult.facultyName = favoritePlacePostDto.getFacultyName();
-        favoritePlacePostDtoResult.longitude = favoritePlacePostDto.getLongitude();
-        favoritePlacePostDtoResult.latitude = favoritePlacePostDto.getLatitude();
-
         return favoritePlacePostDtoResult;
     }
 }

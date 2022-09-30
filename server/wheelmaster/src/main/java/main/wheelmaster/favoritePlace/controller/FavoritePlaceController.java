@@ -1,5 +1,6 @@
 package main.wheelmaster.favoritePlace.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import main.wheelmaster.favoritePlace.dto.request.FavoritePlacePostDto;
 import main.wheelmaster.favoritePlace.dto.response.FavoritePlaceResponseDto;
@@ -18,6 +19,7 @@ import java.util.List;
 public class FavoritePlaceController {
     private final FavoritePlaceService service;
 
+    @ApiOperation(value = "즐겨찾기")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("wheel-center/{wheelCenterId}/favorite-places")
     public FavoritePlaceResponseDto createFavoritePlace(@Login Member member,
@@ -25,9 +27,10 @@ public class FavoritePlaceController {
                                                         @RequestBody @Validated FavoritePlacePostDto dto) {
 
         return service.createFavoritePlace(
-                FavoritePlacePostDto.of(dto, member, wheelCenterId));
+                FavoritePlacePostDto.of(dto.getFacultyName(), member, dto.getLongitude(), dto.getLatitude(), wheelCenterId));
     }
 
+    @ApiOperation(value = "즐겨찾기 취소")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/favorite-places/{favoritePlaceId}")
     public void deleteFavoritePlace(@Login Member member,
@@ -36,6 +39,7 @@ public class FavoritePlaceController {
         service.deleteFavoritePlace(favoritePlaceId);
     }
 
+    @ApiOperation(value = "개인 즐겨찾기 조회")
     @GetMapping("/favorite-places")
     public List<FavoritePlaceResponseDto> getFavoritePlaces(@Login Long memberId)
     {

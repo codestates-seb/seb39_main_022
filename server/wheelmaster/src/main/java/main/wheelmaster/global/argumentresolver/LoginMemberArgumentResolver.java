@@ -20,8 +20,6 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
     public boolean supportsParameter(MethodParameter parameter) {
         log.info("this is parameter = {}", parameter);
 
-        // 추후 OAuth 지원 코드
-
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
         boolean hasMemberType = Member.class.isAssignableFrom(parameter.getParameterType());
         boolean hasMemberId = Long.class.isAssignableFrom(parameter.getParameterType());

@@ -7,12 +7,9 @@ import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.exception.ExceptionCode;
 import main.wheelmaster.global.argumentresolver.Login;
 import main.wheelmaster.member.dto.MemberRequestDto;
-import main.wheelmaster.member.dto.MemberResponseDto;
-import main.wheelmaster.member.dto.MemberResponseDto.MemberInfo;
 import main.wheelmaster.member.entity.Member;
 import main.wheelmaster.member.mapper.MemberMapper;
 import main.wheelmaster.member.service.MemberService;
-import main.wheelmaster.response.MessageResponseDto;
 import main.wheelmaster.response.SingleResponseWithMessageDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +44,7 @@ public class MemberController {
     }
 
     //로그인
-    @ApiOperation(value = "로그인")
+    @ApiOperation(value = "로그인, 로그인시 세션생성")
     @PostMapping("/login")
     public SingleResponseWithMessageDto login(@RequestBody @Valid MemberRequestDto.loginDto loginDto, HttpServletRequest request,
                                               HttpServletResponse response){

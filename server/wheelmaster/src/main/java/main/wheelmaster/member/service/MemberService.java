@@ -7,7 +7,6 @@ import main.wheelmaster.exception.ExceptionCode;
 import main.wheelmaster.member.dto.MemberRequestDto;
 import main.wheelmaster.member.dto.MemberRequestDto.loginDto;
 import main.wheelmaster.member.dto.MemberRequestDto.singUpDto;
-import main.wheelmaster.member.dto.MemberResponseDto;
 import main.wheelmaster.member.entity.Member;
 import main.wheelmaster.member.mapper.MemberMapper;
 import main.wheelmaster.member.repository.MemberRepository;
