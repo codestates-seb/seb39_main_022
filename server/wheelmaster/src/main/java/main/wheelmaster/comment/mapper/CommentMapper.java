@@ -33,7 +33,10 @@ public interface CommentMapper {
     default Comment updateCommentDtoToComment(CommentRequestDto.updateCommentDto updateCommentDto){
         Comment comment = new Comment();
         comment.setMember(updateCommentDto.getMember());
+        WheelCenter wheelCenter = new WheelCenter();
+        wheelCenter.setWheelCenterId(updateCommentDto.getWheelCenterId());
 
+        comment.setWheelCenter(wheelCenter);
         comment.setCommentId(updateCommentDto.getCommentId());
         comment.setComment(updateCommentDto.getComment());
         return comment;

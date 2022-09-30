@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static main.wheelmaster.member.SessionConst.LOGIN_MEMBER;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,9 +37,9 @@ public class FavoritePlaceController {
     }
 
     @GetMapping("/favorite-places")
-    public List<FavoritePlaceResponseDto> getFavoritePlaces(@Login Member member)
+    public List<FavoritePlaceResponseDto> getFavoritePlaces(@Login Long memberId)
     {
-        return service.getFavoritePlaces(member.getMemberId());
+        return service.getFavoritePlaces(memberId);
     }
 
 }

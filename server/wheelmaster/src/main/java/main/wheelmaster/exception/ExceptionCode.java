@@ -16,6 +16,7 @@ public enum ExceptionCode {
   FAVORITE_PLACE_NOT_FOUND(404, "Favorite place not found");
 
 
+
   @Getter
   private int status;
 

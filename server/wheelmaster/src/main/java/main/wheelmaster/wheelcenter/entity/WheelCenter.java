@@ -21,7 +21,8 @@ public class WheelCenter {
     private String cityName; //도시이름
     private String facultyName; //시설명
     private String sigunguName;//구이름
-    private String address;//도로명주소
+    private String roadAddress;//도로명주소
+    private String oldAddress; //지번주소
     private Double latitude;//위도
     private Double longitude; //경도
     private String installLocation;//주입기구 설치 장소

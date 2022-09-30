@@ -6,7 +6,6 @@ import main.wheelmaster.member.entity.Member;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
-
 @Data
 public class FavoritePlacePostDto {
     private Member member;

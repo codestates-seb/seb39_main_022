@@ -9,22 +9,22 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface FavoritePlaceMapper {
 
-   public default FavoritePlace FavoritePlacePostDtoToFavoritePlace(FavoritePlacePostDto favoritePlacePostDto){
+    public default FavoritePlace FavoritePlacePostDtoToFavoritePlace(FavoritePlacePostDto favoritePlacePostDto){
 
-       FavoritePlace favoritePlace = new FavoritePlace();
+        FavoritePlace favoritePlace = new FavoritePlace();
 
-       favoritePlace.setWheelCenter(WheelCenter.builder()
-               .wheelCenterId(favoritePlacePostDto.getWheelCenterId()).build());
+        favoritePlace.setWheelCenter(WheelCenter.builder()
+                .wheelCenterId(favoritePlacePostDto.getWheelCenterId()).build());
 
-       favoritePlace.setMember(favoritePlacePostDto.getMember());
-       favoritePlace.setFacultyName(favoritePlacePostDto.getFacultyName());
-       favoritePlace.setLatitude(favoritePlace.getLatitude());
-       favoritePlace.setLongitude(favoritePlace.getLongitude());
+        favoritePlace.setMember(favoritePlacePostDto.getMember());
+        favoritePlace.setFacultyName(favoritePlacePostDto.getFacultyName());
+        favoritePlace.setLatitude(favoritePlace.getLatitude());
+        favoritePlace.setLongitude(favoritePlace.getLongitude());
 
-       return favoritePlace;
-   }
+        return favoritePlace;
+    }
 
 
-   public FavoritePlaceResponseDto FavoriteToFavoritePlaceResponseDto(FavoritePlace favoritePlace);
+    public FavoritePlaceResponseDto FavoriteToFavoritePlaceResponseDto(FavoritePlace favoritePlace);
 
 }

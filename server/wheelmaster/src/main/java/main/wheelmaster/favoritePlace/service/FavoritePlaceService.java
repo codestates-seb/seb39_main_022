@@ -1,5 +1,4 @@
 package main.wheelmaster.favoritePlace.service;
-
 import lombok.RequiredArgsConstructor;
 import main.wheelmaster.exception.BusinessLogicException;
 import main.wheelmaster.favoritePlace.dto.request.FavoritePlacePostDto;
@@ -11,10 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static main.wheelmaster.exception.ExceptionCode.*;
+import static main.wheelmaster.exception.ExceptionCode.FAVORITE_PLACE_ALREADY_EXISTS;
+import static main.wheelmaster.exception.ExceptionCode.FAVORITE_PLACE_NOT_FOUND;
+
 
 @Service
 @RequiredArgsConstructor
@@ -67,8 +67,8 @@ public class FavoritePlaceService {
     public void deleteFavoritePlace(Long favoritePlaceId){
 
         repository.findById(favoritePlaceId).
-        ifPresentOrElse(repository::delete, () -> {
-            throw new BusinessLogicException(FAVORITE_PLACE_NOT_FOUND);
-        });
+                ifPresentOrElse(repository::delete, () -> {
+                    throw new BusinessLogicException(FAVORITE_PLACE_NOT_FOUND);
+                });
     }
 }
