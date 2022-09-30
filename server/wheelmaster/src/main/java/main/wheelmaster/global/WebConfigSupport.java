@@ -64,7 +64,7 @@ public class WebConfigSupport extends WebMvcConfigurationSupport {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(this.apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("main.wheelmaster"))
                 .paths(PathSelectors.any())
                 .build();
     }
