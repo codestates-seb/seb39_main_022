@@ -80,7 +80,6 @@ export default function FavoriteDetail() {
         setCommentList(newCommentList)
     };
 
-
     // get
     useEffect(() => {
         const getReviewList = async () => {
@@ -97,7 +96,6 @@ export default function FavoriteDetail() {
         }
         getReviewList();
     }, []);
-
 
     // post
     // 임시로 시설명만 저장한다 >>> 어떤 데이터 저장할지 의논 /// 내 생각엔 위도, 경도 필요하다
