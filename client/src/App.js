@@ -1,18 +1,17 @@
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MapTest from './component/Map';
-import Landing from './component/Landing';
+import "./App.css";
+import SideBar from "./component/SideBar";
+import Footer from "./component/Footer";
+
+// import Landing from './page/Landing';
+
 
 function App() {
+
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route path='/' element={<Landing />} />
-          <Route path='/maptest' element={<MapTest />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <div className="App">
+    <SideBar/>
+    <Footer/>
+    </div>
   );
 }
 
