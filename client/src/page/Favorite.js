@@ -20,7 +20,6 @@ export default function Favorite() {
     const [place, setPlace] = useState({
         // 지도의 초기 위치
         center: { lat: 33.452613, lng: 126.570888 },
-        // 지도 위치 변경시 panto를 이용할지에 대해서 정의
         시설명: ''
     })
 
@@ -99,7 +98,7 @@ export default function Favorite() {
                 level={3}
             >
                 <CustomOverlayMap position={place.center}>
-                    <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }}>
+                    {place.id && <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }}>
                         <p>{place.시설명}</p>
                         <p>운영중 <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span> <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span></p>
                         <p>{place.관리기관전화번호}</p>
@@ -108,13 +107,12 @@ export default function Favorite() {
                             state={{ place }}
                         >더보기+
                         </Link>
-                    </div>
+                    </div>}
                 </CustomOverlayMap>
                 <MapMarker
                     position={place.center}
                     clickable={true}
                 />
-
             </Map>
         </FavoritePage >
     )
