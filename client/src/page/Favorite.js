@@ -91,11 +91,8 @@ export default function Favorite() {
             </section>
             <Map
                 center={place.center}
-                style={{
-                    width: "40rem",
-                    height: "40rem",
-                }}
                 level={3}
+                className='map'
             >
                 <CustomOverlayMap position={place.center}>
                     {place.id && <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }}>
@@ -121,18 +118,21 @@ export default function Favorite() {
 const FavoritePage = styled.div`
 display: flex;
 
+.favoriteList{
+    width: 30rem;
+}
+
+.map{
+    width: 100vw;
+    height: 100vh;
+}
 ul{
     li{
         list-style: none;
         border: 1px solid black;
         margin: 1rem;
-        width: 15rem;
         height: 6rem;
     }
-}
-
-.img{
-    width: 5rem;
 }
 
 .list_title{
