@@ -26,7 +26,7 @@ public interface WheelCenterRepository extends JpaRepository<WheelCenter, Long> 
     //TODO hibernate search, Elasticsearch 등 가능하면 변경해보기
 
     @Query(value = "select * from WHEEL_CENTER where "
-            +"CITY_NAME like %:search% or "
+            +"CITY like %:search% or "
             +"REPLACE(SIGUNGU_NAME,' ','') like %:search% or "
             +"REPLACE(ROAD_NAME_ADDRESS,' ','') like %:search% or "
             +"REPLACE(LOT_NUMBER_ADDRESS,' ','') like %:search%", nativeQuery = true)
