@@ -17,7 +17,7 @@ public class WheelCenter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wheelCenterId;
 
-    private String cityName; //도시이름
+    private String city; //도시이름
     private String facultyName; //시설명
     private String sigunguName;//구이름
     private String roadNameAddress;//도로명주소

@@ -17,7 +17,7 @@ public interface WheelCenterMapper {
     default WheelCenterResponseDto.wheelCenterInfo wheelCenterListToInfoList(WheelCenter wheelCenter){
         return WheelCenterResponseDto.wheelCenterInfo.builder()
                 .wheelCenterId(wheelCenter.getWheelCenterId())
-                .cityName(wheelCenter.getCityName())
+                .cityName(wheelCenter.getCity())
                 .facultyName(wheelCenter.getFacultyName())
                 .sigunguName(wheelCenter.getSigunguName())
                 .roadNameAddress(wheelCenter.getRoadNameAddress())

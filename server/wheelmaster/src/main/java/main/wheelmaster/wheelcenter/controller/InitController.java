@@ -71,7 +71,7 @@ public class InitController {
                     JSONObject val = items.getJSONObject(i);
 
                     WheelCenter wheelCenter = WheelCenter.builder()
-                            .cityName(val.getString("ctprvnNm"))
+                            .city(val.getString("ctprvnNm"))
                             .facultyName(val.getString("fcltyNm"))
                             .sigunguName(val.getString("signguNm"))
                             .roadNameAddress(val.getString("rdnmadr"))
