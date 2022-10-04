@@ -63,21 +63,33 @@ export default function Favorite() {
 
     return (
         <FavoritePage>
+            <Link to='/main'>
+                <img
+                    src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-keyboard_backspace.svg'
+                    alt='move_main_icon'
+                    className="move_main_icon"
+                />
+            </Link>
             <section className="favoriteList">
+                <input type='text' className="search-bar" placeholder="충전소를 검색해주세요" />
                 <ul>
                     {currentFavoriteList.map(({ id, 시설명, 공기주입가능여부, 휴대전화충전가능여부 }) => {
                         return (
-                            <li key={id} className="list">
+                            <li key={id} className="favorite_list">
                                 {/* click event */}
-                                <button value={id} onClick={handleMove} className="list_title">
+                                <button value={id} onClick={handleMove} className="favorite_list_title">
                                     {시설명}
                                 </button>
-                                <p>
-                                    {공기주입가능여부 === "Y" ? '공기주입' : ""}
-                                </p>
-                                <p>
-                                    {휴대전화충전가능여부 === "Y" ? '충전' : ""}
-                                </p>
+                                <p className="open">운영중</p>
+                                <section className="whether_section">
+                                    <p>
+                                        {공기주입가능여부 === "Y" ? '바퀴 공기 주입' : ""}
+                                    </p>
+                                    <p>
+                                        {휴대전화충전가능여부 === "Y" ? '휴대폰 충전' : ""}
+                                    </p>
+                                </section>
+
                             </li>
                         )
                     })}
@@ -94,10 +106,11 @@ export default function Favorite() {
                 level={3}
                 className='map'
             >
-                <CustomOverlayMap position={place.center}>
-                    {place.id && <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }}>
-                        <p>{place.시설명}</p>
-                        <p>운영중 <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span> <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span></p>
+                <CustomOverlayMap position={place.center} className='modal'>
+                    {place.id && <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }} className='modal_container'>
+                        <p className="modal_title">{place.시설명}</p>
+                        <p>운영중</p>
+                        <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span> <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span>
                         <p>{place.관리기관전화번호}</p>
                         <Link
                             to={`/favorite/${place.id}`}
@@ -118,25 +131,94 @@ export default function Favorite() {
 const FavoritePage = styled.div`
 display: flex;
 
+.move_main_icon{
+    position: absolute;
+    left: 93%;
+    top: 1rem;
+    z-index: 99999;
+    background-color: white;
+    width: 5rem;
+}
+
 .favoriteList{
-    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    width: 28rem;
+    padding: 1.5rem 1rem;
+
+    .search-bar{
+        height: 2.5rem;
+        padding: .5rem;
+        border-radius: 0.5rem;
+        border: 1px solid #238f51;
+        outline-color: #238f51;
+    }
+
+    ul{
+        .favorite_list{
+            margin: 1rem 0;
+            height: 7rem;
+            list-style: none;
+            border-radius: 0.5rem;
+            border: 1px solid #238f51;
+            padding: .5rem;
+
+            .favorite_list_title{
+                border: none;
+                background-color: white;
+                font-size: 1.8vmax;
+                margin-bottom: .5rem;
+                cursor: pointer;
+            }
+
+            .favorite_list_title:hover{
+                color: #238f51;
+            }
+
+            .open{
+                margin-bottom: .5rem;
+            }
+
+            .whether_section{
+                display: flex;
+
+                p{
+                    border-radius: .5rem;
+                    padding: .5rem;
+                    margin: 0 .5rem 0 0;
+                    font-size: 1vmax;
+                    background-color: #238f51;
+                    color: white;
+                }
+
+                span{
+                    
+                }
+            }
+        }
+    }
 }
 
 .map{
     width: 100vw;
     height: 100vh;
-}
-ul{
-    li{
-        list-style: none;
-        border: 1px solid black;
-        margin: 1rem;
-        height: 6rem;
+
+    .modal_title{
+        font-size: 1.5vmax;
     }
 }
 
-.list_title{
-    cursor: pointer;
+.modal_container{
+
+a{
+    text-decoration: none;
+    color: #238f51;
+}
+
+a:hover{
+    color: #f05d4d;
+}
+
 }
 `
 

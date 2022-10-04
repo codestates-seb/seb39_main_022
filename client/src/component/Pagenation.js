@@ -41,21 +41,19 @@ const Nav = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  margin: 16px;
+  gap: 1rem;
 `;
 
 const Button = styled.button`
   border: none;
-  border-radius: 8px;
-  padding: 8px;
-  margin: 0;
+  border-radius: 1rem;
+  padding: .5rem;
   background: black;
   color: white;
-  font-size: 1rem;
+  font-size: 1.5vmax;
 
   &:hover {
-    background: green;
+    background: #238f51;
     cursor: pointer;
   }
 
@@ -66,7 +64,7 @@ const Button = styled.button`
   }
 
   &[aria-current] {
-    background: green;
+    background: #238f51;
     font-weight: bold;
     cursor: revert;
     transform: revert;
