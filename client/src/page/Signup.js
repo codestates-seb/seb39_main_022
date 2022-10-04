@@ -6,7 +6,7 @@ export default function Signup() {
     return (
         <SignupContainer>
             <Link to='/main'>구르미</Link>
-            <form onSubmit={(e) => e.preventDefault()} className='signup-form'>
+            <form onSubmit={(event) => event.preventDefault()} className='signup-form'>
                 <label htmlFor='userName'>Display name</label>
                 <input
                     type='text'

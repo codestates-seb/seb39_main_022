@@ -110,7 +110,8 @@ export default function Favorite() {
                     {place.id && <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }} className='modal_container'>
                         <p className="modal_title">{place.시설명}</p>
                         <p>운영중</p>
-                        <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span> <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span>
+                        <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span>
+                        <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span>
                         <p>{place.관리기관전화번호}</p>
                         <Link
                             to={`/favorite/${place.id}`}

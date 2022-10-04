@@ -8,16 +8,16 @@ import styled from "styled-components";
 function Pagination({ total, pagenationLimit, currentPageNumber, setCurrentPageNumber }) {
   // 필요한 페이지의 개수 계산
   // ex) 10/5 = 2
-  const numPages = Math.ceil(total / pagenationLimit);
+  const pageSize = Math.ceil(total / pagenationLimit);
 
   return (
     <>
       <Nav>
         {/* disabled === 비활성화 */}
-        <Button onClick={() => setCurrentPageNumber(currentPageNumber - 1)} disabled={currentPageNumber === 1}>
+        <Button onClick={() => setCurrentPageNumber(currentPageNumber => currentPageNumber - 1)} disabled={currentPageNumber === 1}>
           &lt;
         </Button>
-        {Array(numPages)
+        {Array(pageSize)
           .fill()
           .map((_, i) => (
             <Button
@@ -29,7 +29,7 @@ function Pagination({ total, pagenationLimit, currentPageNumber, setCurrentPageN
               {i + 1}
             </Button>
           ))}
-        <Button onClick={() => setCurrentPageNumber(currentPageNumber + 1)} disabled={currentPageNumber === numPages}>
+        <Button onClick={() => setCurrentPageNumber(currentPageNumber + 1)} disabled={currentPageNumber === pageSize}>
           &gt;
         </Button>
       </Nav>

@@ -6,7 +6,7 @@ export default function Login() {
     return (
         <LoginContainer>
             <Link to='/main'>구르미</Link>
-            <form onSubmit={(e) => e.preventDefault()} className='login-form'>
+            <form onSubmit={(event) => event.preventDefault()} className='login-form'>
                 <label htmlFor='userEmail'>Email</label>
                 <input
                     type='text'

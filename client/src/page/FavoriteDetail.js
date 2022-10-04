@@ -23,9 +23,10 @@ export default function FavoriteDetail() {
 
     const copyUrl = `http://localhost:3000${location.pathname}`;
 
+    const { writeText } = window.navigator.clipboard;
 
     const handleMoveFavoritePage = () => {
-        navigate(`/favorite`)
+        navigate(`/favorite`);
     };
 
     const handleFindRoot = () => {
@@ -44,7 +45,7 @@ export default function FavoriteDetail() {
 
     const handleCopyUrl = () => {
         setModal(false)
-        window.navigator.clipboard.writeText(copyUrl).then(() => {
+        writeText(copyUrl).then(() => {
             console.log('복사 완료')
         })
     };
