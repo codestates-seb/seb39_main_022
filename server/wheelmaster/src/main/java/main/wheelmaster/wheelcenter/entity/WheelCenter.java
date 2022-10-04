@@ -45,6 +45,5 @@ public class WheelCenter {
     private String institutionName;//관리기관명
     private String institutionPhoneNumber;//기관 전화번호
 
-
 }
 
