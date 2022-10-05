@@ -18,7 +18,7 @@ public class WheelMasterApplication {
 		WebMvcConfigurer webMvcConfigurer = new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://main-project-22.s3-website.ap-northeast-2.amazonaws.com/");
+				registry.addMapping("/**").allowedOrigins("http://main-project-22.s3-website.ap-northeast-2.amazonaws.com");
 			}
 		}; return webMvcConfigurer;
 	}
