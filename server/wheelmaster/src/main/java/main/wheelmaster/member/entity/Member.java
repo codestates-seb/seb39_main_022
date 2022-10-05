@@ -27,9 +27,9 @@ public class Member{
 
     @Column(nullable = false, length = 100)
     private String password;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String nickName;
-    @Column(length = 50)
+    @Column(length = 50, unique = true)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
