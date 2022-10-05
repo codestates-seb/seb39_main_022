@@ -16,7 +16,7 @@
 
 - Spring Data JPA
 - Java 11 
-- DB : 미정
+- DB : Mysql
 - API 문서 : Swagger
 - API 호출 : Web Client
 - 공공데이터 : https://www.data.go.kr/data/15034533/standard.do

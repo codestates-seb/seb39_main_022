@@ -13,8 +13,6 @@ function Landing() {
                 <Link to='/main'>충전소 찾으러 가기</Link>
             </div>
             <img src={img} alt='landing_img' />
-
-
         </LandingContainer>
     );
 }

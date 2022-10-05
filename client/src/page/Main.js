@@ -10,7 +10,6 @@ export default function Main() {
             <Sidebar />
             <Map
                 center={{ lat: 33.452613, lng: 126.570888 }}
-
                 level={3}
                 className='map'
             >
