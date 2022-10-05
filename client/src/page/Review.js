@@ -20,18 +20,12 @@ export default function Review() {
             // const response = await axios.delete(`http://localhost:4000/comments/${location.state.commentId}`)
             if (true) {
                 console.log('후기 삭제')
-
-                // 서버 연동되면 제대로 해보기
                 navigate(-1)
             }
         } catch (error) {
             console.log('error:', error)
         }
     };
-
-    // 데이터 삭제 >>> 반영
-    // 리스트로 돌아가기 <<< 현재 / 삭제가 완료되었습니다 모달 생성 후 돌아가기
-    // 댓글이 없습니다
 
     return (
         <ReviewContainer>
@@ -128,8 +122,5 @@ flex-direction: column;
             }
         }
     }
-    
 }
-
-
 `

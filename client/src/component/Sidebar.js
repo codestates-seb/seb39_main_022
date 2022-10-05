@@ -5,6 +5,7 @@ import styled from "styled-components";
 export default function Sidebar() {
     return (
         <SidebarContainer>
+            <p className="logo">구르미</p>
             <input type='text' className="search-bar" placeholder="충전소를 검색해주세요" />
             <section className="socialBtn">
                 <Link to='/login'>로그인</Link>
@@ -27,6 +28,12 @@ flex-direction: column;
 width: 28rem;
 padding: 1.5rem 1rem;
 
+.logo{
+color: #238f51;
+margin-bottom: 1rem;
+font-size: 2vmax;
+}
+
 .search-bar{
     height: 2.5rem;
     padding: .5rem;
@@ -42,7 +49,7 @@ padding: 1.5rem 1rem;
     justify-content: space-between;
 
     a{
-        width: 8.5rem;
+        width: 9.5rem;
         height: 2rem;
         line-height: 2rem;
         border-radius: 0.5rem;
@@ -56,7 +63,7 @@ padding: 1.5rem 1rem;
 }
 
 button{
-    width: 8rem;
+    width: 9rem;
     height: 2rem;
     border-radius: 0.5rem;
     border: none;
