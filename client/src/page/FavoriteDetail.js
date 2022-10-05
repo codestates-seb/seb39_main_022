@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 import styled from "styled-components";
 
+import LikeDislike from "../component/LikeDislike";
+
 export default function FavoriteDetail() {
     const [modal, setModal] = useState({
         text: '',
@@ -19,7 +21,9 @@ export default function FavoriteDetail() {
     const location = useLocation();
 
     // isLike = false >>> like 값이 안 들어왔을 때도 흰색으로 표시
-    const likeImage = (isLike = false) => isLike ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon5/mt-favorite.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon5/mt-favorite_border.svg'
+    const likeImage = (isLike = false) => isLike ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_up.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mi-thumbs-up.svg';
+
+    const hateImage = (isUnLike = false) => isUnLike ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_down.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mi-thumbs-down.svg';
 
     const copyUrl = `http://localhost:3000${location.pathname}`;
 
@@ -78,7 +82,8 @@ export default function FavoriteDetail() {
         // targetIndex 해당 되는 요소만 true 로 변경
         const updatedComment = {
             ...commentList[targetIndex],
-            isLike: true
+            isLike: true,
+            isHate: true
         }
 
         // 얕은 복사로 새로운 배열 생성 targetIndex 번째를 제외하고 만든다 0부터 그 전까지
@@ -93,6 +98,8 @@ export default function FavoriteDetail() {
     useEffect(() => {
         const getReviewList = async () => {
             const response = await axios.get('http://localhost:4000/comments');
+            // server get
+            // const response = await axios.get('http://ec2-54-180-29-60.ap-northeast-2.compute.amazonaws.com:8080/comments');
 
             const newCommentList = response.data.map(commentInfo => {
                 return {
@@ -258,7 +265,7 @@ export default function FavoriteDetail() {
                                             </Link>
                                         </p>
 
-                                        <section className="like_section">
+                                        {/* <section className="recommend_setcion">
                                             <img
                                                 src={likeImage(isLike)}
                                                 alt='likeImage'
@@ -266,8 +273,9 @@ export default function FavoriteDetail() {
                                                 className="likeImage"
                                                 data-id={commentId}
                                             />
-                                            <span>좋아요</span>
-                                        </section>
+                                            <span>추천</span>
+                                        </section> */}
+                                        <LikeDislike />
                                     </section>
                                 </li>
                                 <hr></hr>
@@ -287,12 +295,12 @@ justify-content: center;
 align-items: center;
 padding: 3rem;
 
-.exit_icon{
+.exit_icon, .exit_icon_white{
     width: 3rem;
     margin-left:auto;
 }
 
-.exit_icon:hover{
+.exit_icon:hover, .exit_icon_white:hover{
     transform: scale(1.1);
     transition: .1s;
 }
@@ -466,7 +474,7 @@ padding: 3rem;
                 }
                 
 
-                .like_section{
+                .recommend_setcion{
                     display: flex;
                     align-items: center;
                     margin: .5rem 0;

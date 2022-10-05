@@ -45,6 +45,8 @@ export default function Favorite() {
     useEffect(() => {
         const getFavoriteList = async () => {
             const response = await axios.get('http://localhost:4000/favoriteList');
+            // server get
+            // const response = await axios.get('http://ec2-54-180-29-60.ap-northeast-2.compute.amazonaws.com:8080/favorite-places');
             setFavoriteList(response.data)
 
             const favorites = response.data;
@@ -71,6 +73,7 @@ export default function Favorite() {
                 />
             </Link>
             <section className="favoriteList">
+                <p className="logo"><Link to='/main'>구르미</Link></p>
                 <input type='text' className="search-bar" placeholder="충전소를 검색해주세요" />
                 <ul>
                     {currentFavoriteList.map(({ id, 시설명, 공기주입가능여부, 휴대전화충전가능여부 }) => {
@@ -132,6 +135,17 @@ export default function Favorite() {
 const FavoritePage = styled.div`
 display: flex;
 
+.logo{
+
+margin-bottom: 1rem;
+font-size: 2vmax;
+
+a{
+    text-decoration: none;
+    color: #238f51;
+}
+}
+
 .move_main_icon{
     position: absolute;
     left: 93%;
@@ -145,7 +159,7 @@ display: flex;
     display: flex;
     flex-direction: column;
     width: 28rem;
-    padding: 1.5rem 1rem;
+    padding: 1rem 1rem;
 
     .search-bar{
         height: 2.5rem;
@@ -158,7 +172,7 @@ display: flex;
     ul{
         .favorite_list{
             margin: 1rem 0;
-            height: 7rem;
+            height: 6.5rem;
             list-style: none;
             border-radius: 0.5rem;
             border: 1px solid #238f51;
@@ -167,8 +181,8 @@ display: flex;
             .favorite_list_title{
                 border: none;
                 background-color: white;
-                font-size: 1.8vmax;
-                margin-bottom: .5rem;
+                font-size: 1.5vmax;
+                margin-bottom: .3rem;
                 cursor: pointer;
             }
 
