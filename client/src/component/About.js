@@ -1,10 +1,11 @@
-const About = () => {
-    return (
-        <main className='About'>
-            <h2>이용방법</h2>
-            <p style={{ marginTop: "1rem" }}> tutorial </p>
-        </main>
-    )
+import React from 'react';
+import styled from 'styled-components';
+
+export default function Slide({ img }) {
+  return <IMG src={img} />;
 }
 
-export default About
+const IMG = styled.img`
+  width: 500px;
+  height: 500px;
+`;

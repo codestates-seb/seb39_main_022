@@ -4,29 +4,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-.Landing {
-  text-align: center;
-  font-family: 'Gowun Dodum', sans-serif;
-  font-family: 'Nanum Gothic', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.title {
-  font-size: 10rem;
-  color: #238f51;
-}
-
-img {
-  width: 70rem;
-  margin-top: 5rem;
-}
-
-#map {
-  width: 50vw;
-  height: 100vh;
+  font-family: 'Nanum Gothic';
 
 }

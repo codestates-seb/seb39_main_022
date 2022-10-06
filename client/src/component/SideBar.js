@@ -1,137 +1,175 @@
-import {  useNavigate, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Nav from "./Nav";
-import Home from "./Home";
-import NewPost from "./NewPost";
-import PostPage from "./PostPage";
-import About from "./About";
-import Missing from "./Missing";
+import SearchResults from "./SearchResults";
+import Pagination from "./Pagination";
+
 import api from "../api/posts";
 
-
-// import { format } from "date-fns"; // <----날짜 라이브러리 설치----> npm i date-fns
-//import {ko} from "date-fns/locale";
-
-const SideBar =()=> {
+const Sidebar = () => {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [reviewTitle, setReviewTitle] = useState("");
-  const [reviewDescription, setReviewDescription] = useState("");
-const [reviews, setReviews] = useState([]);
-  const history = useNavigate();
 
-  useEffect(()=>{
+  const [favoriteList, setFavoriteList] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  // pagenation-----------------------------------
+  // 페이지당 게시물 수(pagenationLimit) pageSize
+  const [pagenationLimit] = useState(5);
+  // 현재 페이지 번호(currentPageNumber)
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+
+  // pagenation-----------------------------------
+  useEffect(() => {
     const getPosts = async () => {
-      try{
-        const response = await api.get('/posts');
+      try {
+        const response = await api.get("/posts");
         setPosts(response.data); //200응답 ok
-      } catch (err) { 
-        if (err.response){ // 리스폰 응답 실패.
+        setFavoriteList(response.data);
+        // setLoading(false);
+      } catch (err) {
+        if (err.response) {
+          // 리스폰 응답 실패.
           console.log(err.response.data);
           console.log(err.response.status);
           console.log(err.response.headers);
-        }else{
-          console.log(`error: ${err.message}`)
+        } else {
+          console.log(`error: ${err.message}`);
         }
+        // setLoading(false);
 
       }
-    }
+    };
     getPosts();
-  },[])
+  }, []);
 
   useEffect(() => {
     const filteredResults = posts.filter(
-      (post) =>
-        (post.body).includes(search) ||
-        (post.title).includes(search)
+      (post) => post.body.includes(search) || post.title.includes(search)
     );
 
     setSearchResults(filteredResults.reverse());
   }, [posts, search]);
-//-----
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    const id = reviews.length ? reviews[reviews.length - 1].id + 1 : 1;
-    // const datetime = format(new Date(), "MMMM dd, yyyy pp");
-    const newReview = { id, title: reviewTitle,  body: reviewDescription };
-   try {
-    // const response = await api.post('/posts') //이건 후기추가
-     const allReviews = [...reviews, newReview];
-     setReviews(allReviews);
-     setReviewTitle("");
-     setReviewDescription("");
-    history("/");
 
-   }catch(err){
-    console.log(`error: ${err.message}`)
-   }
+  // 모달창 노출 여부 state -------------------------
+  const [modalOpen, setModalOpen] = useState(false);
+  //const [navBoxOpen, setNavBoxOpen] = useState(true);
+
+  // 모달창 노출
+  const showModal = () => {
+    setModalOpen(true);
+    //setNavBoxOpen(false);
   };
-
-  const handleDelete = (id) => {
-    const postsList = posts.filter((post) => post.id !== id);
-    setPosts(postsList);
-    history("/");
+  const closeModal = () => {
+    setModalOpen(false);
+    //setNavBoxOpen(true);
   };
 
   return (
-
-    <>
-    <Container>
-
-      <div className="SideBar">
-        <Header>
-        <button>▶︎</button>
-        <h1>구르미</h1>
+    <SidebarContainer>
+      <header>
+        <button
+          onClick={() => {
+            closeModal();
+          }}>
+          ▶︎
+        </button>
+        <h2>구르미</h2>
         <button>{`<`}</button>
-        </Header>
-        
-       
-        <Nav search={search} setSearch={setSearch} />
-        <Routes>
-          <Route exact path="/" element={<Home posts={searchResults} />} />
-          </Routes>
-      </div>
- 
-    <Routes>
-        <Route exact path="/post" element={<NewPost
-          handleSubmit={handleSubmit}
-          reviewTitle={reviewTitle}
-          setReviewTitle={setReviewTitle}
-          reviewDescription={reviewDescription}
-          setReviewDescription={setReviewDescription} />} />
-        <Route path="/post/:id" element={<PostPage posts={posts} handleDelete={handleDelete} />} />
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<Missing />} />
+      </header>
+      <Nav showModal={showModal} search={search} setSearch={setSearch} />
+      <Routes>
+        <Route
+          path="/searchResults"
+          element={
+            modalOpen && <SearchResults posts={searchResults} loading={loading}/> && (
+              <Pagination
+                total={favoriteList?.length}
+                pagenationLimit={pagenationLimit}
+                currentPageNumber={currentPageNumber}
+                setCurrentPageNumber={setCurrentPageNumber}
+              />
+            )
+          }
+        />
       </Routes>
-      </Container>     
-      
-      </>
-    
+
+      <section className="socialBtn">
+        <Link to="/login">로그인</Link>
+        <Link to="/signup">회원가입</Link>
+      </section>
+      <section className="moveBtn">
+        <Link to="/about">사용법</Link>
+        <Link to="/favorite">즐겨찾기</Link>
+      </section>
+    </SidebarContainer>
   );
-}
-
-export default SideBar;
-
-const Container =styled.div`
-
-background-color: lavender;
-display: flex;
-  flex-direction:row;
-  /* border: 1px solid #333;
-  box-shadow: 0px 0px 15px gray; */
-  .SideBar{
-    padding: 1rem;
-    height: 100vh;
-    border: 1px solid #333;
+};
+export default Sidebar;
+const SidebarContainer = styled.div`
+  font-size: 2rem;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  padding: 1.5rem 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  height: 100vh;
+  .search-bar {
+    height: 2.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #238f51;
+    outline-color: #238f51;
+  }
+  .socialBtn {
+    margin: 1rem 0;
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: space-between;
+    a {
+      width: 8.5rem;
+      height: 2rem;
+      line-height: 2rem;
+      border-radius: 0.5rem;
+      border: none;
+      background-color: #238f51;
+      text-decoration: none;
+      text-align: center;
+      font-size: 1rem;
+      color: white;
+    }
+  }
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    button {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+  button {
+    width: 8rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #238f51;
+  }
+  .moveBtn {
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 3rem;
+    a {
+      text-decoration: none;
+      font-size: 1rem;
+      color: #238f51;
+    }
   }
 `;
-const Header = styled.div`
-display: flex;
-  flex-direction:row;
-  justify-content: space-between;
-`
-
