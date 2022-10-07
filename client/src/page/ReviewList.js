@@ -1,12 +1,7 @@
-import React from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-<<<<<<< HEAD
-=======
-import axios from "axios";
->>>>>>> ec125951e888f4f88719b345f292ac72677314c3
 import styled from "styled-components";
 
-export default function Review() {
+const ReviewList = ({ review }) => {
 
     const navigate = useNavigate();
 
@@ -16,8 +11,6 @@ export default function Review() {
         navigate(-1)
     };
 
-    // comment delete
-    // delete error
     const handleDeleteReview = async () => {
         try {
             // const response = await axios.delete(`http://localhost:4000/comments/${location.state.commentId}`)
@@ -32,10 +25,6 @@ export default function Review() {
         }
     };
 
-    // 데이터 삭제 >>> 반영
-    // 리스트로 돌아가기 <<< 현재 / 삭제가 완료되었습니다 모달 생성 후 돌아가기
-    // 댓글이 없습니다
-
     return (
         <ReviewContainer>
             <img
@@ -44,19 +33,28 @@ export default function Review() {
                 onClick={handleMoveFavoriteDetailPage}
                 className='exitIcon'
             />
-            <section className="review_id">
+             <section className="review_id">
                 <p>{location.state.memberId}</p>
+                <p>{location.review.memberId}</p>
+                <p>{review.memberId}</p>
+
+                <p className="reviewDate">{review.datetime}</p>
             </section>
             <section className="review_section">
-                <p>{location.state.comment}</p>
+            <p>{location.state.comment}</p>
+            <p>{location.review.comment}</p>
+            <p>{review.comment}</p>
                 <section className="button_section">
                     <button><Link to='/addReview'>후기 수정</Link></button>
                     <button onClick={handleDeleteReview}>후기 삭제</button>
                 </section>
             </section>
+
         </ReviewContainer>
     )
 }
+
+export default ReviewList
 
 const ReviewContainer = styled.div`
 padding: 3rem;
