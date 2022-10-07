@@ -1,14 +1,14 @@
 import Feed from "./Feed";
 
-const SearchResults = ({ searchResults, loading }) => {
+const SearchResults = ({ posts =[], loading }) => {
   return (
     <main
       className="SearchResults"
       style={{ overflow: "auto", height: "100%" }}>
-      {searchResults.length ? (
-        <Feed posts={searchResults} loading={loading} />
+      {posts.length !== 0 ? (
+        <Feed posts={posts} loading={loading} />
       ) : (
-        <p style={{ marginTop: "2rem" }}>장소가 없습니다.</p>
+        <p style={{ marginTop: "2rem", color:"lightgray"}}>장소가 없습니다.</p>
       )}
     </main>
   );

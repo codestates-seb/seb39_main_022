@@ -27,10 +27,11 @@ const Sidebar = () => {
   useEffect(() => {
     const getPosts = async () => {
       try {
+        //데[이터를 부르는 로직 = 로딩컴포넌트의 위치.
         const response = await api.get("/posts");
         setPosts(response.data); //200응답 ok
         setFavoriteList(response.data);
-        // setLoading(false);
+        setLoading(false);
       } catch (err) {
         if (err.response) {
           // 리스폰 응답 실패.
@@ -40,20 +41,21 @@ const Sidebar = () => {
         } else {
           console.log(`error: ${err.message}`);
         }
-        // setLoading(false);
+        setLoading(false);
 
       }
     };
     getPosts();
   }, []);
 
-  useEffect(() => {
-    const filteredResults = posts.filter(
-      (post) => post.body.includes(search) || post.title.includes(search)
-    );
+  // useEffect(() => {
+  //   const filteredResults = posts.filter(
+  //     (post) => post.소재지도로명주소.includes(search) || post.title.includes(search)
+  //   );
+  //   filteredResults.reverse()
 
-    setSearchResults(filteredResults.reverse());
-  }, [posts, search]);
+  //   setSearchResults(filteredResults);
+  // }, [posts, search, setSearchResults]);
 
   // 모달창 노출 여부 state -------------------------
   const [modalOpen, setModalOpen] = useState(false);
@@ -69,6 +71,22 @@ const Sidebar = () => {
     //setNavBoxOpen(true);
   };
 
+  const onChange = (event) => {
+    const currentSearch = event.target.value;
+
+    const titleSearch = posts.filter(
+      (post) =>
+        post.title.includes(currentSearch) || post.body.includes(currentSearch)
+    );
+
+    titleSearch.reverse();
+
+    setSearchResults(titleSearch);
+
+    setSearch(currentSearch);
+  };
+
+
   return (
     <SidebarContainer>
       <header>
@@ -76,17 +94,57 @@ const Sidebar = () => {
           onClick={() => {
             closeModal();
           }}>
-          ▶︎
+          ☁️
         </button>
-        <h2>구르미</h2>
+        <h1>구르미</h1>
         <button>{`<`}</button>
       </header>
-      <Nav showModal={showModal} search={search} setSearch={setSearch} />
+      <Nav
+ style={{texDecoration: "none",
+ }}
+        showModal={showModal}
+        search={search}
+        setSearch={setSearch}
+        onChange={onChange}
+      />
+      {modalOpen && (
+        <>
+          <SearchResults posts={searchResults} loading={false} />
+          <Pagination
+            total={favoriteList?.length}
+            pagenationLimit={pagenationLimit}
+            currentPageNumber={currentPageNumber}
+            setCurrentPageNumber={setCurrentPageNumber}
+          />
+        </>
+      )}
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            zIndex: "99999999",
+            borderRadius: '99999px',
+            transform: "translate(-50%, -50%)",
+            width: "100px",
+            height: "100px",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            background: "#f05d4d",
+            color: "white",
+          }}
+        >
+          {" "}
+          loading...{" "}
+        </div>
+      )}
       <Routes>
         <Route
           path="/searchResults"
           element={
-            modalOpen && <SearchResults posts={searchResults} loading={loading}/> && (
+            modalOpen && (
+              <SearchResults posts={searchResults} loading={loading} />
+            ) && (
               <Pagination
                 total={favoriteList?.length}
                 pagenationLimit={pagenationLimit}
@@ -111,7 +169,8 @@ const Sidebar = () => {
 };
 export default Sidebar;
 const SidebarContainer = styled.div`
-  font-size: 2rem;
+  font-size: 1rem;
+  
   /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
@@ -151,6 +210,9 @@ const SidebarContainer = styled.div`
     button {
       width: 3rem;
       height: 3rem;
+    background-color: #fec126;
+    color: white;
+    font-size: larger;
     }
   }
   button {
@@ -158,7 +220,10 @@ const SidebarContainer = styled.div`
     height: 2rem;
     border-radius: 0.5rem;
     border: none;
-    background-color: #238f51;
+    width: auto;
+    padding: 0 1rem;
+
+
   }
   .moveBtn {
     /* border: 1px solid black; */
