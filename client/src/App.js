@@ -1,7 +1,11 @@
 import './App.css';
+<<<<<<< HEAD
 
 import {  Routes, Route } from "react-router-dom";
 
+=======
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+>>>>>>> ec125951e888f4f88719b345f292ac72677314c3
 import Landing from './page/Landing';
 import Main from './page/Main';
 import Signup from './page/Signup';
@@ -10,8 +14,11 @@ import Favorite from './page/Favorite';
 import FavoriteDetail from './page/FavoriteDetail';
 import AddReview from './page/AddReview';
 import Review from './page/Review';
+<<<<<<< HEAD
 import About from './page/AboutSlider';
 import SearchResults from './component/SearchResults';
+=======
+>>>>>>> ec125951e888f4f88719b345f292ac72677314c3
 
 function App() {
   // const [posts, setPosts] = useState([]);
@@ -68,11 +75,17 @@ function App() {
           <Route path='/main' element={<Main />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
+<<<<<<< HEAD
           <Route path="/about" element={<About />} />
           <Route path='/favorite' element={<Favorite />} />
           <Route path='/favorite/:id' element={<FavoriteDetail />} />
           <Route path='/searchResults' element={<SearchResults />} />
           <Route path='/addreview' element={<AddReview />} />
+=======
+          <Route path='/favorite' element={<Favorite />} />
+          <Route path='/favorite/:id' element={<FavoriteDetail />} />
+          <Route path='/addReview' element={<AddReview />} />
+>>>>>>> ec125951e888f4f88719b345f292ac72677314c3
           <Route path='/review/:id' element={<Review />} />
         </Routes>
       </div>

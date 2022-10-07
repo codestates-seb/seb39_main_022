@@ -1,5 +1,9 @@
 import React from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+<<<<<<< HEAD
+=======
+import axios from "axios";
+>>>>>>> ec125951e888f4f88719b345f292ac72677314c3
 import styled from "styled-components";
 
 export default function Review() {
