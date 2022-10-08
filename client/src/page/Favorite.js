@@ -7,128 +7,128 @@ import styled from 'styled-components';
 import Pagination from "../component/Pagenation";
 
 export default function Favorite() {
-    const [favoriteList, setFavoriteList] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]);
 
-    // pagenation
-    // 페이지당 게시물 수(pagenationLimit) pageSize
-    const [pagenationLimit, setPagenationLimit] = useState(5)
-    // 현재 페이지 번호(currentPageNumber)
-    const [currentPageNumber, setCurrentPageNumber] = useState(1)
+  // pagenation
+  // 페이지당 게시물 수(pagenationLimit) pageSize
+  const [pagenationLimit, setPagenationLimit] = useState(5)
+  // 현재 페이지 번호(currentPageNumber)
+  const [currentPageNumber, setCurrentPageNumber] = useState(1)
 
-    // click event
-    const [markers, setMarkers] = useState()
-    const [place, setPlace] = useState({
-        // 지도의 초기 위치
-        center: { lat: 33.452613, lng: 126.570888 },
-        시설명: ''
+  // click event
+  const [markers, setMarkers] = useState()
+  const [place, setPlace] = useState({
+    // 지도의 초기 위치
+    center: { lat: 33.452613, lng: 126.570888 },
+    시설명: ''
+  })
+
+  // 첫 게시물의 위치(firstOffset)
+  const firstOffset = (currentPageNumber - 1) * pagenationLimit
+
+  const currentFavoriteList = favoriteList.slice(firstOffset, firstOffset + pagenationLimit)
+
+  const handleMove = (event) => {
+    const id = event.target.value
+    const targetMarker = markers.find(marker => {
+      return marker.id === id
     })
 
-    // 첫 게시물의 위치(firstOffset)
-    const firstOffset = (currentPageNumber - 1) * pagenationLimit
+    setPlace({
+      ...targetMarker,
+      id: targetMarker.id,
+      center: targetMarker.latlng,
+    })
+  }
 
-    const currentFavoriteList = favoriteList.slice(firstOffset, firstOffset + pagenationLimit)
+  // get favorite
+  useEffect(() => {
+    const getFavoriteList = async () => {
+      const response = await axios.get('http://localhost:4000/favoriteList');
+      // const response = await axios.get('http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/favorite-places');
+      setFavoriteList(response.data)
 
-    const handleMove = (event) => {
-        const id = event.target.value
-        const targetMarker = markers.find(marker => {
-            return marker.id === id
-        })
-
-        setPlace({
-            ...targetMarker,
-            id: targetMarker.id,
-            center: targetMarker.latlng,
-        })
+      const favorites = response.data;
+      const marker = favorites.map(favorite => {
+        return {
+          ...favorite,
+          id: favorite.id,
+          latlng: { lat: Number(favorite.위도), lng: Number(favorite.경도) }
+        }
+      })
+      setMarkers(marker)
     }
 
-    // get favorite
-    useEffect(() => {
-        const getFavoriteList = async () => {
-            const response = await axios.get('http://localhost:4000/favoriteList');
-            // const response = await axios.get('http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/favorite-places');
-            setFavoriteList(response.data)
+    getFavoriteList();
+  }, []);
 
-            const favorites = response.data;
-            const marker = favorites.map(favorite => {
-                return {
-                    ...favorite,
-                    id: favorite.id,
-                    latlng: { lat: Number(favorite.위도), lng: Number(favorite.경도) }
-                }
-            })
-            setMarkers(marker)
-        }
+  return (
+    <FavoritePage>
+      <Link to='/main'>
+        <img
+          src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-keyboard_backspace.svg'
+          alt='move_main_icon'
+          className="move_main_icon"
+        />
+      </Link>
+      <section className="favoriteList">
+        <p className="logo"><Link to='/main'>구르미</Link></p>
+        <input type='text' className="search-bar" placeholder="충전소를 검색해주세요" />
+        <ul>
+          {currentFavoriteList.map(({ id, 시설명, 공기주입가능여부, 휴대전화충전가능여부 }) => {
+            return (
+              <li key={id} className="favorite_list">
+                {/* click event */}
+                <button value={id} onClick={handleMove} className="favorite_list_title">
+                  {시설명}
+                </button>
+                <p className="open">운영중</p>
+                <section className="whether_section">
+                  <p>
+                    {공기주입가능여부 === "Y" ? '바퀴 공기 주입' : ""}
+                  </p>
+                  <p>
+                    {휴대전화충전가능여부 === "Y" ? '휴대폰 충전' : ""}
+                  </p>
+                </section>
 
-        getFavoriteList();
-    }, []);
-
-    return (
-        <FavoritePage>
-            <Link to='/main'>
-                <img
-                    src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-keyboard_backspace.svg'
-                    alt='move_main_icon'
-                    className="move_main_icon"
-                />
+              </li>
+            )
+          })}
+        </ul>
+        <Pagination
+          total={favoriteList?.length}
+          pagenationLimit={pagenationLimit}
+          currentPageNumber={currentPageNumber}
+          setCurrentPageNumber={setCurrentPageNumber}
+        />
+      </section>
+      <Map
+        center={place.center}
+        level={3}
+        className='map'
+      >
+        <CustomOverlayMap position={place.center} className='modal'>
+          {place.id && <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }} className='modal_container'>
+            <p className="modal_title">{place.시설명}</p>
+            <p>운영중</p>
+            <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span>
+            <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span>
+            <p>{place.관리기관전화번호}</p>
+            <Link
+              to={`/favorite/${place.id}`}
+              state={{ place }}
+            >더보기+
             </Link>
-            <section className="favoriteList">
-                <p className="logo"><Link to='/main'>구르미</Link></p>
-                <input type='text' className="search-bar" placeholder="충전소를 검색해주세요" />
-                <ul>
-                    {currentFavoriteList.map(({ id, 시설명, 공기주입가능여부, 휴대전화충전가능여부 }) => {
-                        return (
-                            <li key={id} className="favorite_list">
-                                {/* click event */}
-                                <button value={id} onClick={handleMove} className="favorite_list_title">
-                                    {시설명}
-                                </button>
-                                <p className="open">운영중</p>
-                                <section className="whether_section">
-                                    <p>
-                                        {공기주입가능여부 === "Y" ? '바퀴 공기 주입' : ""}
-                                    </p>
-                                    <p>
-                                        {휴대전화충전가능여부 === "Y" ? '휴대폰 충전' : ""}
-                                    </p>
-                                </section>
-
-                            </li>
-                        )
-                    })}
-                </ul>
-                <Pagination
-                    total={favoriteList?.length}
-                    pagenationLimit={pagenationLimit}
-                    currentPageNumber={currentPageNumber}
-                    setCurrentPageNumber={setCurrentPageNumber}
-                />
-            </section>
-            <Map
-                center={place.center}
-                level={3}
-                className='map'
-            >
-                <CustomOverlayMap position={place.center} className='modal'>
-                    {place.id && <div style={{ width: "200px", padding: "20px", backgroundColor: "#fff", color: "#000" }} className='modal_container'>
-                        <p className="modal_title">{place.시설명}</p>
-                        <p>운영중</p>
-                        <span>{place.공기주입가능여부 === "Y" ? '공기주입' : ""}</span>
-                        <span>{place.휴대전화충전가능여부 === "Y" ? '충전' : ""}</span>
-                        <p>{place.관리기관전화번호}</p>
-                        <Link
-                            to={`/favorite/${place.id}`}
-                            state={{ place }}
-                        >더보기+
-                        </Link>
-                    </div>}
-                </CustomOverlayMap>
-                <MapMarker
-                    position={place.center}
-                    clickable={true}
-                />
-            </Map>
-        </FavoritePage >
-    )
+          </div>}
+        </CustomOverlayMap>
+        <MapMarker
+          position={place.center}
+          clickable={true}
+        />
+      </Map>
+    </FavoritePage >
+  )
 }
 
 const FavoritePage = styled.div`
