@@ -2,14 +2,24 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
-export default function Sidebar() {
+export default function Sidebar({ isLogin }) {
+    // true 여부에 따라 로그인 버튼과 유저 정보로 메인 화면 다르게 렌더링하기...
+
     return (
         <SidebarContainer>
             <p className="logo">구르미</p>
             <input type='text' className="search-bar" placeholder="충전소를 검색해주세요" />
             <section className="socialBtn">
-                <Link to='/login'>로그인</Link>
-                <Link to='/signup'>회원가입</Link>
+                {isLogin ?
+                    (
+                        <Link to=''>userInfo</Link>
+                    ) : (
+                        <>
+                            <Link to='/login'>로그인</Link>
+                            <Link to='/signup'>회원가입</Link>
+                        </>
+                    )
+                }
             </section>
             <section className="moveBtn">
                 <Link>사용법</Link>

@@ -398,29 +398,27 @@
   "comments": [
     {
       "commentId": "0",
-      "memberId": "지혜",
+      "memberName": "지혜",
+      "memberEmail": "rrr@naver.com",
       "comment": "충전소가 잘 되어 있어서 좋았습니다"
     },
     {
       "commentId": "1",
-      "memberId": "수인",
+      "memberName": "수인",
+      "memberEmail": "bbb@naver.com",
       "comment": "시설이 깔끔해요"
     },
     {
       "commentId": "2",
-      "memberId": "용호",
+      "memberName": "용호",
+      "memberEmail": "aaa@naver.com",
       "comment": "직원분들이 친절해요"
     },
     {
       "commentId": "3",
-      "memberId": "동근",
+      "memberName": "동근",
+      "memberEmail": "kkk@naver.com",
       "comment": "충전소가 잘 되어 있어서 좋았습니다"
     }
   ]
 }
-<<<<<<< HEAD
-    }
-  ]
-}
-=======
->>>>>>> main

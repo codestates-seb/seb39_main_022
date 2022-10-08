@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import LikeDislike from "../component/LikeDislike";
 
-export default function FavoriteDetail() {
+export default function FavoriteDetail({ uniqueId, setUniqueId }) {
     const [modal, setModal] = useState({
         text: '',
         isFindOpen: false,
@@ -13,7 +13,7 @@ export default function FavoriteDetail() {
         isFavoriteOpen: false,
         isFormOpen: false,
     });
-
+    // console.log(uniqueId)
     const [commentList, setCommentList] = useState([]);
 
     const navigate = useNavigate();
@@ -94,12 +94,12 @@ export default function FavoriteDetail() {
         setCommentList(newCommentList)
     };
 
-    // get
+    // get review
     useEffect(() => {
         const getReviewList = async () => {
             const response = await axios.get('http://localhost:4000/comments');
             // server get
-            // const response = await axios.get('http://ec2-54-180-29-60.ap-northeast-2.compute.amazonaws.com:8080/comments');
+            // const response = await axios.get('http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/comments');
 
             const newCommentList = response.data.map(commentInfo => {
                 return {
@@ -124,7 +124,9 @@ export default function FavoriteDetail() {
         const addFavoriteList = async () => {
             try {
                 const response = await axios.post('http://localhost:4000/favoriteList', {
-                    시설명: location.state.place.시설명
+                    시설명: location.state.place.시설명,
+                    공기주입가능여부: location.state.place.공기주입가능여부,
+                    휴대전화충전가능여부: location.state.place.휴대전화충전가능여부
                 });
                 if (response) {
                     console.log('즐겨찾기 저장 성공')
@@ -139,6 +141,7 @@ export default function FavoriteDetail() {
 
     return (
         <DetailContainer>
+            {uniqueId}
             <img
                 src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-multiply.svg'
                 alt='exitIcon'
@@ -238,9 +241,11 @@ export default function FavoriteDetail() {
             <section className="comment_section">
                 <p className="comment_count">전체 {commentList.length}</p>
                 <ul>
-                    {commentList.map(({ commentId, memberId, comment, isLike }) => {
+                    {commentList.map(({ commentId, memberId, comment, memberEmail }) => {
                         return (
                             <div key={commentId}>
+
+                                {memberEmail}
                                 < li className="commentList" >
                                     <img
                                         src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-face.svg'
@@ -275,7 +280,11 @@ export default function FavoriteDetail() {
                                             />
                                             <span>추천</span>
                                         </section> */}
-                                        <LikeDislike />
+                                        <LikeDislike
+                                            uniqueId={uniqueId}
+                                            memberEmail={memberEmail}
+                                        />
+
                                     </section>
                                 </li>
                                 <hr></hr>
@@ -290,6 +299,7 @@ export default function FavoriteDetail() {
 
 const DetailContainer = styled.div`
 display: flex;
+
 flex-direction: column;
 justify-content: center;
 align-items: center;

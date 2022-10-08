@@ -41,12 +41,11 @@ export default function Favorite() {
         })
     }
 
-    // get
+    // get favorite
     useEffect(() => {
         const getFavoriteList = async () => {
             const response = await axios.get('http://localhost:4000/favoriteList');
-            // server get
-            // const response = await axios.get('http://ec2-54-180-29-60.ap-northeast-2.compute.amazonaws.com:8080/favorite-places');
+            // const response = await axios.get('http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/favorite-places');
             setFavoriteList(response.data)
 
             const favorites = response.data;

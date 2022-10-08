@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import styled from "styled-components";
 
-export default function Login() {
+export default function Login({ setUniqueId, setIsLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
-    const URL = 'http://ec2-54-180-29-60.ap-northeast-2.compute.amazonaws.com:8080/members/login'
+    const loginUrl = '/members/login'
 
     const handleEmail = (event) => {
         setEmail(event.target.value);
@@ -19,21 +19,46 @@ export default function Login() {
         setPassword(event.target.value);
     }
 
+    // post login
+    // jwt  > session
     const handleLogin = async () => {
-        await axios.post(URL,
+        await axios.post(loginUrl,
             ({
                 email: email,
                 password: password,
             }))
             .then(response => {
-                localStorage.setItem("token", response.headers["access-token"]);
-                console.log('로그인 성공');
-                navigate('/main');
+                console.log('로그인 성공', response);
+                setUniqueId(response.data.data.email)
+                setLocalStorage(response.data.data.email)
+                setIsLogin(true)
+                navigate('/main')
             })
             .catch(error =>
                 console.log('error:', error)
             )
     }
+
+    // 로컬스토리지에 이메일을 저장 >>> 실제로는 토큰
+    const setLocalStorage = async (email) => {
+        if (!email) return false
+
+        // 값 / 키
+        await localStorage.setItem("id", email)
+    }
+
+    // 자동 로그인
+    // 1번 크롬탭 켜져있을 때만
+    // 2번 콤푸타 껐다 켜도 >>> 로그아웃 <<< 이거
+
+
+    // 세션이었따...
+    // const accessToken = response.headers.authorization;
+    // const refreshToken = response.headers.refresh;
+    // setLocalStorage('access_token', accessToken);
+    // setLocalStorage('refresh_token', refreshToken);
+    // // 헤더에 토큰 담아서 요청마다 보내기
+    // axios.defaults.headers.common['Authorization'] = `${accessToken}`;
 
     return (
         <LoginContainer>
@@ -67,7 +92,6 @@ export default function Login() {
 }
 
 const LoginContainer = styled.div`
-border: 1px solid black;
 height: 100vh;
 display: flex;
 flex-direction: column;
