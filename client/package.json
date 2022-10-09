@@ -8,10 +8,14 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
 <<<<<<< HEAD
+    "dotenv": "^16.0.2",
+=======
+<<<<<<< HEAD
     "date-fns": "^2.29.3",
 =======
     "dotenv": "^16.0.2",
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-kakao-maps-sdk": "^1.1.3",
@@ -43,5 +47,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080"
 }

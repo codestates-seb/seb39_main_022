@@ -2,9 +2,11 @@ HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
+!start.jar
+!deploy.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+**/gradle/*.*
 ### STS ###
 .apt_generated
 .classpath
@@ -16,7 +18,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-
+src/main/generated
 ### IntelliJ IDEA ###
 .idea
 *.iws

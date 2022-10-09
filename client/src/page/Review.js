@@ -1,9 +1,6 @@
 import React from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import axios from "axios";
->>>>>>> ec125951e888f4f88719b345f292ac72677314c3
 import styled from "styled-components";
 
 export default function Review() {
@@ -15,23 +12,6 @@ export default function Review() {
     const handleMoveFavoriteDetailPage = () => {
         navigate(-1)
     };
-
-    // comment delete
-    // delete error
-    const handleDeleteReview = async () => {
-        try {
-            // const response = await axios.delete(`http://localhost:4000/comments/${location.state.commentId}`)
-            if (true) {
-                console.log('후기 삭제')
-
-                // 서버 연동되면 제대로 해보기
-                navigate(-1)
-            }
-        } catch (error) {
-            console.log('error:', error)
-        }
-    };
-
     // 데이터 삭제 >>> 반영
     // 리스트로 돌아가기 <<< 현재 / 삭제가 완료되었습니다 모달 생성 후 돌아가기
     // 댓글이 없습니다
@@ -130,9 +110,6 @@ flex-direction: column;
                 color: #238f51;
             }
         }
-    }
-    
+    }   
 }
-
-
 `

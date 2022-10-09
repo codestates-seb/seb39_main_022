@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
 <<<<<<< HEAD
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from "axios";
+import styled from "styled-components";
+
+import LikeDislike from "../component/LikeDislike";
+
+export default function FavoriteDetail({ uniqueId, setUniqueId }) {
+=======
+<<<<<<< HEAD
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -351,6 +360,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 export default function FavoriteDetail() {
+>>>>>>> origin/dev-front
     const [modal, setModal] = useState({
         text: '',
         isFindOpen: false,
@@ -358,7 +368,11 @@ export default function FavoriteDetail() {
         isFavoriteOpen: false,
         isFormOpen: false,
     });
+<<<<<<< HEAD
+    // console.log(uniqueId)
+=======
 
+>>>>>>> origin/dev-front
     const [commentList, setCommentList] = useState([]);
 
     const navigate = useNavigate();
@@ -366,7 +380,13 @@ export default function FavoriteDetail() {
     const location = useLocation();
 
     // isLike = false >>> like 값이 안 들어왔을 때도 흰색으로 표시
+<<<<<<< HEAD
+    const likeImage = (isLike = false) => isLike ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_up.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mi-thumbs-up.svg';
+
+    const hateImage = (isUnLike = false) => isUnLike ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_down.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mi-thumbs-down.svg';
+=======
     const likeImage = (isLike = false) => isLike ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon5/mt-favorite.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon5/mt-favorite_border.svg'
+>>>>>>> origin/dev-front
 
     const copyUrl = `http://localhost:3000${location.pathname}`;
 
@@ -425,7 +445,12 @@ export default function FavoriteDetail() {
         // targetIndex 해당 되는 요소만 true 로 변경
         const updatedComment = {
             ...commentList[targetIndex],
+<<<<<<< HEAD
+            isLike: true,
+            isHate: true
+=======
             isLike: true
+>>>>>>> origin/dev-front
         }
 
         // 얕은 복사로 새로운 배열 생성 targetIndex 번째를 제외하고 만든다 0부터 그 전까지
@@ -436,10 +461,19 @@ export default function FavoriteDetail() {
         setCommentList(newCommentList)
     };
 
+<<<<<<< HEAD
+    // get review
+    useEffect(() => {
+        const getReviewList = async () => {
+            const response = await axios.get('http://localhost:4000/comments');
+            // server get
+            // const response = await axios.get('http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/comments');
+=======
     // get
     useEffect(() => {
         const getReviewList = async () => {
             const response = await axios.get('http://localhost:4000/comments');
+>>>>>>> origin/dev-front
 
             const newCommentList = response.data.map(commentInfo => {
                 return {
@@ -464,7 +498,13 @@ export default function FavoriteDetail() {
         const addFavoriteList = async () => {
             try {
                 const response = await axios.post('http://localhost:4000/favoriteList', {
+<<<<<<< HEAD
+                    시설명: location.state.place.시설명,
+                    공기주입가능여부: location.state.place.공기주입가능여부,
+                    휴대전화충전가능여부: location.state.place.휴대전화충전가능여부
+=======
                     시설명: location.state.place.시설명
+>>>>>>> origin/dev-front
                 });
                 if (response) {
                     console.log('즐겨찾기 저장 성공')
@@ -479,6 +519,10 @@ export default function FavoriteDetail() {
 
     return (
         <DetailContainer>
+<<<<<<< HEAD
+            {uniqueId}
+=======
+>>>>>>> origin/dev-front
             <img
                 src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-multiply.svg'
                 alt='exitIcon'
@@ -578,9 +622,17 @@ export default function FavoriteDetail() {
             <section className="comment_section">
                 <p className="comment_count">전체 {commentList.length}</p>
                 <ul>
+<<<<<<< HEAD
+                    {commentList.map(({ commentId, memberId, comment, memberEmail }) => {
+                        return (
+                            <div key={commentId}>
+
+                                {memberEmail}
+=======
                     {commentList.map(({ commentId, memberId, comment, isLike }) => {
                         return (
                             <div key={commentId}>
+>>>>>>> origin/dev-front
                                 < li className="commentList" >
                                     <img
                                         src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-face.svg'
@@ -605,7 +657,11 @@ export default function FavoriteDetail() {
                                             </Link>
                                         </p>
 
+<<<<<<< HEAD
+                                        {/* <section className="recommend_setcion">
+=======
                                         <section className="like_section">
+>>>>>>> origin/dev-front
                                             <img
                                                 src={likeImage(isLike)}
                                                 alt='likeImage'
@@ -613,8 +669,18 @@ export default function FavoriteDetail() {
                                                 className="likeImage"
                                                 data-id={commentId}
                                             />
+<<<<<<< HEAD
+                                            <span>추천</span>
+                                        </section> */}
+                                        <LikeDislike
+                                            uniqueId={uniqueId}
+                                            memberEmail={memberEmail}
+                                        />
+
+=======
                                             <span>좋아요</span>
                                         </section>
+>>>>>>> origin/dev-front
                                     </section>
                                 </li>
                                 <hr></hr>
@@ -629,17 +695,29 @@ export default function FavoriteDetail() {
 
 const DetailContainer = styled.div`
 display: flex;
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/dev-front
 flex-direction: column;
 justify-content: center;
 align-items: center;
 padding: 3rem;
 
+<<<<<<< HEAD
+.exit_icon, .exit_icon_white{
+=======
 .exit_icon{
+>>>>>>> origin/dev-front
     width: 3rem;
     margin-left:auto;
 }
 
+<<<<<<< HEAD
+.exit_icon:hover, .exit_icon_white:hover{
+=======
 .exit_icon:hover{
+>>>>>>> origin/dev-front
     transform: scale(1.1);
     transition: .1s;
 }
@@ -650,7 +728,10 @@ padding: 3rem;
 }
 
 .place_section{
+<<<<<<< HEAD
+=======
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front
     width: 10rem;
     height: 10rem;
     margin: 3rem;
@@ -659,6 +740,8 @@ padding: 3rem;
     justify-content: center;
     align-items: center;
 
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
     p {
       font-size: 1.5vmax;
@@ -675,6 +758,7 @@ padding: 3rem;
 
   .button_section {
 =======
+>>>>>>> origin/dev-front
     p{
         font-size: 1.5vmax;
     }
@@ -689,12 +773,17 @@ padding: 3rem;
 }
 
 .button_section{
+<<<<<<< HEAD
+=======
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front
     width: 35rem;
     margin: 0 auto;
     display: flex;
     justify-content: space-around;
 
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
     button {
       border: none;
@@ -721,6 +810,7 @@ padding: 3rem;
 
   .modal_container {
 =======
+>>>>>>> origin/dev-front
     button{
         border: none;
         background-color: white;
@@ -745,7 +835,10 @@ padding: 3rem;
 }
 
 .modal_container{
+<<<<<<< HEAD
+=======
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front
     border-radius: 1rem;
     background-color: #238f51;
     color: white;
@@ -764,6 +857,8 @@ padding: 3rem;
     position: fixed;
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
     img {
       margin: 0 auto;
       margin-top: -5rem;
@@ -780,6 +875,7 @@ padding: 3rem;
 
   .place_detail {
 =======
+>>>>>>> origin/dev-front
     img{
         margin: 0 auto;
         margin-top: -5rem;
@@ -795,13 +891,18 @@ padding: 3rem;
 }
 
 .place_detail{
+<<<<<<< HEAD
+=======
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front
     border-radius: 1rem;
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
     width: 40rem;
     padding: 3rem;
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
     margin: 2rem;
 
@@ -892,6 +993,7 @@ padding: 3rem;
 
   .change_form {
 =======
+>>>>>>> origin/dev-front
     margin:2rem;
 
     button{
@@ -966,7 +1068,11 @@ padding: 3rem;
                 }
                 
 
+<<<<<<< HEAD
+                .recommend_setcion{
+=======
                 .like_section{
+>>>>>>> origin/dev-front
                     display: flex;
                     align-items: center;
                     margin: .5rem 0;
@@ -981,7 +1087,10 @@ padding: 3rem;
 }
 
 .change_form{
+<<<<<<< HEAD
+=======
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front
     position: absolute;
     top: 0;
     width: 100%;
@@ -991,6 +1100,8 @@ padding: 3rem;
     justify-content: center;
     align-items: center;
 
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
     form {
       border-radius: 1rem;
@@ -1046,6 +1157,7 @@ padding: 3rem;
 
   .commentList {
 =======
+>>>>>>> origin/dev-front
     form{
         border-radius: 1rem;
         width: 20rem;
@@ -1101,11 +1213,18 @@ padding: 3rem;
 }
 
 .commentList{
+<<<<<<< HEAD
+=======
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front
     /* border: 1px solid black; */
     list-style: none;
     width: 25rem;
     padding: 2rem;
+<<<<<<< HEAD
+}
+`
+=======
 <<<<<<< HEAD
   }
 `;
@@ -1113,3 +1232,4 @@ padding: 3rem;
 }
 `
 >>>>>>> ec125951e888f4f88719b345f292ac72677314c3
+>>>>>>> origin/dev-front

@@ -1,7 +1,5 @@
-import React from "react";
-<<<<<<< HEAD
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 import styled from "styled-components";
 
@@ -212,13 +210,4 @@ padding: 1rem;
       box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;         }
   }
 `;
-=======
 
-export default function AddReview() {
-    return (
-        <>
-            후기 작성 페이지
-        </>
-    )
-}
->>>>>>> ec125951e888f4f88719b345f292ac72677314c3
