@@ -1,9 +1,7 @@
-import React from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from "axios";
 import styled from "styled-components";
 
-export default function Review() {
+const ReviewList = ({ review }) => {
 
     const navigate = useNavigate();
 
@@ -12,9 +10,20 @@ export default function Review() {
     const handleMoveFavoriteDetailPage = () => {
         navigate(-1)
     };
-    // 데이터 삭제 >>> 반영
-    // 리스트로 돌아가기 <<< 현재 / 삭제가 완료되었습니다 모달 생성 후 돌아가기
-    // 댓글이 없습니다
+
+    const handleDeleteReview = async () => {
+        try {
+            // const response = await axios.delete(`http://localhost:4000/comments/${location.state.commentId}`)
+            if (true) {
+                console.log('후기 삭제')
+
+                // 서버 연동되면 제대로 해보기
+                navigate(-1)
+            }
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
 
     return (
         <ReviewContainer>
@@ -24,19 +33,28 @@ export default function Review() {
                 onClick={handleMoveFavoriteDetailPage}
                 className='exitIcon'
             />
-            <section className="review_id">
+             <section className="review_id">
                 <p>{location.state.memberId}</p>
+                <p>{location.review.memberId}</p>
+                <p>{review.memberId}</p>
+
+                <p className="reviewDate">{review.datetime}</p>
             </section>
             <section className="review_section">
-                <p>{location.state.comment}</p>
+            <p>{location.state.comment}</p>
+            <p>{location.review.comment}</p>
+            <p>{review.comment}</p>
                 <section className="button_section">
                     <button><Link to='/addReview'>후기 수정</Link></button>
                     <button onClick={handleDeleteReview}>후기 삭제</button>
                 </section>
             </section>
+
         </ReviewContainer>
     )
 }
+
+export default ReviewList
 
 const ReviewContainer = styled.div`
 padding: 3rem;
@@ -110,6 +128,9 @@ flex-direction: column;
                 color: #238f51;
             }
         }
-    }   
+    }
+    
 }
+
+
 `

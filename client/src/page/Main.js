@@ -1,5 +1,4 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import { Map } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
