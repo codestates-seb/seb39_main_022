@@ -4,6 +4,11 @@ import axios from "axios";
 import styled from "styled-components";
 
 export default function Signup() {
+    // 회원가입 유효성 관련
+    // 이메일 중복
+    // 비밀번호 10글자 이상
+    // 전화번호 000-0000-000 형식
+
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,7 +16,7 @@ export default function Signup() {
 
     const navigate = useNavigate();
 
-    const URL = 'ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com:8080';
+    const signupUrl = 'http://ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com/members/signup'
 
     const handleUserName = (event) => {
         setUserName(event.target.value);
@@ -29,10 +34,11 @@ export default function Signup() {
         setPhoneNumber(event.target.value);
     }
 
+    // post signup
     const handleSignup = (event) => {
         event.preventDefault();
 
-        axios.post(URL,
+        axios.post(signupUrl,
             {
                 email: email,
                 nickName: userName,
@@ -48,10 +54,8 @@ export default function Signup() {
                 }
             })
             .then(response => {
-                if (response.status === 201) {
-                    navigate('/login')
-                    console.log('회원가입 성공');
-                }
+                navigate('/login')
+                console.log('회원가입 성공', response);
             })
             .catch(error =>
                 console.log('error:', error)
@@ -110,7 +114,6 @@ export default function Signup() {
 }
 
 const SignupContainer = styled.div`
-border: 1px solid black;
 height: 100vh;
 display: flex;
 flex-direction: column;

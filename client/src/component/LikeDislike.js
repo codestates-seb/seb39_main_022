@@ -1,34 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import styled from "styled-components";
 
-function LikeDislike() {
+function LikeDislike({ uniqueId, memberEmail }) {
     const [like, setLike] = useState(false);
     const [dislike, setDislike] = useState(false);
 
-    const handelLike = () => {
-        setLike(pre => !pre)
-    }
-
-    const handelDislike = () => {
-        setDislike(pre => !pre)
-    }
+    const likeEmptyImage = 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-thumbs-up.svg';
+    const likgFullImage = 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_up.svg';
+    const dislikeEmptyImage = 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-thumbs-down.svg';
+    const dislikeFullImage = 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_down.svg';
 
     return (
-        <LikeDislikeContainer>
-            <img
-                src={like ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_up.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-thumbs-up.svg'}
-                alt='like'
-                onClick={handelLike}
-            />
-            <span>{like ? 1 : 0}</span>
-            <img
-                src={dislike ? 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_down.svg' : 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-thumbs-down.svg'}
-                alt='dislike'
-                onClick={handelDislike}
-            />
-            <span>{dislike ? 1 : 0}</span>
-        </LikeDislikeContainer>
+        <>
+            {memberEmail === uniqueId &&
+                (<LikeDislikeContainer>
+                    <img
+                        src={like ? likgFullImage : likeEmptyImage}
+                        alt='like'
+                    />
+                    <span>추천</span>
+                    <img
+                        src={dislike ? dislikeFullImage : dislikeEmptyImage}
+                        alt='dislike'
+                    />
+                    <span>비추천</span>
+                </LikeDislikeContainer>)
+            }
+        </>
     )
 }
 
@@ -46,9 +45,5 @@ img, span{
     height: 2rem;
     line-height: 2rem;
     margin-right: .5rem;
-}
-
-span{
-    /* border: 1px solid black; */
 }
 `

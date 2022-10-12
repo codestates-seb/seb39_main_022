@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import LikeDislike from "../component/LikeDislike";
 
-export default function FavoriteDetail() {
+export default function FavoriteDetail({ uniqueId, setUniqueId }) {
     const [modal, setModal] = useState({
         text: '',
         isFindOpen: false,
@@ -13,7 +13,7 @@ export default function FavoriteDetail() {
         isFavoriteOpen: false,
         isFormOpen: false,
     });
-
+    // console.log(uniqueId)
     const [commentList, setCommentList] = useState([]);
 
     const navigate = useNavigate();
@@ -65,12 +65,6 @@ export default function FavoriteDetail() {
         setModal(false)
     }
 
-    // 같은 동작을 해도 각각 해당되는 동작을 넣어주기 객체안에 데이터를 넣어주는 !
-    // 요소마다 like 이벤트를 개별로
-    // setLike Boolean 변경 >>> 새로운 배열 생성
-    // data 속성을 이용해서 img id 값을 받아왔다
-    // 실무에서 다른 점 >>> 서버로 날아간다
-
     // 개별 like 반영
     const handleLikeImage = (event) => {
         // tag data-## >>> dataset 객체에 data 저장 / data-id >>> id 라는 객체에 저장
@@ -86,20 +80,18 @@ export default function FavoriteDetail() {
             isHate: true
         }
 
-        // 얕은 복사로 새로운 배열 생성 targetIndex 번째를 제외하고 만든다 0부터 그 전까지
-        // ...을 붙인 이유 >>> 타겟 되는 것을 제외하고 그대로 false 상태이다 / 타겟만 true
         const newCommentList = [...commentList.slice(0, targetIndex), updatedComment, ...commentList.slice(targetIndex + 1)]
 
         // 실제로 서버에 먼저
         setCommentList(newCommentList)
     };
 
-    // get
+    // get review
     useEffect(() => {
         const getReviewList = async () => {
             const response = await axios.get('http://localhost:4000/comments');
             // server get
-            // const response = await axios.get('http://ec2-54-180-29-60.ap-northeast-2.compute.amazonaws.com:8080/comments');
+            // const response = await axios.get('http://ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com/comments');
 
             const newCommentList = response.data.map(commentInfo => {
                 return {
@@ -123,8 +115,10 @@ export default function FavoriteDetail() {
 
         const addFavoriteList = async () => {
             try {
-                const response = await axios.post('ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com:8080/favoriteList', {
-                    시설명: location.state.place.시설명
+                const response = await axios.post('http://localhost:4000/favoriteList', {
+                    시설명: location.state.place.시설명,
+                    공기주입가능여부: location.state.place.공기주입가능여부,
+                    휴대전화충전가능여부: location.state.place.휴대전화충전가능여부
                 });
                 if (response) {
                     console.log('즐겨찾기 저장 성공')
@@ -139,6 +133,7 @@ export default function FavoriteDetail() {
 
     return (
         <DetailContainer>
+            {uniqueId}
             <img
                 src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-multiply.svg'
                 alt='exitIcon'
@@ -238,9 +233,11 @@ export default function FavoriteDetail() {
             <section className="comment_section">
                 <p className="comment_count">전체 {commentList.length}</p>
                 <ul>
-                    {commentList.map(({ commentId, memberId, comment, isLike }) => {
+                    {commentList.map(({ commentId, memberId, comment, memberEmail }) => {
                         return (
                             <div key={commentId}>
+
+                                {memberEmail}
                                 < li className="commentList" >
                                     <img
                                         src='https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-face.svg'
@@ -275,7 +272,11 @@ export default function FavoriteDetail() {
                                             />
                                             <span>추천</span>
                                         </section> */}
-                                        <LikeDislike />
+                                        <LikeDislike
+                                            uniqueId={uniqueId}
+                                            memberEmail={memberEmail}
+                                        />
+
                                     </section>
                                 </li>
                                 <hr></hr>
@@ -290,6 +291,7 @@ export default function FavoriteDetail() {
 
 const DetailContainer = styled.div`
 display: flex;
+
 flex-direction: column;
 justify-content: center;
 align-items: center;

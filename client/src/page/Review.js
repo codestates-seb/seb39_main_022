@@ -13,11 +13,10 @@ export default function Review() {
         navigate(-1)
     };
 
-    // comment delete
-    // delete error
-    const handleDeleteReview = async () => {
+    // delete comment 
+    const handleDeleteReview = async ({ wheelCenterId, commentId }) => {
         try {
-            const response = await axios.delete(`ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com:8080/comments/${location.state.commentId}`)
+            // const response = await axios.delete(`http://ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com/wheel-center/${wheelCenterId}/comment/${commentId}`)
             if (true) {
                 console.log('후기 삭제')
                 navigate(-1)

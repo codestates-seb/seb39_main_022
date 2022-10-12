@@ -3,13 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import styled from "styled-components";
 
-export default function Login() {
+export default function Login({ setUniqueId, setIsLogin }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
-    const URL = 'ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com:8080/members/login'
+    const loginUrl = 'http://ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com/members/login'
 
     const handleEmail = (event) => {
         setEmail(event.target.value);
@@ -20,19 +20,26 @@ export default function Login() {
     }
 
     const handleLogin = async () => {
-        await axios.post(URL,
+        await axios.post(loginUrl,
             ({
                 email: email,
                 password: password,
             }))
             .then(response => {
-                localStorage.setItem("token", response.headers["access-token"]);
-                console.log('로그인 성공');
-                navigate('/main');
+                console.log('로그인 성공', response);
+                setUniqueId(response.data.data.email)
+                setLocalStorage(response.data.data.email)
+                setIsLogin(true)
+                navigate('/main')
             })
             .catch(error =>
                 console.log('error:', error)
             )
+    }
+
+    const setLocalStorage = async (email) => {
+        if (!email) return false
+        await localStorage.setItem("id", email)
     }
 
     return (
@@ -67,7 +74,6 @@ export default function Login() {
 }
 
 const LoginContainer = styled.div`
-border: 1px solid black;
 height: 100vh;
 display: flex;
 flex-direction: column;
