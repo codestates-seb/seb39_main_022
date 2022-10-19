@@ -2,13 +2,15 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 
+import Search from "./Search";
+
 export default function Sidebar({ isLogin }) {
     // true 여부에 따라 로그인 버튼과 유저 정보로 메인 화면 다르게 렌더링하기...
 
     return (
         <SidebarContainer>
             <p className="logo">구르미</p>
-            <input type='text' className="search-bar" placeholder="충전소를 검색해주세요" />
+            <Search />
             <section className="socialBtn">
                 {isLogin ?
                     (
@@ -42,14 +44,6 @@ padding: 1.5rem 1rem;
 color: #238f51;
 margin-bottom: 1rem;
 font-size: 2vmax;
-}
-
-.search-bar{
-    height: 2.5rem;
-    padding: .5rem;
-    border-radius: 0.5rem;
-    border: 1px solid #238f51;
-    outline-color: #238f51;
 }
 
 .socialBtn{

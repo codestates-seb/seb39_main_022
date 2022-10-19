@@ -9,7 +9,7 @@ export default function Login({ setUniqueId, setIsLogin }) {
 
     const navigate = useNavigate();
 
-    const loginUrl = '/members/login'
+    const loginUrl = 'http://ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com/members/login'
 
     const handleEmail = (event) => {
         setEmail(event.target.value);
@@ -19,8 +19,6 @@ export default function Login({ setUniqueId, setIsLogin }) {
         setPassword(event.target.value);
     }
 
-    // post login
-    // jwt  > session
     const handleLogin = async () => {
         await axios.post(loginUrl,
             ({
@@ -39,26 +37,10 @@ export default function Login({ setUniqueId, setIsLogin }) {
             )
     }
 
-    // 로컬스토리지에 이메일을 저장 >>> 실제로는 토큰
     const setLocalStorage = async (email) => {
         if (!email) return false
-
-        // 값 / 키
         await localStorage.setItem("id", email)
     }
-
-    // 자동 로그인
-    // 1번 크롬탭 켜져있을 때만
-    // 2번 콤푸타 껐다 켜도 >>> 로그아웃 <<< 이거
-
-
-    // 세션이었따...
-    // const accessToken = response.headers.authorization;
-    // const refreshToken = response.headers.refresh;
-    // setLocalStorage('access_token', accessToken);
-    // setLocalStorage('refresh_token', refreshToken);
-    // // 헤더에 토큰 담아서 요청마다 보내기
-    // axios.defaults.headers.common['Authorization'] = `${accessToken}`;
 
     return (
         <LoginContainer>

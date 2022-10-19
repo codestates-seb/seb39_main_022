@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import axios from "axios";
 import styled from "styled-components";
 
 export default function Review() {
@@ -12,9 +11,19 @@ export default function Review() {
     const handleMoveFavoriteDetailPage = () => {
         navigate(-1)
     };
-    // 데이터 삭제 >>> 반영
-    // 리스트로 돌아가기 <<< 현재 / 삭제가 완료되었습니다 모달 생성 후 돌아가기
-    // 댓글이 없습니다
+
+    // delete comment 
+    const handleDeleteReview = async ({ wheelCenterId, commentId }) => {
+        try {
+            // const response = await axios.delete(`http://ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com:8080/wheel-center/${wheelCenterId}/comment/${commentId}`)
+            if (true) {
+                console.log('후기 삭제')
+                navigate(-1)
+            }
+        } catch (error) {
+            console.log('error:', error)
+        }
+    };
 
     return (
         <ReviewContainer>
@@ -110,6 +119,6 @@ flex-direction: column;
                 color: #238f51;
             }
         }
-    }   
+    }
 }
 `

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios";
+import React, { useState } from 'react'
 import styled from "styled-components";
 
 function LikeDislike({ uniqueId, memberEmail }) {
@@ -11,30 +10,6 @@ function LikeDislike({ uniqueId, memberEmail }) {
     const dislikeEmptyImage = 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/ul-thumbs-down.svg';
     const dislikeFullImage = 'https://raw.githubusercontent.com/eirikmadland/notion-icons/master/v5/icon4/mt-thumb_down.svg';
 
-    // get like
-    // useEffect(async (wheelCenterId) => {
-    //     const data = async () => {
-    //         const response = await axios.get(`http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/wheel-center/${wheelCenterId}/vote`)
-    //         if (response.data.type === 'like')
-    //             setLike(true)
-    //     }
-    //     data()
-    // }, []);
-
-    // post like
-    const handelLike = async (wheelCenterId) => {
-        // setLike(previousLike => !previousLike)
-        // await axios.post(`http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/wheel-center/${wheelCenterId}/vote`,)
-        //     .then(setLike(!like))
-    }
-
-    // delete like
-    // await axios.delete('http://ec2-43-201-22-41.ap-northeast-2.compute.amazonaws.com:8080/wheel-center/{wheelCenterId}/vote/{voteId}')
-
-    const handelDislike = () => {
-        // setDislike(previousDislike => !previousDislike)
-    }
-
     return (
         <>
             {memberEmail === uniqueId &&
@@ -42,13 +17,11 @@ function LikeDislike({ uniqueId, memberEmail }) {
                     <img
                         src={like ? likgFullImage : likeEmptyImage}
                         alt='like'
-                        onClick={handelLike}
                     />
                     <span>추천</span>
                     <img
                         src={dislike ? dislikeFullImage : dislikeEmptyImage}
                         alt='dislike'
-                        onClick={handelDislike}
                     />
                     <span>비추천</span>
                 </LikeDislikeContainer>)
@@ -71,9 +44,5 @@ img, span{
     height: 2rem;
     line-height: 2rem;
     margin-right: .5rem;
-}
-
-span{
-    /* border: 1px solid black; */
 }
 `

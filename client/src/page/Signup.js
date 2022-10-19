@@ -16,7 +16,7 @@ export default function Signup() {
 
     const navigate = useNavigate();
 
-    const signupUrl = '/members/signup'
+    const signupUrl = 'http://ec2-3-38-101-126.ap-northeast-2.compute.amazonaws.com/members/signup'
 
     const handleUserName = (event) => {
         setUserName(event.target.value);
@@ -50,7 +50,7 @@ export default function Signup() {
                     "Content-Type": "application/json",
                     Accept: "application/json",
                     withCredentials: true,
-                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Origin": "*"
                 }
             })
             .then(response => {

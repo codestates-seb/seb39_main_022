@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 import styled from "styled-components";
 
@@ -6,14 +6,30 @@ import Sidebar from "../component/Sidebar";
 
 export default function Main({ isLogin }) {
 
-    console.log(isLogin)
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
+
+    // 현재위치 나타내기
+    function locationSuccess(position) {
+        setLatitude(position.coords.latitude)
+        setLongitude(position.coords.longitude)
+    }
+
+    function locationError() {
+        alert("Can't find you");
+    }
+
+    navigator.geolocation.getCurrentPosition(locationSuccess, locationError)
+
+    // console.log(latitude, longitude)
     return (
         <MainContainer>
             <Sidebar
                 isLogin={isLogin}
             />
             <Map
-                center={{ lat: 33.452613, lng: 126.570888 }}
+                // 현재위치 구현 아직 못함
+                center={{ lat: 33.450701, lng: 126.570667 }}
                 level={3}
                 className='map'
             >
